@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/app_nav"
+    app:startDestination="@id/gameLoginFragment"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <fragment
+        android:id="@+id/gameLoginFragment"
+        android:name="com.example.projetfinaljeu.GameLoginFragment"
+        android:label="GameLoginFragment"
+        tools:layout="@layout/fragment_game_login">
+        <action
+            android:id="@+id/action_gameLoginFragment_to_gameHomeFragment"
+            app:destination="@id/gameHomeFragment" />
+        <action
+            android:id="@+id/action_gameLoginFragment_to_gameForgetPasswordFragment"
+            app:destination="@id/gameForgetPasswordFragment" />
+        <action
+            android:id="@+id/action_gameLoginFragment_to_gameRegisterFragment"
+            app:destination="@id/gameRegisterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameRegisterFragment"
+        android:name="com.example.projetfinaljeu.GameRegisterFragment"
+        android:label="GameRegisterFragment"
+        tools:layout="@layout/fragment_game_register">
+        <action
+            android:id="@+id/action_gameRegisterFragment_to_gameLoginFragment"
+            app:destination="@id/gameLoginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameForgetPasswordFragment"
+        android:name="com.example.projetfinaljeu.GameForgetPasswordFragment"
+        android:label="GameForgetPasswordFragment"
+        tools:layout="@layout/fragment_game_forget_password">
+    </fragment>
+    <fragment
+        android:id="@+id/gameHomeFragment"
+        android:name="com.example.projetfinaljeu.GameHomeFragment"
+        android:label="GameHomeFragment"
+        tools:layout="@layout/fragment_game_home">
+        <argument
+            android:name="loginDataArgs"
+            app:argType="com.example.projetfinaljeu.Login" />
+        <action
+            android:id="@+id/action_gameHomeFragment_to_gameDetailFragment"
+            app:destination="@id/gameDetailFragment" />
+        <action
+            android:id="@+id/action_gameHomeFragment_to_gameWishFragment"
+            app:destination="@id/gameWishFragment" />
+        <action
+            android:id="@+id/action_gameHomeFragment_to_gameLikeFragment"
+            app:destination="@id/gameLikeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameDetailFragment"
+        android:name="com.example.projetfinaljeu.GameDetailFragment"
+        android:label="GameDetailFragment"
+        tools:layout="@layout/fragment_game_detail">
+        <argument
+            android:name="gameDataArgs"
+            app:argType="com.example.projetfinaljeu.Game" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameWishFragment"
+        android:name="com.example.projetfinaljeu.GameWishFragment"
+        android:label="GameWishFragment"
+        tools:layout="@layout/fragment_game_wish">
+        <argument
+            android:name="gameDataArgs"
+            app:argType="com.example.projetfinaljeu.Game[]" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameLikeFragment"
+        android:name="com.example.projetfinaljeu.GameLikeFragment"
+        android:label="GameLikeFragment"
+        tools:layout="@layout/fragment_game_like">
+        <argument
+            android:name="gameDataArgs"
+            app:argType="com.example.projetfinaljeu.Game[]" />
+    </fragment>
+</navigation>
