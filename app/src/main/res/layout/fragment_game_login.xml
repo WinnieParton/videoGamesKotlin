@@ -3,56 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
     tools:context=".GameLoginFragment">
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="239dp"
-        android:layout_height="69dp"
-        android:layout_marginEnd="60dp"
-        android:Position="center"
-        android:text="@string/welcome"
-        android:textColor="@color/white"
-        android:textSize="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="31dp" />
-
-    <EditText
-        android:id="@+id/editTextTextEmailAddress"
-        android:layout_width="350dp"
-        android:layout_height="69dp"
-        android:accessibilityLiveRegion="polite"
-        android:ems="15"
-        android:hint="EmailAddress"
-        android:textColor="@color/white"
-        android:textSize="25dp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="31dp"
-        tools:layout_editor_absoluteY="169dp" />
-
-    <EditText
-        android:id="@+id/editTextTextPassword"
-        android:layout_width="350dp"
-        android:layout_height="77dp"
-        android:ems="15"
-        android:hint="Password"
-        android:textColor="@color/white"
-        android:textSize="25dp"
-        tools:layout_editor_absoluteX="31dp"
-        tools:layout_editor_absoluteY="283dp"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/button_connexion"
-        android:layout_width="238dp"
-        android:layout_height="84dp"
-        android:text="Connexion!"
-        android:textSize="30dp"
-        tools:layout_editor_absoluteX="95dp"
-        tools:layout_editor_absoluteY="426dp"
-        tools:ignore="MissingConstraints" />
 
 
 
