@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">videoGamesKotlin</string>
+    <string name="app_name">Projet Final Jeu</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="welcome">Welcome</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dont_like_content">You haven\'t liked any content yet.</string>
+    <string name="check_heart">Click on the heart to add more.</string>
+    <string name="check_start">Click on the star to add more.</string>
 </resources>
