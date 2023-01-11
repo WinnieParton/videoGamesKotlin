@@ -13,7 +13,22 @@ object ApiClient {
         .build()
         .create(ApiInterface::class.java)
 
-   /* suspend fun getGames(): ServerResponse {
+    private val apiwish = Retrofit.Builder()
+        .baseUrl("https://store.steampowered.com/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .build()
+        .create(ApiInterface::class.java)
+
+   suspend fun getGames(): ServerResponse {
         return api.getGames().await()
-    }*/
+   }
+
+    suspend fun getDetailGames(apiId: Int): ServerResponse {
+        return apiwish.getDetailGames(apiId).await()
+    }
+
+    suspend fun getWishGames(apiId: Int): ServerResponse {
+        return apiwish.getWishGames(apiId).await()
+    }
 }
