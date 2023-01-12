@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Projet Final Jeu</string>
+    <string name="app_name">videoGamesKotlin</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="welcome">Welcome !</string>
     <string name="partie" translatable="false"> Please log in or create a New account to use the app </string>

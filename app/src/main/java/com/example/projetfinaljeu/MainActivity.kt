@@ -6,8 +6,7 @@ import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
-import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.android.synthetic.main.fragment_game_home.*
+import kotlinx.android.synthetic.main.loader.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -22,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         //pour rendre le loader visible
         //progressBar.visibility=View.VISIBLE
         //pour rendre invisible
-        progressBar.visibility=View.GONE
+       // progressBar.visibility=View.GONE
     }
 
     override fun onSupportNavigateUp(): Boolean {
