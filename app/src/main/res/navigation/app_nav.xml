@@ -40,9 +40,6 @@
         android:name="com.example.projetfinaljeu.GameHomeFragment"
         android:label="GameHomeFragment"
         tools:layout="@layout/fragment_game_home">
-        <argument
-            android:name="loginDataArgs"
-            app:argType="com.example.projetfinaljeu.Login" />
         <action
             android:id="@+id/action_gameHomeFragment_to_gameDetailFragment"
             app:destination="@id/gameDetailFragment" />

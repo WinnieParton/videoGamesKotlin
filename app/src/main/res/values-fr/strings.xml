@@ -7,5 +7,8 @@
     <string name="dont_like_content">Vous n\'avez encore pas liké de contenu.</string>
     <string name="check_heart">Cliquez sur le cœur pour en rajouter.</string>
     <string name="check_start">Cliquez sur l\'étoile pour en rajouter.</string>
-
+    <string name="item_name_game">Nom du jeu</string>
+    <string name="item_name_editor">Nom de l\'éditeur</string>
+    <string name="item_price">Prix : </string>
+    <string name="item_info">En savoir plus</string>
 </resources>

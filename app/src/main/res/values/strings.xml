@@ -8,4 +8,8 @@
     <string name="dont_like_content">You haven\'t liked any content yet.</string>
     <string name="check_heart">Click on the heart to add more.</string>
     <string name="check_start">Click on the star to add more.</string>
+    <string name="item_name_game">Name of the game</string>
+    <string name="item_name_editor">Name of the publisher </string>
+    <string name="item_price">Price : </string>
+    <string name="item_info">Read more</string>
 </resources>
