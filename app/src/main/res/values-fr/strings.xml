@@ -4,4 +4,8 @@
     <string name="welcome">Bienvenu</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dont_like_content">Vous n\'avez encore pas liké de contenu.</string>
+    <string name="check_heart">Cliquez sur le cœur pour en rajouter.</string>
+    <string name="check_start">Cliquez sur l\'étoile pour en rajouter.</string>
+
 </resources>
