@@ -16,4 +16,13 @@
     <string name="my_like">Mes likes</string>
     <string name="my_wish">Ma liste de souhaits</string>
     <string name="research">Recherche</string>
+
+    <string name="register_title">Inscription</string>
+    <string name="register_hero_text">Veuillez saisir ces différentes informations, afin que vos lites soient sauvegardées.</string>
+    <string name="username">Nom d\'utilisateur</string>
+    <string name="email">E-mail</string>
+    <string name="password">Mot de passe</string>
+    <string name="forgot_password">Vérification du mot de passe</string>
+    <string name="register_submit_btn">S\'inscrire</string>
+
 </resources>

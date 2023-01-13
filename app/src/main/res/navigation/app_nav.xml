@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_gameLoginFragment_to_gameRegisterFragment"
             app:destination="@id/gameRegisterFragment" />
+        <action
+            android:id="@+id/action_gameLoginFragment_to_gameRegisterFragment2"
+            app:destination="@id/gameRegisterFragment" />
     </fragment>
     <fragment
         android:id="@+id/gameRegisterFragment"

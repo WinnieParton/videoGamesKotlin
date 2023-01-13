@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
+
 fun TextView.applyUnderlineTextStart(text: String){
     val spannable = SpannableString(text)
     spannable.setSpan(UnderlineSpan(),  0,text.indexOf(' ') , 0)

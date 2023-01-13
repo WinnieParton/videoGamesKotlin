@@ -37,5 +37,11 @@ class GameLoginFragment : Fragment() {
                 GameLoginFragmentDirections.actionGameLoginFragmentToGameHomeFragment()
             )
         }
+
+        button_creer_un_compte.setOnClickListener { view ->
+           findNavController().navigate(
+               GameLoginFragmentDirections.actionGameLoginFragmentToGameRegisterFragment()
+           )
+        }
     }
 }
