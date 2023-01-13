@@ -17,5 +17,5 @@
     <string name="my_like">My likes</string>
     <string name="my_wish">My wish list</string>
     <string name="research">Search</string>
-
+    <string name="logout">Logout</string>
 </resources>

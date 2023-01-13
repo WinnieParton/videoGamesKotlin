@@ -1,14 +1,7 @@
 package com.example.projetfinaljeu
 
-import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.os.Bundle
-import android.renderscript.Allocation
-import android.renderscript.ScriptIntrinsicBlur
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toolbar
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -20,51 +13,95 @@ import kotlinx.android.synthetic.main.fragment_game_home.*
 class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
    // private val login: GameHomeFragmentArgs by navArgs()
 
-   lateinit var rv:RecyclerView;
+   lateinit var rv:RecyclerView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_game_home, container, false)
-       /* val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        toolbar.setNavigationIcon(R.drawable.close)*/
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getGame();
-       /* GlobalScope.launch(Dispatchers.Default) {
+        getGame()
+        /* GlobalScope.launch(Dispatchers.Default) {
 
-            val response = ApiClient.getGames()
+             val response = ApiClient.getGames()
 
-            withContext(Dispatchers.Main) {
-                getGame(response);
-            }
-        }*/
+             withContext(Dispatchers.Main) {
+                 getGame(response);
+             }
+         }*/
     }
 
     override fun onResume() {
         super.onResume()
-        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+        (activity as AppCompatActivity?)!!.let {
+            it.supportActionBar?.show()
+
+        }
     }
+
     private fun getGame() {
-//response: ServerResponse
+        //response: ServerResponse
         val games: List<Game> = listOf(Game(1),
             Game(6),
             Game(8),Game(6),
             Game(8),Game(6),
             Game(8))
-  rv = list_game_recyclerview
+        rv = list_game_recyclerview
         //scroller ver le haut
-        rv.layoutManager = LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true)
+        rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
         //scroller vers le bas
-        rv.layoutManager = LinearLayoutManager(getContext())
+        rv.layoutManager = LinearLayoutManager(context)
         rv.adapter = GamesAdapter(games, listener, getString(R.string.item_price))
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+
+        inflater.inflate(R.menu.menu_toolbar, menu)
+        menu.removeItem(R.id.close);
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.like -> {
+                findNavController().navigate(
+                    GameHomeFragmentDirections.actionGameHomeFragmentToGameLikeFragment(arrayOf(
+                        Game(123),
+                        Game(855), Game(955), Game(855),
+                        Game(955),Game(855), Game(955)))
+                )
+                return true
+            }
+            R.id.wish -> {
+                findNavController().navigate(
+                    GameHomeFragmentDirections.actionGameHomeFragmentToGameWishFragment(arrayOf(Game(123), Game(855), Game(955)))
+                )
+                return true
+            }
+            R.id.logout -> {
+                findNavController().navigate(
+                    GameHomeFragmentDirections.actionGameHomeFragmentToGameLoginFragment()
+                )
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private val listener = GamesAdapter.OnClickListener { game ->
         // Add action to navigate
         findNavController().navigate(

@@ -16,4 +16,5 @@
     <string name="my_like">Mes likes</string>
     <string name="my_wish">Ma liste de souhaits</string>
     <string name="research">Recherche</string>
+    <string name="logout">Déconnexion</string>
 </resources>

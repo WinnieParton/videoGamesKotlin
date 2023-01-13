@@ -8,9 +8,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_game_home.*
 
 class GameLikeFragment : Fragment() {
-
+     private val listGame: GameLikeFragmentArgs by navArgs()
+    lateinit var rv: RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -21,10 +27,21 @@ class GameLikeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        toolbar.setNavigationIcon(R.drawable.close)
+        val games: List<Game> = listGame.gameDataArgs.toList()
+        rv = list_game_recyclerview
+        //scroller ver le haut
+        rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+        //scroller vers le bas
+        rv.layoutManager = LinearLayoutManager(context)
+        rv.adapter = GamesAdapter(games, listener, getString(R.string.item_price))
 
     }
 
+    private val listener = GamesAdapter.OnClickListener { game ->
+        // Add action to navigate
+        findNavController().navigate(
+            GameLikeFragmentDirections.actionGameLikeFragmentToGameDetailFragment(game)
+        )
+
+    }
 }
