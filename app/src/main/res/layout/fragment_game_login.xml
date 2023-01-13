@@ -3,57 +3,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
-    tools:context=".GameLoginFragment">
+    tools:context=".GameLoginFragment"
+    >
+    <LinearLayout
+        android:id="@+id/ll_main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="25dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:textColor="@color/white"
+            android:padding="40dp"
+            android:text="@string/welcome"/>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="239dp"
-        android:layout_height="69dp"
-        android:layout_marginEnd="60dp"
-        android:Position="center"
-        android:text="@string/welcome"
-        android:textColor="@color/white"
-        android:textSize="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="31dp" />
+        <EditText
+            android:id="@+id/editTextTextEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:hint="E-mail"
+            android:textAlignment="center" />
+        <EditText
+            android:id="@+id/editTextTextPassword"
+            android:hint="Password"
+            android:textAlignment="center"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-    <EditText
-        android:id="@+id/editTextTextEmailAddress"
-        android:layout_width="350dp"
-        android:layout_height="69dp"
-        android:accessibilityLiveRegion="polite"
-        android:ems="15"
-        android:hint="EmailAddress"
-        android:textColor="@color/white"
-        android:textSize="25dp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="31dp"
-        tools:layout_editor_absoluteY="169dp" />
+        <Button
+            android:id="@+id/button_connexion"
+            android:layout_width="238dp"
+            android:layout_height="84dp"
+            android:text="Se connecter"
+            android:backgroundTint="@color/secondary"
+            android:textSize="20dp"
+            android:layout_marginBottom="35dp"
+            tools:layout_editor_absoluteX="95dp"
+            tools:layout_editor_absoluteY="426dp" />
 
-    <EditText
-        android:id="@+id/editTextTextPassword"
-        android:layout_width="350dp"
-        android:layout_height="77dp"
-        android:ems="15"
-        android:hint="Password"
-        android:textColor="@color/white"
-        android:textSize="25dp"
-        tools:layout_editor_absoluteX="31dp"
-        tools:layout_editor_absoluteY="283dp"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/button_connexion"
-        android:layout_width="238dp"
-        android:layout_height="84dp"
-        android:text="Connexion!"
-        android:textSize="30dp"
-        tools:layout_editor_absoluteX="95dp"
-        tools:layout_editor_absoluteY="426dp"
-        tools:ignore="MissingConstraints" />
+        <Button
+            android:id="@+id/button_creer_un_compte"
+            android:layout_width="238dp"
+            android:layout_height="90dp"
+            android:text="Créer un nouveau compte"
+            android:backgroundTint="@color/secondary"
+            android:textSize="25dp"
+            android:layout_marginBottom="40dp"
+            tools:layout_editor_absoluteX="105dp"
+            tools:layout_editor_absoluteY="426dp"
+            tools:ignore="MissingConstraints" />
 
 
+        <Button
+            android:id="@+id/button_mot_de_passe_oublier"
+            android:layout_width="238dp"
+            android:layout_height="90dp"
+            android:backgroundTint="@color/secondary"
+            android:text="Mot de passe oublié"
+            android:textSize="25dp"
+            tools:ignore="MissingConstraints" />
+
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
