@@ -38,7 +38,7 @@
     <fragment
         android:id="@+id/gameHomeFragment"
         android:name="com.example.projetfinaljeu.GameHomeFragment"
-        android:label="GameHomeFragment"
+        android:label="@string/home"
         tools:layout="@layout/fragment_game_home">
         <action
             android:id="@+id/action_gameHomeFragment_to_gameDetailFragment"
@@ -53,7 +53,7 @@
     <fragment
         android:id="@+id/gameDetailFragment"
         android:name="com.example.projetfinaljeu.GameDetailFragment"
-        android:label="GameDetailFragment"
+        android:label="@string/detail_jeu"
         tools:layout="@layout/fragment_game_detail">
         <argument
             android:name="gameDataArgs"
@@ -62,7 +62,7 @@
     <fragment
         android:id="@+id/gameWishFragment"
         android:name="com.example.projetfinaljeu.GameWishFragment"
-        android:label="GameWishFragment"
+        android:label="@string/my_wish"
         tools:layout="@layout/fragment_game_wish">
         <argument
             android:name="gameDataArgs"
@@ -71,7 +71,7 @@
     <fragment
         android:id="@+id/gameLikeFragment"
         android:name="com.example.projetfinaljeu.GameLikeFragment"
-        android:label="GameLikeFragment"
+        android:label="@string/my_like"
         tools:layout="@layout/fragment_game_like">
         <argument
             android:name="gameDataArgs"

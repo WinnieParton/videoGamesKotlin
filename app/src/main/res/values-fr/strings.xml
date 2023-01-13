@@ -9,6 +9,11 @@
     <string name="check_start">Cliquez sur l\'étoile pour en rajouter.</string>
     <string name="item_name_game">Nom du jeu</string>
     <string name="item_name_editor">Nom de l\'éditeur</string>
-    <string name="item_price">Prix : </string>
+    <string name="item_price">Prix : 10,00 €</string>
     <string name="item_info">En savoir plus</string>
+    <string name="home">Accueil</string>
+    <string name="detail_jeu">Détail du jeu</string>
+    <string name="my_like">Mes likes</string>
+    <string name="my_wish">Ma liste de souhaits</string>
+    <string name="research">Recherche</string>
 </resources>

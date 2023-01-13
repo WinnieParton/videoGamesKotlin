@@ -3,34 +3,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".GameHomeFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/item_product"
+        android:id="@+id/item_product_el"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_margin="5dp"
         android:layout_marginVertical="15dp"
-        android:elevation="8dp"
+        android:elevation="9dp"
         android:orientation="vertical"
         app:cardCornerRadius="8dp"
         >
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/relative_image_bg"
-            >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/img3"
+                android:scaleType="centerCrop"
+                android:alpha="0.1"/>
 
             <ImageView
                 android:id="@+id/id_image_jeu_item"
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
                 android:layout_marginVertical="10dp"
+                android:layout_marginStart="10dp"
                 android:src="@drawable/img3"
-                android:background="@android:color/transparent"/>
+               />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/id_constraint_block"
@@ -45,31 +49,33 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="15sp"
+                    android:background="@android:color/transparent"
                     android:text="@string/item_name_game"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:background="@android:color/transparent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/name_editeur"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10sp"
+                    android:background="@android:color/transparent"
                     android:text="@string/item_name_editor"
+                    android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/title_game"
-                    android:background="@android:color/transparent"/>
+                    app:layout_constraintTop_toBottomOf="@+id/title_game" />
 
                 <TextView
                     android:id="@+id/id_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
                     android:text="@string/item_price"
+                    android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/name_editeur"
-                    android:background="@android:color/transparent"/>
+                    app:layout_constraintTop_toBottomOf="@+id/name_editeur" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

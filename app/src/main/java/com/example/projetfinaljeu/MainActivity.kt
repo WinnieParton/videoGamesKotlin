@@ -1,9 +1,10 @@
 package com.example.projetfinaljeu
 
-import android.graphics.RenderEffect
-import android.graphics.Shader
 import android.os.Build
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -33,4 +34,10 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
+}
+
+fun TextView.applyUnderlineTextStart(text: String){
+    val spannable = SpannableString(text)
+    spannable.setSpan(UnderlineSpan(),  0,text.indexOf(' ') , 0)
+    setText(spannable)
 }
