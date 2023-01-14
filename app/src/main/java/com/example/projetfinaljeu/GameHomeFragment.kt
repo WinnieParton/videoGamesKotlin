@@ -25,6 +25,7 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_game_home, container, false)
+
         return view
     }
 
@@ -69,7 +70,7 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 
         inflater.inflate(R.menu.menu_toolbar, menu)
-        menu.removeItem(R.id.close);
+        menu.removeItem(R.id.close)
 
         super.onCreateOptionsMenu(menu, inflater)
     }

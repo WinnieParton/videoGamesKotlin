@@ -18,4 +18,5 @@
     <string name="my_wish">My wish list</string>
     <string name="research">Search</string>
     <string name="logout">Logout</string>
+    <string name="place_holder_search">Search for a game...</string>
 </resources>
