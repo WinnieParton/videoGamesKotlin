@@ -18,4 +18,7 @@
     <string name="research">Recherche</string>
     <string name="logout">Déconnexion</string>
     <string name="place_holder_search">Rechercher un jeu...</string>
+    <string name="description_game">Une description d\'un jeu mis en avant (peu être fait en dur)</string>
+    <string name="bestsell">Meilleures ventes</string>
+
 </resources>

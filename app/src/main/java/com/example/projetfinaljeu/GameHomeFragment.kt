@@ -1,7 +1,9 @@
 package com.example.projetfinaljeu
 
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.*
+import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController

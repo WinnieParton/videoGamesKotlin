@@ -19,4 +19,8 @@
     <string name="research">Search</string>
     <string name="logout">Logout</string>
     <string name="place_holder_search">Search for a game...</string>
+    <string name="title_best" translatable="false">Titan Fall 2</string>
+    <string name="sub_title" translatable="false">Ultimate Edition</string>
+    <string name="description_game">A description of a highlighted game (can be done in hard copy)</string>
+    <string name="bestsell">Best sellers</string>
 </resources>

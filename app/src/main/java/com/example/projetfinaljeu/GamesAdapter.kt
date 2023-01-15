@@ -2,6 +2,7 @@ package com.example.projetfinaljeu
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
 class GamesAdapter(
@@ -21,7 +22,7 @@ class GamesAdapter(
 
     override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
         holder.updateView(games[position], textId!!)
-        holder.itemView.setOnClickListener {
+        holder.itemView.findViewById<ConstraintLayout>(R.id.item_click_button).setOnClickListener {
             onClickListener.onClick(games[position])
         }
     }
