@@ -1,21 +1,31 @@
 package com.example.projetfinaljeu
 
+import android.graphics.Paint
+import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.*
-import android.widget.AutoCompleteTextView
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_game_home.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
    // private val login: GameHomeFragmentArgs by navArgs()
 
-   lateinit var rv:RecyclerView
+    private lateinit var rv:RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,21 +38,52 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_game_home, container, false)
 
+        val actionbar = (activity as AppCompatActivity).supportActionBar
+        actionbar?.setDisplayHomeAsUpEnabled(false)
+
+        val textView: TextView = view.findViewById(R.id.title_underline)
+        textView.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+
+        val constraintLayout: ConstraintLayout = view.findViewById(R.id.btn_read_more)
+        val drawable = GradientDrawable()
+        drawable.cornerRadius = 15f // set the corner radius
+        drawable.setColor(ContextCompat.getColor(requireContext(),R.color.secondary))
+        constraintLayout.background = drawable
+
+        val relativeLayout: RelativeLayout = view.findViewById(R.id.homeSearchBar)
+        val drawable1 = GradientDrawable()
+        drawable1.cornerRadius = 15f // set the corner radius
+        val color = ContextCompat.getColor(requireContext(),R.color.third)
+        drawable1.setColor(color) // set the color using a resource
+        relativeLayout.background = drawable1
+
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getGame()
-        /* GlobalScope.launch(Dispatchers.Default) {
+        val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar_home)
+        val color = ContextCompat.getColor(requireContext(), R.color.white)
+        val drawable = progressBar.indeterminateDrawable.mutate()
+        drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        progressBar.indeterminateDrawable = drawable
+
+        progressBar.visibility=View.VISIBLE
+
+        home_frag.visibility=View.GONE
+
+         GlobalScope.launch(Dispatchers.Default) {
 
              val response = ApiClient.getGames()
 
              withContext(Dispatchers.Main) {
                  getGame(response);
+                 progressBar.visibility=View.GONE
+                 home_frag.visibility=View.VISIBLE
              }
-         }*/
+         }
     }
 
     override fun onResume() {
@@ -53,13 +94,8 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
         }
     }
 
-    private fun getGame() {
-        //response: ServerResponse
-        val games: List<Game> = listOf(Game(1),
-            Game(6),
-            Game(8),Game(6),
-            Game(8),Game(6),
-            Game(8))
+    private fun getGame(response: ServerResponse) {
+        val games: List<Game> = response.toGames()!!
         rv = list_game_recyclerview
         //scroller ver le haut
         rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)

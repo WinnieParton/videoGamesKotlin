@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GameDetailFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <include layout="@layout/loader" />
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/home_frag">
+
+    </ScrollView>
 
 </FrameLayout>

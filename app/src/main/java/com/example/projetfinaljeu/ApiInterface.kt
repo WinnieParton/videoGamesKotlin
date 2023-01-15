@@ -1,5 +1,6 @@
 package com.example.projetfinaljeu
 
+import com.google.gson.JsonObject
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -13,7 +14,7 @@ interface ApiInterface {
 
     //recuperer les details d'un jeu
     @GET("api/appdetails")
-    fun getDetailGames(@Query("appids") appids: Int?): Deferred<ServerResponse>
+    fun getDetailGames(@Query("appids") appids: Int?): Deferred<JsonObject>
 
     //recuperer les avis d'un jeu
     @GET("appreviews/{apiId}?json=1")
