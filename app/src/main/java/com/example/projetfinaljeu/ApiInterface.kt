@@ -18,5 +18,5 @@ interface ApiInterface {
 
     //recuperer les avis d'un jeu
     @GET("appreviews/{apiId}?json=1")
-    fun getWishGames(@Path("apiId") apiId: Int?): Deferred<ServerResponse>
+    fun getWishGames(@Path("apiId") apiId: Int?): Deferred<ServerDetailWishGameResponse>
 }

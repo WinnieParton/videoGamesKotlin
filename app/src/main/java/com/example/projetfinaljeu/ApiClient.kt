@@ -29,7 +29,7 @@ object ApiClient {
         return apiwish.getDetailGames(apiId).await()
     }
 
-    suspend fun getWishGames(apiId: Int): ServerResponse {
+    suspend fun getWishGames(apiId: Int): ServerDetailWishGameResponse {
         return apiwish.getWishGames(apiId).await()
     }
 }

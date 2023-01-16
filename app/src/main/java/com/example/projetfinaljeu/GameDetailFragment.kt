@@ -12,18 +12,26 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_game_detail.*
+import kotlinx.android.synthetic.main.fragment_game_detail.description_game
+import kotlinx.android.synthetic.main.fragment_game_home.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.net.HttpURLConnection
+import java.net.URL
 
 class GameDetailFragment : Fragment() {
     var isItemFavorite:Boolean=true
     var isItemWisk:Boolean=true
     private val game: GameDetailFragmentArgs by navArgs()
-   private lateinit var gameInfo: GameInfos
+    private lateinit var rv: RecyclerView
+
+    private lateinit var gameInfo: GameInfos
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -76,10 +84,14 @@ class GameDetailFragment : Fragment() {
 
         GlobalScope.launch(Dispatchers.Default) {
             val response = ApiClient.getDetailGames(game.gameDataArgs.appid)
+            val responseWish = ApiClient.getWishGames(game.gameDataArgs.appid)
+
                 withContext(Dispatchers.Main) {
+                    getGameWishDetail(responseWish)
                     home_detail_frag.visibility=View.VISIBLE
                     var namegame = response.getAsJsonObject(game.gameDataArgs.appid.toString())
                     var data = namegame.getAsJsonObject("data")
+
                      gameInfo= GameInfos(game.gameDataArgs.appid,
                         data.get("header_image").asString.trimMargin(),
                         data.get("background").asString.trimMargin(),
@@ -93,9 +105,34 @@ class GameDetailFragment : Fragment() {
                     val img1 = view.findViewById<ImageView>(R.id.backgr)
                     val img2 = view.findViewById<ImageView>(R.id.id_image_jeu_item)
 
-                    Glide.with(requireContext()).load(gameInfo.header_image).into(img)
-                    Glide.with(requireContext()).load(gameInfo.background).into(img1)
-                    Glide.with(requireContext()).load(gameInfo.background_raw).into(img2)
+                    val url = URL(gameInfo.header_image)
+                    val url1 = URL(gameInfo.background_raw)
+                    val url2 = URL(gameInfo.background)
+
+                    try {
+                        val connection = url.openConnection() as HttpURLConnection
+                        connection.connect()
+                        if (connection.responseCode == HttpURLConnection.HTTP_OK) {
+                            // URL is valid, load image with Glide
+                            Glide.with(requireContext()).load(gameInfo.header_image).into(img)
+                        }
+
+                        val connection1 = url1.openConnection() as HttpURLConnection
+                        connection1.connect()
+                        if (connection1.responseCode == HttpURLConnection.HTTP_OK) {
+                            // URL is valid, load image with Glide
+                            Glide.with(requireContext()).load(gameInfo.background_raw).into(img2)
+                        }
+
+                        val connection2 = url2.openConnection() as HttpURLConnection
+                        connection2.connect()
+                        if (connection2.responseCode == HttpURLConnection.HTTP_OK) {
+                            // URL is valid, load image with Glide
+                            Glide.with(requireContext()).load(gameInfo.background).into(img1)
+                        }
+                    } catch (e: Exception) {
+                        // URL is invalid, show default image or handle the error
+                    }
                     view.findViewById<TextView>(R.id.title_detail).text = gameInfo.name
                     view.findViewById<TextView>(R.id.descrip).text = gameInfo.publishers
                     view.findViewById<TextView>(R.id.description_game).text = Html.fromHtml(gameInfo.detailed_description)
@@ -103,6 +140,17 @@ class GameDetailFragment : Fragment() {
                 progressBar.visibility=View.GONE
             }
         }
+    }
+
+    private fun getGameWishDetail(response: ServerDetailWishGameResponse) {
+        val wish: List<WishDetailGame> = response.toWishDetailGame()!!
+        rv = list_wish_recyclerview
+        //scroller ver le haut
+        rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+        //scroller vers le bas
+        rv.layoutManager = LinearLayoutManager(context)
+        rv.adapter = WishDetailGameAdapter(wish)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
