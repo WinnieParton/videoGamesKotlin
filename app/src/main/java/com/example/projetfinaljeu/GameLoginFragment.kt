@@ -80,5 +80,17 @@ class GameLoginFragment : Fragment() {
 
 
         }
+
+        button_creer_un_compte.setOnClickListener {
+            findNavController().navigate(
+                GameLoginFragmentDirections.actionGameLoginFragmentToGameRegisterFragment()
+            )
+        }
+
+        button_mot_de_passe_oublier.setOnClickListener {
+            findNavController().navigate(
+                GameLoginFragmentDirections.actionGameLoginFragmentToGameForgetPasswordFragment()
+            )
+        }
     }
 }

@@ -3,7 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="welcome">Welcome !</string>
     <string name="partie" > Please log in or create a New account to use the app </string>
-    <string name="partie1" ><u>Password forget</u></string>
+    <string name="partie1" >Forgot your password</string>
     <string name="register_game"> Registration </string>
     <string name="enregistrer" >Please enter this information so that your lists are saved</string>
     <string name="creer_compte">Create a new account</string>
@@ -15,6 +15,7 @@
     <string name="utilisateur" >Username</string>
     <string name="mdp" >Please enter your email to reset your password</string>
     <string name="renvoyer_code" >Resend my password</string>
+    <string name="message_send" >An email has been sent to your email address, please login to complete the password reset process</string>
     <string name="invalid_email" >Invalid email address</string>
     <string name="invalid_password" >Password must be at least 8 characters</string>
     <!-- TODO: Remove or change this placeholder text -->
