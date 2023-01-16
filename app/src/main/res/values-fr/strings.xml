@@ -1,7 +1,22 @@
 <resources>
     <string name="app_name">videoGamesKotlin</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="welcome">Bienvenu</string>
+    <string name="welcome">Bienvenue !</string>
+    <string name="partie" >Veuillez vous connecter ou créer un nouveau compte pour utiliser l\'application</string>
+    <string name="partie1" ><u>Mot de passe oublié</u></string>
+    <string name="register_game" >Inscription</string>
+    <string name="enregistrer" >Veuillez saisir ces différentes informations afin que vos listes soient sauvegardées</string>
+    <string name="creer_compte">Créer un nouveau compte</string>
+    <string name="inscrire" > S\'inscrire </string>
+    <string name="connecter" >Se connecter</string>
+    <string name="verification_mot_de_passe" >Vérification du mot de passe</string>
+    <string name="password" >Mot de passe</string>
+    <string name="email" >E-mail</string>
+    <string name="utilisateur" >Nom d\'utilisateur</string>
+    <string name="mdp" >Veuillez saisir votre email afin de réinitialiser votre mot de passe</string>
+    <string name="renvoyer_code" >Renvoyer mon mot de passe</string>
+    <string name="invalid_email" >Adresse électronique non valide</string>
+    <string name="invalid_password" >Le mot de passe doit comporter au moins 8 caractères</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dont_like_content">Vous n\'avez encore pas liké de contenu.</string>

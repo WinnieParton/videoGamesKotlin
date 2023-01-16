@@ -18,10 +18,10 @@ data class ServerResponse (
         )
     }
     fun toGames(): List<Game>? =response?.let{ resp ->
-        var prod = mutableListOf<Game>()
+        val prod = mutableListOf<Game>()
 
         resp.ranks?.forEach {
-            prod.add(Game(it?.appid!!))
+            prod.add(Game(it.appid!!))
         }
 
         return prod;

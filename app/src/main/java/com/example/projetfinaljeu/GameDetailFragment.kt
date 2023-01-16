@@ -89,8 +89,8 @@ class GameDetailFragment : Fragment() {
                 withContext(Dispatchers.Main) {
                     getGameWishDetail(responseWish)
                     home_detail_frag.visibility=View.VISIBLE
-                    var namegame = response.getAsJsonObject(game.gameDataArgs.appid.toString())
-                    var data = namegame.getAsJsonObject("data")
+                    val namegame = response.getAsJsonObject(game.gameDataArgs.appid.toString())
+                    val data = namegame.getAsJsonObject("data")
 
                      gameInfo= GameInfos(game.gameDataArgs.appid,
                         data.get("header_image").asString.trimMargin(),

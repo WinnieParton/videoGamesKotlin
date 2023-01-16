@@ -12,7 +12,7 @@ class WishDetailGameViewHolder(v: View)  : RecyclerView.ViewHolder(v){
     private val author = v.findViewById<TextView>(R.id.name_user)
     private val descrip_wish = v.findViewById<TextView>(R.id.descrip_wish)
     private val id_start = v.findViewById<RatingBar>(R.id.id_start)
-    val colorStateList = ColorStateList.valueOf(Color.YELLOW)
+    private val colorStateList = ColorStateList.valueOf(Color.YELLOW)
 
     @SuppressLint("SetTextI18n", "ResourceAsColor")
     fun updateView(wish: WishDetailGame) {

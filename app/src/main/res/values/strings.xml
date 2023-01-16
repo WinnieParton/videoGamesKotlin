@@ -2,7 +2,21 @@
     <string name="app_name">videoGamesKotlin</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="welcome">Welcome !</string>
-    <string name="partie" translatable="false"> Please log in or create a New account to use the app </string>
+    <string name="partie" > Please log in or create a New account to use the app </string>
+    <string name="partie1" ><u>Password forget</u></string>
+    <string name="register_game"> Registration </string>
+    <string name="enregistrer" >Please enter this information so that your lists are saved</string>
+    <string name="creer_compte">Create a new account</string>
+    <string name="inscrire" > Register </string>
+    <string name="connecter" >Login</string>
+    <string name="verification_mot_de_passe" >Password verification</string>
+    <string name="password" >Password</string>
+    <string name="email" >E-mail</string>
+    <string name="utilisateur" >Username</string>
+    <string name="mdp" >Please enter your email to reset your password</string>
+    <string name="renvoyer_code" >Resend my password</string>
+    <string name="invalid_email" >Invalid email address</string>
+    <string name="invalid_password" >Password must be at least 8 characters</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dont_like_content">You haven\'t liked any content yet.</string>

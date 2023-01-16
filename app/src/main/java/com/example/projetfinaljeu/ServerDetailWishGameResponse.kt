@@ -25,8 +25,8 @@ data class ServerDetailWishGameResponse (
     fun toWishDetailGame(): List<WishDetailGame>? =reviews?.let{ resp ->
         var prod = mutableListOf<WishDetailGame>()
 
-        resp?.forEach {
-            prod.add(WishDetailGame(it?.author!!.steamid!!, it?.author!!.num_games_owned!!, it.votes_up!!, it.review!!))
+        resp.forEach {
+            prod.add(WishDetailGame(it.author!!.steamid!!, it.author.num_games_owned!!, it.votes_up!!, it.review!!))
         }
 
         return prod;

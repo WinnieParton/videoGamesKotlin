@@ -55,7 +55,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="15sp"
                     android:background="@android:color/transparent"
-                    android:outlineSpotShadowColor="@color/white"
                     android:text="@string/item_name_game"
                     android:stepSize="1"
                     android:numStars="5"
