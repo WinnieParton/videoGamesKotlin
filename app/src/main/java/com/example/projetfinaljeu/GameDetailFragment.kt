@@ -37,6 +37,7 @@ class GameDetailFragment : Fragment() {
             view.findViewById<TextView>(R.id.textnotic)
                 .setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.primary))
             description_game.visibility=View.VISIBLE
+            list_wish_recyclerview.visibility=View.GONE
         }
 
 
@@ -49,6 +50,8 @@ class GameDetailFragment : Fragment() {
             view.findViewById<TextView>(R.id.textdescri).setBackgroundColor(ContextCompat.getColor(
                 requireContext(),R.color.primary))
             description_game.visibility=View.GONE
+            list_wish_recyclerview.visibility=View.VISIBLE
+
 
         }
         return  view;

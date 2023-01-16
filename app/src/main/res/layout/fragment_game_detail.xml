@@ -152,7 +152,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_rel" />
 
-
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list_wish_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/description_game"
+                android:visibility="gone"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
