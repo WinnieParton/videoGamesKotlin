@@ -23,4 +23,6 @@
     <string name="sub_title" translatable="false">Ultimate Edition</string>
     <string name="description_game">A description of a highlighted game (can be done in hard copy)</string>
     <string name="bestsell">Best sellers</string>
+    <string name="title_description">DESCRIPTION</string>
+    <string name="title_avis">NOTICE</string>
 </resources>
