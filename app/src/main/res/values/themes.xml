@@ -9,8 +9,8 @@
         <item name="android:colorPrimary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/primary</item>
-        android:textColorHint
         <item name="android:textColorHint">@color/white</item>
         <item name="android:background">@color/primary</item>
     </style>
+
 </resources>

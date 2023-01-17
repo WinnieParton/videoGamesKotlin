@@ -3,72 +3,135 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".GameLoginFragment"
+    android:padding="30dp"
     >
-    <LinearLayout
-        android:id="@+id/ll_main_layout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:padding="25dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
         <TextView
+            android:id="@+id/id_welcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
+            android:layout_marginBottom="15dp"
+            android:text="@string/welcome"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            app:layout_constraintBottom_toTopOf="@+id/descr_wel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/descr_wel"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginBottom="35dp"
+            android:text="@string/partie"
             android:textColor="@color/white"
-            android:padding="40dp"
-            android:text="@string/welcome"/>
+            app:layout_constraintBottom_toTopOf="@+id/editTextTextEmailAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/id_welcome" />
 
         <EditText
             android:id="@+id/editTextTextEmailAddress"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            android:hint="E-mail"
-            android:textAlignment="center" />
+            android:layout_height="50dp"
+            android:background="@color/third"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descr_wel"
+            />
+
+
         <EditText
             android:id="@+id/editTextTextPassword"
-            android:hint="Password"
-            android:textAlignment="center"
-            android:inputType="textPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="50dp"
+            android:background="@color/third"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress"
+            />
 
-        <Button
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:id="@+id/button_connexion"
-            android:layout_width="238dp"
-            android:layout_height="84dp"
-            android:text="Se connecter"
+            app:layout_constraintBottom_toTopOf="@+id/button_creer_un_compte"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:backgroundTint="@color/secondary"
-            android:textSize="20dp"
-            android:layout_marginBottom="35dp"
-            tools:layout_editor_absoluteX="95dp"
-            tools:layout_editor_absoluteY="426dp" />
-
-        <Button
+            android:layout_marginTop="75dp"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/connecter"
+                android:backgroundTint="@color/secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/button_creer_un_compte"
-            android:layout_width="238dp"
-            android:layout_height="90dp"
-            android:text="Créer un nouveau compte"
+            app:layout_constraintTop_toBottomOf="@+id/button_connexion"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:backgroundTint="@color/secondary"
-            android:textSize="25dp"
-            android:layout_marginBottom="40dp"
-            tools:layout_editor_absoluteX="105dp"
-            tools:layout_editor_absoluteY="426dp"
-            tools:ignore="MissingConstraints" />
+            android:padding="1dp"
+            android:layout_marginTop="15dp"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text="@string/creer_compte"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <Button
+
+        <TextView
             android:id="@+id/button_mot_de_passe_oublier"
-            android:layout_width="238dp"
-            android:layout_height="90dp"
-            android:backgroundTint="@color/secondary"
-            android:text="Mot de passe oublié"
-            android:textSize="25dp"
-            tools:ignore="MissingConstraints" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:text="@string/partie1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

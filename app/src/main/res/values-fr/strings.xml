@@ -1,7 +1,24 @@
 <resources>
     <string name="app_name">videoGamesKotlin</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="welcome">Bienvenu</string>
+    <string name="welcome">Bienvenue !</string>
+    <string name="partie" >Veuillez vous connecter ou créer un nouveau compte pour utiliser l\'application</string>
+    <string name="partie1" ><u>Mot de passe oublié</u></string>
+    <string name="register_game" >Inscription</string>
+    <string name="enregistrer" >Veuillez saisir ces différentes informations afin que vos listes soient sauvegardées</string>
+    <string name="creer_compte">Créer un nouveau compte</string>
+    <string name="inscrire" > S\'inscrire </string>
+    <string name="connecter" >Se connecter</string>
+    <string name="verification_mot_de_passe" >Vérification du mot de passe</string>
+    <string name="password" >Mot de passe</string>
+    <string name="email" >E-mail</string>
+    <string name="search">Research</string>
+    <string name="utilisateur" >Nom d\'utilisateur</string>
+    <string name="mdp" >Veuillez saisir votre email afin de réinitialiser votre mot de passe</string>
+    <string name="renvoyer_code" >Renvoyer mon mot de passe</string>
+    <string name="invalid_email" >Adresse électronique non valide</string>
+    <string name="invalid_password" >Le mot de passe doit comporter au moins 8 caractères</string>
+    <string name="message_send" >Un mail a été envoyé à votre adresse-email, veuillez vous connecter afin de terminer le processus de réinitialisation de mot de passe</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dont_like_content">Vous n\'avez encore pas liké de contenu.</string>
@@ -16,13 +33,10 @@
     <string name="my_like">Mes likes</string>
     <string name="my_wish">Ma liste de souhaits</string>
     <string name="research">Recherche</string>
-
-    <string name="register_title">Inscription</string>
-    <string name="register_hero_text">Veuillez saisir ces différentes informations, afin que vos lites soient sauvegardées.</string>
-    <string name="username">Nom d\'utilisateur</string>
-    <string name="email">E-mail</string>
-    <string name="password">Mot de passe</string>
-    <string name="forgot_password">Vérification du mot de passe</string>
-    <string name="register_submit_btn">S\'inscrire</string>
-
+    <string name="logout">Déconnexion</string>
+    <string name="place_holder_search">Rechercher un jeu...</string>
+    <string name="description_game">Une description d\'un jeu mis en avant (peu être fait en dur)</string>
+    <string name="bestsell">Meilleures ventes</string>
+    <string name="title_description">DESCRIPTION</string>
+    <string name="title_avis">AVIS</string>
 </resources>

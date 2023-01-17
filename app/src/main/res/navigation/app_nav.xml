@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_gameHomeFragment_to_gameLikeFragment"
             app:destination="@id/gameLikeFragment" />
+        <action
+            android:id="@+id/action_gameHomeFragment_to_gameLoginFragment"
+            app:destination="@id/gameLoginFragment" />
     </fragment>
     <fragment
         android:id="@+id/gameDetailFragment"
@@ -70,12 +73,27 @@
         <argument
             android:name="gameDataArgs"
             app:argType="com.example.projetfinaljeu.Game[]" />
+        <action
+            android:id="@+id/action_gameWishFragment_to_gameDetailFragment"
+            app:destination="@id/gameDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/gameLikeFragment"
         android:name="com.example.projetfinaljeu.GameLikeFragment"
         android:label="@string/my_like"
         tools:layout="@layout/fragment_game_like">
+        <argument
+            android:name="gameDataArgs"
+            app:argType="com.example.projetfinaljeu.Game[]" />
+        <action
+            android:id="@+id/action_gameLikeFragment_to_gameDetailFragment"
+            app:destination="@id/gameDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameResearchFragment"
+        android:name="com.example.projetfinaljeu.GameResearchFragment"
+        android:label="@string/search"
+        tools:layout="@layout/fragment_game_research">
         <argument
             android:name="gameDataArgs"
             app:argType="com.example.projetfinaljeu.Game[]" />
