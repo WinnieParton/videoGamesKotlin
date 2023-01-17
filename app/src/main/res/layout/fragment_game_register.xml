@@ -3,99 +3,120 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".GameRegisterFragment">
+    tools:context=".GameRegisterFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="30dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        tools:context=".GameRegisterFragment">
-
-
-
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <TextView
-            android:layout_width="250dp"
-            android:layout_height="155dp"
-            android:layout_margin="80dp"
-            android:padding="60dp"
+            android:id="@+id/id_welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
             android:text="@string/register_game"
-            android:textSize="22sp"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="80dp"
-            tools:layout_editor_absoluteY="-29dp" />
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            app:layout_constraintBottom_toTopOf="@+id/descr_wel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:layout_width="384dp"
-            android:layout_height="134dp"
-            android:gravity="center"
-            android:padding="42dp"
+            android:id="@+id/descr_wel"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
             android:text="@string/enregistrer"
+            android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="22sp"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="11dp"
-            tools:layout_editor_absoluteY="117dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/id_welcome"
+            android:layout_marginTop="25dp"/>
 
 
         <EditText
             android:id="@+id/editTextUsername"
-            android:layout_width="332dp"
-            android:layout_height="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:background="@color/third"
             android:hint="@string/utilisateur"
             android:textAlignment="center"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="39dp"
-            tools:layout_editor_absoluteY="275dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descr_wel"
+            app:layout_constraintBottom_toTopOf="@+id/editTextTextEmailAddress"
+            android:layout_marginTop="50dp"/>
 
 
         <EditText
             android:id="@+id/editTextTextEmailAddress"
-            android:layout_width="332dp"
-            android:layout_height="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:background="@color/third"
             android:hint="@string/email"
             android:textAlignment="center"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="39dp"
-            tools:layout_editor_absoluteY="355dp" />
-
+            app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextUsername"
+            android:layout_marginTop="12dp"
+            android:inputType="text"/>
 
         <EditText
             android:id="@+id/editTextTextPassword"
-            android:layout_width="332dp"
-            android:layout_height="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:background="@color/third"
             android:hint="@string/password"
             android:inputType="textPassword"
             android:textAlignment="center"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="39dp"
-            tools:layout_editor_absoluteY="435dp" />
+            app:layout_constraintBottom_toTopOf="@+id/editTextVerificationPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress"
+            android:layout_marginTop="12dp"
+            />
 
         <EditText
             android:id="@+id/editTextVerificationPassword"
-            android:layout_width="332dp"
-            android:layout_height="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:background="@color/third"
             android:hint="@string/verification_mot_de_passe"
             android:inputType="textPassword"
             android:textAlignment="center"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="39dp"
-            tools:layout_editor_absoluteY="515dp" />
+            app:layout_constraintBottom_toTopOf="@+id/button_connexion"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
+            android:layout_marginTop="12dp"/>
 
-        <Button
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:id="@+id/button_connexion"
-            android:layout_width="332dp"
-            android:layout_height="70dp"
+            app:layout_constraintTop_toBottomOf="@+id/editTextVerificationPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:backgroundTint="@color/secondary"
-            android:text="@string/inscrire"
-            android:textSize="18sp"
-            tools:ignore="MissingConstraints"
-            android:textAllCaps="false"
-            tools:layout_editor_absoluteX="39dp"
-            tools:layout_editor_absoluteY="618dp" />
+            android:layout_marginTop="75dp"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/inscrire"
+                android:backgroundTint="@color/secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
