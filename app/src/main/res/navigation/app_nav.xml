@@ -86,4 +86,13 @@
             android:id="@+id/action_gameLikeFragment_to_gameDetailFragment"
             app:destination="@id/gameDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/gameResearchFragment"
+        android:name="com.example.projetfinaljeu.GameResearchFragment"
+        android:label="@string/search"
+        tools:layout="@layout/fragment_game_research">
+        <argument
+            android:name="gameDataArgs"
+            app:argType="com.example.projetfinaljeu.Game[]" />
+    </fragment>
 </navigation>

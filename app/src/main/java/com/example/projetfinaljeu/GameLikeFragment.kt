@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class GameLikeFragment : Fragment() {
-     private val listGame: GameLikeFragmentArgs by navArgs()
+    private val listGame: GameLikeFragmentArgs by navArgs()
     lateinit var rv: RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

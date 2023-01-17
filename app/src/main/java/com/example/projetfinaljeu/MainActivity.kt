@@ -42,7 +42,9 @@ fun TextView.applyUnderlineTextStart(text: String){
     setText(spannable)
 }
 fun TextView.applyUnderlineText(text: String){
-    val spannable = SpannableString(text)
-    spannable.setSpan(UnderlineSpan(),  0,text.length , 0)
-    setText(spannable)
+    if(text!=null) {
+        val spannable = SpannableString(text)
+        spannable.setSpan(UnderlineSpan(), 0, text.length, 0)
+        setText(spannable)
+    }
 }

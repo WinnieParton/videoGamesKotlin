@@ -12,6 +12,7 @@
     <string name="verification_mot_de_passe" >Vérification du mot de passe</string>
     <string name="password" >Mot de passe</string>
     <string name="email" >E-mail</string>
+    <string name="search">Research</string>
     <string name="utilisateur" >Nom d\'utilisateur</string>
     <string name="mdp" >Veuillez saisir votre email afin de réinitialiser votre mot de passe</string>
     <string name="renvoyer_code" >Renvoyer mon mot de passe</string>
