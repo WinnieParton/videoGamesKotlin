@@ -17,6 +17,7 @@
     <string name="renvoyer_code" >Resend my password</string>
     <string name="message_send" >An email has been sent to your email address, please login to complete the password reset process</string>
     <string name="invalid_email" >Invalid email address</string>
+    <string name="nb_result" >Number of results : </string>
     <string name="invalid_password" >Password must be at least 8 characters</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -30,7 +31,6 @@
     <string name="home">Home</string>
     <string name="detail_jeu">Detail of the game</string>
     <string name="my_like">My likes</string>
-    <string name="search">Recherche</string>
     <string name="my_wish">My wish list</string>
     <string name="research">Search</string>
     <string name="logout">Logout</string>

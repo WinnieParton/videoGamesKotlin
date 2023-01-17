@@ -51,7 +51,7 @@ class GameLikeFragment : Fragment() {
 
                     rv = list_game_recyclerview
                     //scroller ver le haut
-                    rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+                    //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
                     //scroller vers le bas
                     rv.layoutManager = LinearLayoutManager(context)
                     rv.adapter = GamesAdapter(games, listener, getString(R.string.item_price))

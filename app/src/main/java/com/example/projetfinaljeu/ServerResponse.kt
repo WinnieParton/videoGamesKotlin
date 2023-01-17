@@ -24,6 +24,6 @@ data class ServerResponse (
             prod.add(Game(it.appid!!))
         }
 
-        return prod;
+        return prod
     }
 }

@@ -24,11 +24,7 @@
         android:id="@+id/gameRegisterFragment"
         android:name="com.example.projetfinaljeu.GameRegisterFragment"
         android:label="GameRegisterFragment"
-        tools:layout="@layout/fragment_game_register">
-        <action
-            android:id="@+id/action_gameRegisterFragment_to_gameLoginFragment"
-            app:destination="@id/gameLoginFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_game_register"/>
     <fragment
         android:id="@+id/gameForgetPasswordFragment"
         android:name="com.example.projetfinaljeu.GameForgetPasswordFragment"
@@ -40,6 +36,9 @@
         android:name="com.example.projetfinaljeu.GameHomeFragment"
         android:label="@string/home"
         tools:layout="@layout/fragment_game_home">
+        <action
+            android:id="@+id/action_gameHomeFragment_to_gameResearchFragment"
+            app:destination="@id/gameResearchFragment" />
         <action
             android:id="@+id/action_gameHomeFragment_to_gameDetailFragment"
             app:destination="@id/gameDetailFragment" />
@@ -61,6 +60,18 @@
         <argument
             android:name="gameDataArgs"
             app:argType="com.example.projetfinaljeu.Game" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameResearchFragment"
+        android:name="com.example.projetfinaljeu.GameResearchFragment"
+        android:label="@string/research"
+        tools:layout="@layout/fragment_game_research">
+        <argument
+            android:name="gameDataArgs"
+            app:argType="com.example.projetfinaljeu.Game[]" />
+        <action
+            android:id="@+id/action_gameResearchFragment_to_gameDetailFragment"
+            app:destination="@id/gameDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/gameWishFragment"
@@ -85,14 +96,5 @@
         <action
             android:id="@+id/action_gameLikeFragment_to_gameDetailFragment"
             app:destination="@id/gameDetailFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/gameResearchFragment"
-        android:name="com.example.projetfinaljeu.GameResearchFragment"
-        android:label="@string/search"
-        tools:layout="@layout/fragment_game_research">
-        <argument
-            android:name="gameDataArgs"
-            app:argType="com.example.projetfinaljeu.Game[]" />
     </fragment>
 </navigation>

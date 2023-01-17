@@ -29,6 +29,6 @@ data class ServerDetailWishGameResponse (
             prod.add(WishDetailGame(it.author!!.steamid!!, it.author.num_games_owned!!, it.votes_up!!, it.review!!))
         }
 
-        return prod;
+        return prod
     }
 }

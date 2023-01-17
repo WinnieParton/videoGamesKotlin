@@ -30,11 +30,12 @@
                         app:layout_constraintTop_toTopOf="parent"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="20dp"
+                        android:background="@color/third"
 
                         >
 
-                        <AutoCompleteTextView
-                            android:id="@+id/autoCompleteTextView"
+                        <TextView
+                            android:id="@+id/text_search_click"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"

@@ -12,7 +12,6 @@
     <string name="verification_mot_de_passe" >Vérification du mot de passe</string>
     <string name="password" >Mot de passe</string>
     <string name="email" >E-mail</string>
-    <string name="search">Research</string>
     <string name="utilisateur" >Nom d\'utilisateur</string>
     <string name="mdp" >Veuillez saisir votre email afin de réinitialiser votre mot de passe</string>
     <string name="renvoyer_code" >Renvoyer mon mot de passe</string>
@@ -21,6 +20,7 @@
     <string name="message_send" >Un mail a été envoyé à votre adresse-email, veuillez vous connecter afin de terminer le processus de réinitialisation de mot de passe</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nb_result" >Nombre de résultats : </string>
     <string name="dont_like_content">Vous n\'avez encore pas liké de contenu.</string>
     <string name="check_heart">Cliquez sur le cœur pour en rajouter.</string>
     <string name="check_start">Cliquez sur l\'étoile pour en rajouter.</string>

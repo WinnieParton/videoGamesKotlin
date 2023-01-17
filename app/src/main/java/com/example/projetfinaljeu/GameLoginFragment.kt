@@ -45,6 +45,8 @@ class GameLoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        button_mot_de_passe_oublier.applyUnderlineText(getString(R.string.partie1))
+
         val emailEditText = view.findViewById<EditText>(R.id.editTextTextEmailAddress)
         emailEditText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {

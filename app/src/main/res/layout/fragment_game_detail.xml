@@ -109,7 +109,7 @@
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="15dp"
                 android:background="@color/secondary"
-                android:padding="1dp"
+                android:padding="2dp"
                 android:id="@+id/text_rel"
 
                 >

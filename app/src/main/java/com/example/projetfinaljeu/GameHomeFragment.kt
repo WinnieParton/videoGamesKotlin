@@ -24,7 +24,7 @@ import kotlinx.coroutines.withContext
 
 class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
    // private val login: GameHomeFragmentArgs by navArgs()
-
+    private lateinit var games: List<Game>
     private lateinit var rv:RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,13 +57,18 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
         drawable1.setColor(color) // set the color using a resource
         relativeLayout.background = drawable1
 
-
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val clickinput = view.findViewById<RelativeLayout>(R.id.homeSearchBar)
+        clickinput.setOnClickListener {
+            // Add action to navigate
+            findNavController().navigate(
+                GameHomeFragmentDirections.actionGameHomeFragmentToGameResearchFragment(games.toTypedArray())
+            )
+        }
         val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar_home)
         val color = ContextCompat.getColor(requireContext(), R.color.white)
         val drawable = progressBar.indeterminateDrawable.mutate()
@@ -79,7 +84,7 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
              val response = ApiClient.getGames()
 
              withContext(Dispatchers.Main) {
-                 getGame(response);
+                 getGame(response)
                  progressBar.visibility=View.GONE
                  home_frag.visibility=View.VISIBLE
              }
@@ -95,10 +100,10 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
     }
 
     private fun getGame(response: ServerResponse) {
-        val games: List<Game> = response.toGames()!!
+        games= response.toGames()!!
         rv = list_game_recyclerview
         //scroller ver le haut
-        rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+        //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
         //scroller vers le bas
         rv.layoutManager = LinearLayoutManager(context)
         rv.adapter = GamesAdapter(games, listener, getString(R.string.item_price))

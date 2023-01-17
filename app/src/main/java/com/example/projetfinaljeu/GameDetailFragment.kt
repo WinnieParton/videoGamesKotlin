@@ -62,7 +62,7 @@ class GameDetailFragment : Fragment() {
 
 
         }
-        return  view;
+        return  view
     }
 
     @SuppressLint("SuspiciousIndentation")
@@ -146,7 +146,7 @@ class GameDetailFragment : Fragment() {
         val wish: List<WishDetailGame> = response.toWishDetailGame()!!
         rv = list_wish_recyclerview
         //scroller ver le haut
-        rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+        //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
         //scroller vers le bas
         rv.layoutManager = LinearLayoutManager(context)
         rv.adapter = WishDetailGameAdapter(wish)
