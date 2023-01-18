@@ -2,6 +2,8 @@ package com.example.projetfinaljeu
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
 class GamesAdapter(
@@ -20,13 +22,16 @@ class GamesAdapter(
     }
 
     override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
-        holder.updateView(games[position], textId!!)
-        holder.itemView.setOnClickListener {
+        val priceText=holder.itemView.findViewById<TextView>(R.id.id_price)
+        if (textId != null) {
+            priceText.applyUnderlineTextStart(textId)
+        }
+        holder.itemView.findViewById<ConstraintLayout>(R.id.item_click_button).setOnClickListener {
             onClickListener.onClick(games[position])
         }
     }
 
-    class OnClickListener(val clickListener: (product: Game) -> Unit) {
-        fun onClick(product: Game) = clickListener(product)
+    class OnClickListener(val clickListener: (game: Game) -> Unit) {
+        fun onClick(game: Game) = clickListener(game)
     }
 }

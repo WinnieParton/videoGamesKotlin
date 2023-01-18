@@ -3,12 +3,166 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameDetailFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    tools:context=".GameDetailFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <include layout="@layout/loader" />
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/home_detail_frag">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/header_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                >
+
+                <ImageView
+                    android:id="@+id/image_header"
+                    android:layout_width="0dp"
+                    android:layout_height="265dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img4"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="40dp"
+                    android:alpha="0.6"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/third"
+                    android:layout_marginHorizontal="15dp"
+                    >
+                    <ImageView
+                        android:id="@+id/backgr"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img1"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        tools:ignore="MissingConstraints" />
+
+                    <ImageView
+                        android:id="@+id/id_image_jeu_item"
+                        android:layout_width="75dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:src="@drawable/img3"
+                        android:background="@android:color/transparent"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:scaleType="centerCrop"
+                        />
+
+                    <TextView
+                        android:id="@+id/title_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_toEndOf="@id/id_image_jeu_item"
+                        android:background="@android:color/transparent"
+                       />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/id_image_jeu_item"
+                        android:background="@android:color/transparent"
+                        android:text="@string/description_game"
+                        android:layout_marginTop="50dp"
+                        android:textSize="10sp"
+                        android:id="@+id/descrip"
+                        />
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/header_home"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/secondary"
+                android:padding="1dp"
+                android:id="@+id/text_rel"
+
+                >
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/title_description"
+                    android:textStyle="bold"
+                    android:layout_alignParentStart="true"
+                    android:textAlignment="center"
+                    android:paddingVertical="10dp"
+                    android:background="@color/secondary"
+                    android:id="@+id/textdescri"
+                    />
+
+                <TextView
+                    android:id="@+id/textnotic"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/title_avis"
+                    android:textStyle="bold"
+                    android:layout_alignParentEnd="true"
+                    android:textAlignment="center"
+                    android:paddingVertical="10dp"
+                    />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/description_game"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="15dp"
+                android:text="@string/description_game"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_rel" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list_wish_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/description_game"
+                android:visibility="gone"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </FrameLayout>

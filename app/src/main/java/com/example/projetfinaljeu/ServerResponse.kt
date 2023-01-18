@@ -17,4 +17,13 @@ data class ServerResponse (
             val appid: Int?,
         )
     }
+    fun toGames(): List<Game>? =response?.let{ resp ->
+        val prod = mutableListOf<Game>()
+
+        resp.ranks?.forEach {
+            prod.add(Game(it.appid!!))
+        }
+
+        return prod;
+    }
 }

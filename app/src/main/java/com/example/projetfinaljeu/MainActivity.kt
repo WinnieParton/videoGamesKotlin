@@ -36,8 +36,16 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
+
 fun TextView.applyUnderlineTextStart(text: String){
     val spannable = SpannableString(text)
     spannable.setSpan(UnderlineSpan(),  0,text.indexOf(' ') , 0)
     setText(spannable)
+}
+fun TextView.applyUnderlineText(text: String){
+    if(text!=null) {
+        val spannable = SpannableString(text)
+        spannable.setSpan(UnderlineSpan(), 0, text.length, 0)
+        setText(spannable)
+    }
 }

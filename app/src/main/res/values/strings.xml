@@ -2,7 +2,28 @@
     <string name="app_name">videoGamesKotlin</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="welcome">Welcome !</string>
-    <string name="partie" translatable="false"> Please log in or create a New account to use the app </string>
+    <string name="partie" > Please log in or create a New account to use the app </string>
+    <string name="partie1" >Forgot your password</string>
+    <string name="register_game"> Registration </string>
+    <string name="enregistrer" >Please enter this information so that your lists are saved</string>
+    <string name="creer_compte">Create a new account</string>
+    <string name="inscrire" > Register </string>
+    <string name="connecter" >Login</string>
+    <string name="verification_mot_de_passe" >Password verification</string>
+    <string name="password" >Password</string>
+    <string name="email" >E-mail</string>
+    <string name="utilisateur" >Username</string>
+    <string name="mdp" >Please enter your email to reset your password</string>
+    <string name="renvoyer_code" >Resend my password</string>
+    <string name="message_send" >An email has been sent to your email address, please login to complete the password reset process</string>
+    <string name="invalid_email" >Invalid email address</string>
+    <string name="invalid_password" >Password must be at least 8 characters</string>
+    <string name="invalid_username" >Username cannot be empty</string>
+    <string name="error_create_account" >An error occurred while creating your account please try again.</string>
+    <string name="success_create_account" >Your account has been created</string>
+    <string name="error_login" >Incorrect email or password</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dont_like_content">You haven\'t liked any content yet.</string>
@@ -15,7 +36,15 @@
     <string name="home">Home</string>
     <string name="detail_jeu">Detail of the game</string>
     <string name="my_like">My likes</string>
+    <string name="search">Recherche</string>
     <string name="my_wish">My wish list</string>
     <string name="research">Search</string>
     <string name="logout">Logout</string>
+    <string name="place_holder_search">Search for a game...</string>
+    <string name="title_best" translatable="false">Titan Fall 2</string>
+    <string name="sub_title" translatable="false">Ultimate Edition</string>
+    <string name="description_game">A description of a highlighted game (can be done in hard copy)</string>
+    <string name="bestsell">Best sellers</string>
+    <string name="title_description">DESCRIPTION</string>
+    <string name="title_avis">NOTICE</string>
 </resources>
