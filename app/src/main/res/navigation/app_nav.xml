@@ -14,11 +14,11 @@
             android:id="@+id/action_gameLoginFragment_to_gameHomeFragment"
             app:destination="@id/gameHomeFragment" />
         <action
-            android:id="@+id/action_gameLoginFragment_to_gameForgetPasswordFragment"
-            app:destination="@id/gameForgetPasswordFragment" />
-        <action
             android:id="@+id/action_gameLoginFragment_to_gameRegisterFragment"
             app:destination="@id/gameRegisterFragment" />
+        <action
+            android:id="@+id/action_gameLoginFragment_to_gameForgetPasswordFragment"
+            app:destination="@id/gameForgetPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/gameRegisterFragment"
@@ -28,12 +28,18 @@
         <action
             android:id="@+id/action_gameRegisterFragment_to_gameHomeFragment"
             app:destination="@id/gameHomeFragment" />
+        <argument
+            android:name="userArgs"
+            app:argType="com.example.projetfinaljeu.User" />
     </fragment>
     <fragment
         android:id="@+id/gameForgetPasswordFragment"
         android:name="com.example.projetfinaljeu.GameForgetPasswordFragment"
         android:label="GameForgetPasswordFragment"
         tools:layout="@layout/fragment_game_forget_password">
+        <argument
+            android:name="userArgs"
+            app:argType="com.example.projetfinaljeu.User" />
     </fragment>
     <fragment
         android:id="@+id/gameHomeFragment"
@@ -54,6 +60,12 @@
             app:destination="@id/gameLikeFragment" />
         <action
             android:id="@+id/action_gameHomeFragment_to_gameLoginFragment"
+            app:destination="@id/gameLoginFragment" />
+        <argument
+            android:name="userArgs"
+            app:argType="com.example.projetfinaljeu.User" />
+        <action
+            android:id="@+id/action_gameHomeFragment_to_gameLoginFragment2"
             app:destination="@id/gameLoginFragment" />
     </fragment>
     <fragment

@@ -8,11 +8,13 @@ import android.view.*
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.ktx.auth
@@ -28,16 +30,27 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
    // private val login: GameHomeFragmentArgs by navArgs()
     private lateinit var games: List<Game>
     private lateinit var rv:RecyclerView
+    private val user: GameHomeFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Handle the back button event
+                findNavController().navigate(
+                    GameHomeFragmentDirections.actionGameHomeFragmentToGameLoginFragment()
+                )
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.fragment_game_home, container, false)
 
         val actionbar = (activity as AppCompatActivity).supportActionBar
@@ -66,6 +79,7 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
         super.onViewCreated(view, savedInstanceState)
         val clickinput = view.findViewById<RelativeLayout>(R.id.homeSearchBar)
         clickinput.setOnClickListener {
+            Firebase.auth.signOut()
             // Add action to navigate
             findNavController().navigate(
                 GameHomeFragmentDirections.actionGameHomeFragmentToGameResearchFragment(games.toTypedArray())

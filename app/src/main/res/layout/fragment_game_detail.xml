@@ -160,7 +160,21 @@
                 android:layout_marginBottom="12dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/description_game"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                />
+            <TextView
+                android:id="@+id/no_wish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/list_wish_recyclerview"
+                android:text="@string/now_wish"
+                android:visibility="gone"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

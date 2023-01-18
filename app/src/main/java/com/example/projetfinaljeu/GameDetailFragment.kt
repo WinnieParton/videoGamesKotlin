@@ -30,7 +30,6 @@ class GameDetailFragment : Fragment() {
     var isItemWisk:Boolean=true
     private val game: GameDetailFragmentArgs by navArgs()
     private lateinit var rv: RecyclerView
-
     private lateinit var gameInfo: GameInfos
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -143,14 +142,17 @@ class GameDetailFragment : Fragment() {
     }
 
     private fun getGameWishDetail(response: ServerDetailWishGameResponse) {
-        val wish: List<WishDetailGame> = response.toWishDetailGame()!!
-        rv = list_wish_recyclerview
-        //scroller ver le haut
-        //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
-        //scroller vers le bas
-        rv.layoutManager = LinearLayoutManager(context)
-        rv.adapter = WishDetailGameAdapter(wish)
-
+        val wish: List<WishDetailGame> = listOf() //response.toWishDetailGame()!!
+        if(wish.isNotEmpty()) {
+            rv = list_wish_recyclerview
+            //scroller ver le haut
+            //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+            //scroller vers le bas
+            rv.layoutManager = LinearLayoutManager(context)
+            rv.adapter = WishDetailGameAdapter(wish)
+        }else{
+            no_wish.visibility=View.VISIBLE
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

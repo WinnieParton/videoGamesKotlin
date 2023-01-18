@@ -9,6 +9,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -18,13 +19,18 @@ import kotlinx.android.synthetic.main.fragment_game_forget_password.*
 
 class GameForgetPasswordFragment : Fragment() {
     private lateinit var  auth: FirebaseAuth
+    private val user: GameForgetPasswordFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_game_forget_password, container, false)
+        val view= inflater.inflate(R.layout.fragment_game_forget_password, container, false)
+        val emailEditText = view.findViewById<EditText>(R.id.editTextUsername_mot_de_passe)
+        if(user.userArgs.email!=null)
+            emailEditText.setText(user.userArgs.email)
+        return  view;
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,6 +40,7 @@ class GameForgetPasswordFragment : Fragment() {
         editTextUsername_mot_de_passe.visibility=View.VISIBLE
 
         val emailEditText = view.findViewById<EditText>(R.id.editTextUsername_mot_de_passe)
+
         emailEditText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 emailEditText.error = null
