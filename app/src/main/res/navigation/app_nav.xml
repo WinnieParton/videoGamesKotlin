@@ -24,7 +24,11 @@
         android:id="@+id/gameRegisterFragment"
         android:name="com.example.projetfinaljeu.GameRegisterFragment"
         android:label="GameRegisterFragment"
-        tools:layout="@layout/fragment_game_register"/>
+        tools:layout="@layout/fragment_game_register">
+        <action
+            android:id="@+id/action_gameRegisterFragment_to_gameHomeFragment"
+            app:destination="@id/gameHomeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/gameForgetPasswordFragment"
         android:name="com.example.projetfinaljeu.GameForgetPasswordFragment"

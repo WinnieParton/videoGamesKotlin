@@ -18,5 +18,6 @@
         android:icon="@drawable/whishlist"
         tools:ignore="MenuTitle"
         app:showAsAction="ifRoom"/>
-    <item android:title="@string/logout" />
+    <item android:id="@+id/logout"
+        android:title="@string/logout" />
 </menu>

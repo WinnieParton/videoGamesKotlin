@@ -9,10 +9,15 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_game_forget_password.*
 
 
 class GameForgetPasswordFragment : Fragment() {
+    private lateinit var  auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,14 +50,24 @@ class GameForgetPasswordFragment : Fragment() {
                 emailEditText.error=getString(R.string.invalid_email)
                 emailEditText.background = drawable
             } else{
-                // email is valid
-                button_renvoyer_mot_de_passe.visibility=View.GONE
-                editTextUsername_mot_de_passe.visibility=View.GONE
-                text_success.visibility=View.VISIBLE
-                emailEditText.error=null
+
+
+                resetPassword(email)
 
             }
         }
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        auth = Firebase.auth
+    }
+    private fun resetPassword(email: String){
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener(OnCompleteListener<Void?> { task ->
+                if (task.isSuccessful) {
+                    println("Email sent.")
+                }
+            })
     }
 
     override fun onResume() {

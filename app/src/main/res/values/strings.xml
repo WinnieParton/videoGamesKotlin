@@ -19,6 +19,7 @@
     <string name="invalid_email" >Invalid email address</string>
     <string name="nb_result" >Number of results : </string>
     <string name="invalid_password" >Password must be at least 8 characters</string>
+    <string name="invalid_password_confir" >The password entered does not match!</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dont_like_content">You haven\'t liked any content yet.</string>

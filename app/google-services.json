@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "165913106052",
+    "project_id": "videogameskotlin-75bb7",
+    "storage_bucket": "videogameskotlin-75bb7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165913106052:android:b43e096ae03596acf0d4d1",
+        "android_client_info": {
+          "package_name": "com.example.projetfinaljeu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "165913106052-5npuoqsne7tk7jr2ijo68rs95a9rkm8f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCClQ-tAX_y6y-qqTV9YOV3JmIjpWH5-So"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "165913106052-5npuoqsne7tk7jr2ijo68rs95a9rkm8f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

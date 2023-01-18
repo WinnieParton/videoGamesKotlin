@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_game_home.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -137,6 +139,7 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
                 return true
             }
             R.id.logout -> {
+                Firebase.auth.signOut()
                 findNavController().navigate(
                     GameHomeFragmentDirections.actionGameHomeFragmentToGameLoginFragment()
                 )
