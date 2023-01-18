@@ -22,6 +22,7 @@
     <string name="invalid_username" >Le nom d\'utilisateur ne peut pas être vide</string>
     <string name="error_create_account" >Une erreur s\'est produit lors de la création de votre compte veuilez réessayer.</string>
     <string name="success_create_account" >Votre compte a bien été créé</string>
+    <string name="error_login" >Email ou mot de passe incorrect</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

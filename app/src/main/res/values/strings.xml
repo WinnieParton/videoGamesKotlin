@@ -21,6 +21,7 @@
     <string name="invalid_username" >Username cannot be empty</string>
     <string name="error_create_account" >An error occurred while creating your account please try again.</string>
     <string name="success_create_account" >Your account has been created</string>
+    <string name="error_login" >Incorrect email or password</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

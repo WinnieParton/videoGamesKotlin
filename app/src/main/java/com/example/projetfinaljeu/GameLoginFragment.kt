@@ -88,7 +88,7 @@ class GameLoginFragment : Fragment() {
                         )
 
                     }else{
-                        Toast.makeText(activity,getString(R.string.error_create_account), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity,getString(R.string.error_login), Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -110,10 +110,10 @@ class GameLoginFragment : Fragment() {
             )
         }
 
-        button_creer_un_compte.setOnClickListener { view ->
+     /*   button_creer_un_compte.setOnClickListener { view ->
            findNavController().navigate(
                GameLoginFragmentDirections.actionGameLoginFragmentToGameRegisterFragment()
            )
-        }
+        }*/
     }
 }

@@ -6,14 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_game_forget_password.*
 
 
 class GameForgetPasswordFragment : Fragment() {
 
+    private lateinit var auth: FirebaseAuth
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,6 +53,17 @@ class GameForgetPasswordFragment : Fragment() {
                 editTextUsername_mot_de_passe.visibility=View.GONE
                 text_success.visibility=View.VISIBLE
                 emailEditText.error=null
+
+                auth = FirebaseAuth.getInstance()
+
+                auth.sendPasswordResetEmail(email)
+                    .addOnSuccessListener {
+                        Toast.makeText(activity,getString(R.string.message_send), Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener{
+                        Toast.makeText(activity,getString(R.string.invalid_email), Toast.LENGTH_SHORT).show()
+                    }
+
 
             }
         }
