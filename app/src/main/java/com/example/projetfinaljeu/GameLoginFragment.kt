@@ -6,17 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_game_login.*
 
 
 class GameLoginFragment : Fragment() {
 
-
+    private lateinit var auth: FirebaseAuth
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,10 +77,22 @@ class GameLoginFragment : Fragment() {
                 passwordEditText.error=getString(R.string.invalid_password)
                 passwordEditText.background = drawable
             } else {
-                // email and password are valid
-                findNavController().navigate(
-                    GameLoginFragmentDirections.actionGameLoginFragmentToGameHomeFragment()
-                )
+                auth = Firebase.auth
+
+                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+                        task ->
+                    if(task.isSuccessful){
+
+                        findNavController().navigate(
+                            GameLoginFragmentDirections.actionGameLoginFragmentToGameHomeFragment()
+                        )
+
+                    }else{
+                        Toast.makeText(activity,getString(R.string.error_create_account), Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+
             }
 
 

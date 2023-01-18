@@ -88,7 +88,7 @@
             android:hint="@string/verification_mot_de_passe"
             android:inputType="textPassword"
             android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@+id/button_connexion"
+            app:layout_constraintBottom_toTopOf="@+id/button_register"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
@@ -97,7 +97,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:id="@+id/button_connexion"
+            android:id="@+id/button_register"
             app:layout_constraintTop_toBottomOf="@+id/editTextVerificationPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

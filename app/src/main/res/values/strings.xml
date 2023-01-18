@@ -18,6 +18,11 @@
     <string name="message_send" >An email has been sent to your email address, please login to complete the password reset process</string>
     <string name="invalid_email" >Invalid email address</string>
     <string name="invalid_password" >Password must be at least 8 characters</string>
+    <string name="invalid_username" >Username cannot be empty</string>
+    <string name="error_create_account" >An error occurred while creating your account please try again.</string>
+    <string name="success_create_account" >Your account has been created</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dont_like_content">You haven\'t liked any content yet.</string>

@@ -19,6 +19,11 @@
     <string name="invalid_email" >Adresse électronique non valide</string>
     <string name="invalid_password" >Le mot de passe doit comporter au moins 8 caractères</string>
     <string name="message_send" >Un mail a été envoyé à votre adresse-email, veuillez vous connecter afin de terminer le processus de réinitialisation de mot de passe</string>
+    <string name="invalid_username" >Le nom d\'utilisateur ne peut pas être vide</string>
+    <string name="error_create_account" >Une erreur s\'est produit lors de la création de votre compte veuilez réessayer.</string>
+    <string name="success_create_account" >Votre compte a bien été créé</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dont_like_content">Vous n\'avez encore pas liké de contenu.</string>
