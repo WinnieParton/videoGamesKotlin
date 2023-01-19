@@ -138,7 +138,6 @@ class GameLoginFragment : Fragment() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     val user = auth.currentUser
-                    println("*************** $user")
                     if (user != null) {
                         findNavController().navigate(
                             GameLoginFragmentDirections.actionGameLoginFragmentToGameHomeFragment(

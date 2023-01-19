@@ -15,6 +15,13 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_game_detail.*
 import kotlinx.android.synthetic.main.fragment_game_detail.description_game
 import kotlinx.android.synthetic.main.fragment_game_home.*
@@ -31,6 +38,9 @@ class GameDetailFragment : Fragment() {
     private val game: GameDetailFragmentArgs by navArgs()
     private lateinit var rv: RecyclerView
     private lateinit var gameInfo: GameInfos
+    private lateinit var auth: FirebaseAuth
+    private val database = FirebaseDatabase.getInstance().reference
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -166,6 +176,7 @@ class GameDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        auth = Firebase.auth
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -174,9 +185,11 @@ class GameDetailFragment : Fragment() {
                 if (isItemFavorite) {
                     item.setIcon(R.drawable.like_full)
                     isItemFavorite = false
+                    likeGame()
                 } else {
                     item.setIcon(R.drawable.like)
                     isItemFavorite = true
+                    unlikeGame()
                 }
                 return true
             }
@@ -195,4 +208,34 @@ class GameDetailFragment : Fragment() {
         }
     }
 
+    fun likeGame(){
+        // Create a "like" object to save in Firebase
+        val like = mapOf("userId" to auth.currentUser!!.uid)
+
+        // Save the "like" object to Firebase under the video's ID
+        database.child("gamelikes").child(game.gameDataArgs.appid.toString()).child("likes").push().setValue(like)
+    }
+
+    fun unlikeGame(){
+        // Get reference to the video's "likes" child in Firebase
+        val likesRef = database.child("gamelikes").child(game.gameDataArgs.appid.toString()).child("likes" )
+
+        // Get a listener for the "likes" child
+        likesRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (likeSnapshot in dataSnapshot.children) {
+                    val like = likeSnapshot.getValue(Like::class.java)
+                    if (like != null && like.userId == auth.currentUser!!.uid) {
+                        // Remove the like from Firebase
+                        likeSnapshot.ref.removeValue()
+                    }
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle error
+            }
+        })
+    }
+    data class Like(var userId: String = "")
 }

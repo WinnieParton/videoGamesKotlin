@@ -15,12 +15,14 @@ import androidx.navigation.fragment.navArgs
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_game_register.*
 
 class GameRegisterFragment : Fragment() {
     private lateinit var  auth: FirebaseAuth
     private val user: GameRegisterFragmentArgs by navArgs()
+    private val database = FirebaseDatabase.getInstance().reference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,9 +92,13 @@ class GameRegisterFragment : Fragment() {
             if (task.isSuccessful) {
                 // Sign in success, update UI with the signed-in user's information
                 val user = auth.currentUser
+
                 val profileUpdates = UserProfileChangeRequest.Builder()
                     .setDisplayName(username)
                     .build()
+
+                database.child("Users").child(username).setValue(user!!.uid)
+
                 user?.updateProfile(profileUpdates)?.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         findNavController().navigate(
