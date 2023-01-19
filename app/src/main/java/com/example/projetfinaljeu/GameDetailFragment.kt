@@ -197,9 +197,11 @@ class GameDetailFragment : Fragment() {
                 if (isItemWisk) {
                     item.setIcon(R.drawable.whishlist_full)
                     isItemWisk = false
+                    wishGame()
                 } else {
                     item.setIcon(R.drawable.whishlist)
                     isItemWisk = true
+                    wishGame()
                 }
 
                 return true
@@ -210,22 +212,22 @@ class GameDetailFragment : Fragment() {
 
     fun likeGame(){
         // Create a "like" object to save in Firebase
-        val like = mapOf("userId" to auth.currentUser!!.uid)
+        val like = mapOf("userId" to auth.currentUser!!.uid, "appId" to game.gameDataArgs.appid.toString())
 
         // Save the "like" object to Firebase under the video's ID
-        database.child("gamelikes").child(game.gameDataArgs.appid.toString()).child("likes").push().setValue(like)
+        database.child("gamelikes").child("likes").push().setValue(like)
     }
 
     fun unlikeGame(){
         // Get reference to the video's "likes" child in Firebase
-        val likesRef = database.child("gamelikes").child(game.gameDataArgs.appid.toString()).child("likes" )
+        val likesRef = database.child("gamelikes").child("likes" )
 
         // Get a listener for the "likes" child
         likesRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (likeSnapshot in dataSnapshot.children) {
                     val like = likeSnapshot.getValue(Like::class.java)
-                    if (like != null && like.userId == auth.currentUser!!.uid) {
+                    if (like != null && like.appId == game.gameDataArgs.appid.toString()) {
                         // Remove the like from Firebase
                         likeSnapshot.ref.removeValue()
                     }
@@ -237,5 +239,36 @@ class GameDetailFragment : Fragment() {
             }
         })
     }
-    data class Like(var userId: String = "")
+    data class Like(var appId: String = "", var userId: String = "")
+
+    fun wishGame(){
+        // Create a "like" object to save in Firebase
+        val like = mapOf("userId" to auth.currentUser!!.uid, "appId" to game.gameDataArgs.appid.toString())
+
+        // Save the "like" object to Firebase under the video's ID
+        database.child("gamewishs").child("likes").push().setValue(like)
+    }
+
+    fun unwishGame(){
+        // Get reference to the video's "likes" child in Firebase
+        val wishsRef = database.child("gamewishs").child("likes" )
+
+        // Get a listener for the "likes" child
+        wishsRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (wishSnapshot in dataSnapshot.children) {
+                    val wish = wishSnapshot.getValue(Wish::class.java)
+                    if (wish != null && wish.appId == game.gameDataArgs.appid.toString()) {
+                        // Remove the like from Firebase
+                        wishSnapshot.ref.removeValue()
+                    }
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle error
+            }
+        })
+    }
+    data class Wish(var appId: String = "")
 }
