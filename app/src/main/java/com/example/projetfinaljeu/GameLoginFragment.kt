@@ -144,7 +144,7 @@ class GameLoginFragment : Fragment() {
                                 User(
                                     user.email!!,
                                     user.displayName!!,
-                                    user.uid!!.toString(),
+                                    user.uid,
                                     ""
                                 )
                             )

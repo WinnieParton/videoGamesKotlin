@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">videoGamesKotlin</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="welcome">Welcome !</string>
     <string name="partie" > Please log in or create a New account to use the app </string>
     <string name="partie1" >Forgot your password</string>
@@ -20,8 +19,6 @@
     <string name="nb_result" >Number of results : </string>
     <string name="invalid_password" >Password must be at least 8 characters</string>
     <string name="invalid_password_confir" >The password entered does not match!</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="message_register">Fail to register</string>
     <string name="message_login">Email or password incorrect</string>
     <string name="dont_like_content">You haven\'t liked any content yet.</string>
@@ -38,7 +35,7 @@
     <string name="research">Search</string>
     <string name="logout">Logout</string>
     <string name="now_wish">No wish</string>
-    <string name="place_holder_search">Search for a game...</string>
+    <string name="place_holder_search">Search for a game…</string>
     <string name="title_best" translatable="false">Titan Fall 2</string>
     <string name="sub_title" translatable="false">Ultimate Edition</string>
     <string name="description_game">A description of a highlighted game (can be done in hard copy)</string>

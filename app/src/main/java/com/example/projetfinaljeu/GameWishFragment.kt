@@ -14,6 +14,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_game_wish.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -23,6 +30,8 @@ import kotlinx.coroutines.withContext
 class GameWishFragment : Fragment() {
     private val listGame: GameWishFragmentArgs by navArgs()
     lateinit var rv: RecyclerView
+    private lateinit var auth: FirebaseAuth
+    private val database = FirebaseDatabase.getInstance().reference
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,6 +39,12 @@ class GameWishFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_game_wish, container, false)
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        auth = Firebase.auth
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,20 +55,54 @@ class GameWishFragment : Fragment() {
 
 
         val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar_home)
-        val imgL = view.findViewById<ImageView>(R.id.imageStartView)
-        val textl = view.findViewById<TextView>(R.id.check_start_text_view)
-        val imgL1 = view.findViewById<ImageView>(R.id.imageHeartView)
-        val textl1 = view.findViewById<TextView>(R.id.check_heart_text_view)
-        val constraint = view.findViewById<ConstraintLayout>(R.id.constraint_id_wish)
+
         progressBar.visibility=View.VISIBLE
 
         list_game_wish_recyclerview.visibility=View.GONE
         GlobalScope.launch(Dispatchers.Default) {
 
-            val games: List<Game> = listOf() // listGame.gameDataArgs.toList()
-
             withContext(Dispatchers.Main) {
+                getWishedGame(view)
+
+            }
+        }
+    }
+    private fun getWishedGame(view: View) {
+        val wishdGames = mutableListOf<String>()
+
+        val imgL = view.findViewById<ImageView>(R.id.imageStartView)
+        val textl = view.findViewById<TextView>(R.id.check_start_text_view)
+        val imgL1 = view.findViewById<ImageView>(R.id.imageHeartView)
+        val textl1 = view.findViewById<TextView>(R.id.check_heart_text_view)
+        val constraint = view.findViewById<ConstraintLayout>(R.id.constraint_id_wish)
+        val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar_home)
+
+        // Get reference to the "wishs" child in Firebase
+        val wishsRef = database.child("game").child("wishs" )
+
+        // Get a listener for the "wishs" child
+        wishsRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                for (wishSnapshot in dataSnapshot.children) {
+                    val wish = wishSnapshot.getValue(Wish::class.java)
+
+                    if (wish != null && wish.userId == auth.currentUser!!.uid)
+                        wishdGames.add(wish.appId)
+
+                }
                 progressBar.visibility=View.GONE
+                val games: MutableList<Game> = mutableListOf()
+
+
+                wishdGames.forEach { el->
+                    listGame.gameDataArgs.forEach{
+                        if( it.appid.toString() == el) {
+                            games.add(it!!)
+                        }
+                    }
+                }
+
                 if(games.isNotEmpty()) {
                     constraint.visibility=View.GONE
                     list_game_wish_recyclerview.visibility=View.VISIBLE
@@ -70,15 +119,16 @@ class GameWishFragment : Fragment() {
                     textl.visibility=View.VISIBLE
                     imgL1.visibility=View.GONE
                     textl1.visibility=View.GONE
-
                 }
+
             }
 
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle error
+                println("hhhhhhhhhhhhhhhhhh ${databaseError.message}")
 
-        }
-
-
-
+            }
+        })
     }
 
     private val listener = GamesAdapter.OnClickListener { game ->

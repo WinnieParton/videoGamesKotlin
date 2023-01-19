@@ -41,7 +41,7 @@ class GameRegisterFragment : Fragment() {
         if(user.userArgs.email!=null)
             emailEditText.setText(user.userArgs.email)
 
-        return  view;
+        return  view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -99,7 +99,7 @@ class GameRegisterFragment : Fragment() {
 
                 database.child("Users").child(username).setValue(user!!.uid)
 
-                user?.updateProfile(profileUpdates)?.addOnCompleteListener { task ->
+                user.updateProfile(profileUpdates).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         findNavController().navigate(
                             GameRegisterFragmentDirections.actionGameRegisterFragmentToGameHomeFragment(User(email, username, user.uid,""))

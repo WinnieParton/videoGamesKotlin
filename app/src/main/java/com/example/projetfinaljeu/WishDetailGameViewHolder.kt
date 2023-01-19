@@ -10,15 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 
 class WishDetailGameViewHolder(v: View)  : RecyclerView.ViewHolder(v){
     private val author = v.findViewById<TextView>(R.id.name_user)
-    private val descrip_wish = v.findViewById<TextView>(R.id.descrip_wish)
-    private val id_start = v.findViewById<RatingBar>(R.id.id_start)
+    private val descripwish = v.findViewById<TextView>(R.id.descrip_wish)
+    private val idstart = v.findViewById<RatingBar>(R.id.id_start)
     private val colorStateList = ColorStateList.valueOf(Color.YELLOW)
 
     @SuppressLint("SetTextI18n", "ResourceAsColor")
     fun updateView(wish: WishDetailGame) {
         author.applyUnderlineText(wish.num_games_owned.toString())
-        descrip_wish.text=wish.review.trim()
-        id_start.rating= wish.votes_up.toFloat()
-        id_start.progressTintList = colorStateList
+        descripwish.text=wish.review.trim()
+        idstart.rating= wish.votes_up.toFloat()
+        idstart.progressTintList = colorStateList
     }
 }

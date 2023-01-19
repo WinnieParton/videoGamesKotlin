@@ -50,7 +50,7 @@ class GameLikeFragment : Fragment() {
         GlobalScope.launch(Dispatchers.Default) {
 
             withContext(Dispatchers.Main) {
-                getLikedVideos(view)
+                getLikedGame(view)
 
 
             }
@@ -61,7 +61,7 @@ class GameLikeFragment : Fragment() {
         auth = Firebase.auth
     }
 
-    private fun getLikedVideos(view: View) {
+    private fun getLikedGame(view: View) {
         val likedVideos = mutableListOf<String>()
 
         val imgL = view.findViewById<ImageView>(R.id.imageStartView)
@@ -77,23 +77,23 @@ class GameLikeFragment : Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 for (likeSnapshot in dataSnapshot.children) {
-                    val like = likeSnapshot.getValue(GameDetailFragment.Like::class.java)
+                    val like = likeSnapshot.getValue(Like::class.java)
 
                     if (like != null && like.userId == auth.currentUser!!.uid)
-                        likedVideos.add(like.appId!!)
+                        likedVideos.add(like.appId)
 
                 }
                 progressBar.visibility=View.GONE
                 val games: MutableList<Game> = mutableListOf()
 
 
-               val dat= likedVideos.forEach { el->
-                        listGame.gameDataArgs.forEach{
-                            if( it.appid.toString() == el) {
-                               games.add(it!!)
-                           }
-                        }
+                likedVideos.forEach { el->
+                    listGame.gameDataArgs.forEach{
+                        if( it.appid.toString() == el) {
+                           games.add(it!!)
+                       }
                     }
+                }
 
                 if(games.isNotEmpty()) {
                     constraint.visibility=View.GONE

@@ -25,16 +25,13 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_game_detail.*
 import kotlinx.android.synthetic.main.fragment_game_detail.description_game
 import kotlinx.android.synthetic.main.fragment_game_home.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.net.HttpURLConnection
 import java.net.URL
 
 class GameDetailFragment : Fragment() {
-    var isItemFavorite:Boolean=true
-    var isItemWisk:Boolean=true
+    private var isItemFavorite:Boolean=true
+    private var isItemWisk:Boolean=true
     private val game: GameDetailFragmentArgs by navArgs()
     private lateinit var rv: RecyclerView
     private lateinit var gameInfo: GameInfos
@@ -89,15 +86,12 @@ class GameDetailFragment : Fragment() {
         progressBar.visibility=View.VISIBLE
         home_detail_frag.visibility=View.GONE
 
-
-
         GlobalScope.launch(Dispatchers.Default) {
             val response = ApiClient.getDetailGames(game.gameDataArgs.appid)
             val responseWish = ApiClient.getWishGames(game.gameDataArgs.appid)
 
                 withContext(Dispatchers.Main) {
                     getGameWishDetail(responseWish)
-                    home_detail_frag.visibility=View.VISIBLE
                     val namegame = response.getAsJsonObject(game.gameDataArgs.appid.toString())
                     val data = namegame.getAsJsonObject("data")
 
@@ -106,59 +100,85 @@ class GameDetailFragment : Fragment() {
                         data.get("background").asString.trimMargin(),
                         data.get("background_raw").asString.trimMargin(),
                         data.get("name").asString.trimMargin(),
-                         data.getAsJsonArray("publishers")
-                             .joinToString { it.asString.trimMargin() },
+                        data.getAsJsonArray("publishers").joinToString { it.asString.trimMargin() },
                         data.get("detailed_description").asString.trimMargin()
                     )
-
-                    val img = view.findViewById<ImageView>(R.id.image_header)
-                    val img1 = view.findViewById<ImageView>(R.id.backgr)
-                    val img2 = view.findViewById<ImageView>(R.id.id_image_jeu_item)
-
-                    val url = URL(gameInfo.header_image)
-                    val url1 = URL(gameInfo.background_raw)
-                    val url2 = URL(gameInfo.background)
-
-                    try {
-                        val connection = url.openConnection() as HttpURLConnection
-                        connection.connect()
-                        if (connection.responseCode == HttpURLConnection.HTTP_OK) {
-                            // URL is valid, load image with Glide
-                            Glide.with(requireContext()).load(gameInfo.header_image).into(img)
-                        }
-
-                        val connection1 = url1.openConnection() as HttpURLConnection
-                        connection1.connect()
-                        if (connection1.responseCode == HttpURLConnection.HTTP_OK) {
-                            // URL is valid, load image with Glide
-                            Glide.with(requireContext()).load(gameInfo.background_raw).into(img2)
-                        }
-
-                        val connection2 = url2.openConnection() as HttpURLConnection
-                        connection2.connect()
-                        if (connection2.responseCode == HttpURLConnection.HTTP_OK) {
-                            // URL is valid, load image with Glide
-                            Glide.with(requireContext()).load(gameInfo.background).into(img1)
-                        }
-                    } catch (e: Exception) {
-                        // URL is invalid, show default image or handle the error
-                    }
+                    updateImg(gameInfo, view)
                     view.findViewById<TextView>(R.id.title_detail).text = gameInfo.name
                     view.findViewById<TextView>(R.id.descrip).text = gameInfo.publishers
                     view.findViewById<TextView>(R.id.description_game).text = Html.fromHtml(gameInfo.detailed_description)
+                    progressBar.visibility = View.GONE
+                    home_detail_frag.visibility = View.VISIBLE
+                }
 
-                progressBar.visibility=View.GONE
+        }
+    }
+
+    private fun updateImg(gameInfo: GameInfos, view: View) {
+        val img = view.findViewById<ImageView>(R.id.image_header)
+        val img1 = view.findViewById<ImageView>(R.id.backgr)
+        val img2 = view.findViewById<ImageView>(R.id.id_image_jeu_item)
+
+        GlobalScope.launch {
+
+            val url = URL(gameInfo.header_image.split("?")[0])
+            val connection = withContext(Dispatchers.IO) {
+                url.openConnection()
+            } as HttpURLConnection
+
+            withContext(Dispatchers.IO) {
+                connection.connect()
+            }
+
+            val data = connection.responseCode
+
+            val url1 = URL(gameInfo.background.split("?")[0])
+            val connection1 = withContext(Dispatchers.IO) {
+                url1.openConnection()
+            } as HttpURLConnection
+            withContext(Dispatchers.IO) {
+                connection1.connect()
+            }
+
+            val data1 = connection1.responseCode
+
+            val url2 = URL(gameInfo.header_image.split("?")[0])
+            val connection2 = withContext(Dispatchers.IO) {
+                url2.openConnection()
+            } as HttpURLConnection
+            withContext(Dispatchers.IO) {
+                connection2.connect()
+            }
+
+            val data2 = connection2.responseCode
+
+            withContext(Dispatchers.Main) {
+                if (data == HttpURLConnection.HTTP_OK) {
+                    Glide.with(requireContext())
+                        .load(gameInfo.header_image.split("?")[0])
+                        .into(img)
+                }
+
+                if (data1 == HttpURLConnection.HTTP_OK) {
+                    Glide.with(requireContext())
+                        .load(gameInfo.background.split("?")[0])
+                        .into(img1)
+                }
+
+                if (data2 == HttpURLConnection.HTTP_OK) {
+                    Glide.with(requireContext())
+                        .load(gameInfo.background_raw.split("?")[0])
+                        .into(img2)
+                }
+
             }
         }
     }
 
     private fun getGameWishDetail(response: ServerDetailWishGameResponse) {
-        val wish: List<WishDetailGame> = listOf() //response.toWishDetailGame()!!
+        val wish: List<WishDetailGame> = response.toWishDetailGame()!!
         if(wish.isNotEmpty()) {
             rv = list_wish_recyclerview
-            //scroller ver le haut
-            //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
-            //scroller vers le bas
             rv.layoutManager = LinearLayoutManager(context)
             rv.adapter = WishDetailGameAdapter(wish)
         }else{
@@ -202,7 +222,7 @@ class GameDetailFragment : Fragment() {
                 } else {
                     item.setIcon(R.drawable.whishlist)
                     isItemWisk = true
-                    wishGame()
+                    unwishGame()
                 }
 
                 return true
@@ -211,7 +231,7 @@ class GameDetailFragment : Fragment() {
         }
     }
 
-    fun likeGame(){
+    private fun likeGame(){
         // Create a "like" object to save in Firebase
         val like = mapOf("userId" to auth.currentUser!!.uid, "appId" to game.gameDataArgs.appid.toString())
 
@@ -219,7 +239,7 @@ class GameDetailFragment : Fragment() {
         database.child("game").child("likes").push().setValue(like)
     }
 
-    fun unlikeGame(){
+    private fun unlikeGame(){
         // Get reference to the video's "likes" child in Firebase
         val likesRef = database.child("game").child("likes" )
 
@@ -240,9 +260,8 @@ class GameDetailFragment : Fragment() {
             }
         })
     }
-    data class Like(var appId: String = "", var userId: String = "")
 
-    fun wishGame(){
+    private fun wishGame(){
         // Create a "like" object to save in Firebase
         val like = mapOf("userId" to auth.currentUser!!.uid, "appId" to game.gameDataArgs.appid.toString())
 
@@ -250,7 +269,7 @@ class GameDetailFragment : Fragment() {
         database.child("game").child("wishs").push().setValue(like)
     }
 
-    fun unwishGame(){
+    private fun unwishGame(){
         // Get reference to the video's "likes" child in Firebase
         val wishsRef = database.child("game").child("wishs" )
 
@@ -271,5 +290,4 @@ class GameDetailFragment : Fragment() {
             }
         })
     }
-    data class Wish(var appId: String = "")
 }

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">videoGamesKotlin</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="welcome">Bienvenue !</string>
     <string name="partie" >Veuillez vous connecter ou créer un nouveau compte pour utiliser l\'application</string>
     <string name="partie1" ><u>Mot de passe oublié</u></string>
@@ -19,8 +18,6 @@
     <string name="invalid_password" >Le mot de passe doit comporter au moins 8 caractères</string>
     <string name="invalid_password_confir" >Le mot de passe saisi ne correspond pas !</string>
     <string name="message_send" >Un mail a été envoyé à votre adresse-email, veuillez vous connecter afin de terminer le processus de réinitialisation de mot de passe</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="message_register">Echec d\'enregistrement</string>
     <string name="message_login">Email ou mot de passe incorrect</string>
     <string name="nb_result" >Nombre de résultats : </string>

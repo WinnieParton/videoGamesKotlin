@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -30,7 +29,7 @@ class GameForgetPasswordFragment : Fragment() {
         val emailEditText = view.findViewById<EditText>(R.id.editTextUsername_mot_de_passe)
         if(user.userArgs.email!=null)
             emailEditText.setText(user.userArgs.email)
-        return  view;
+        return  view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -70,11 +69,11 @@ class GameForgetPasswordFragment : Fragment() {
     }
     private fun resetPassword(email: String){
         auth.sendPasswordResetEmail(email)
-            .addOnCompleteListener(OnCompleteListener<Void?> { task ->
+            .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     println("Email sent.")
                 }
-            })
+            }
     }
 
     override fun onResume() {

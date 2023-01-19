@@ -14,7 +14,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.ktx.auth
@@ -30,7 +29,6 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
    // private val login: GameHomeFragmentArgs by navArgs()
     private lateinit var games: List<Game>
     private lateinit var rv:RecyclerView
-    private val user: GameHomeFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

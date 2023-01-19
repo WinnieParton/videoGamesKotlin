@@ -20,7 +20,7 @@ import kotlinx.coroutines.withContext
 
 class GameResearchFragment : Fragment() {
     private val listGame: GameResearchFragmentArgs by navArgs()
-    lateinit var rv: RecyclerView
+    private lateinit var rv: RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
