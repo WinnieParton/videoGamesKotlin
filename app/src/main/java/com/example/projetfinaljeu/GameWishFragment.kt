@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_game_home.*
+import kotlinx.android.synthetic.main.fragment_game_wish.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -47,7 +47,7 @@ class GameWishFragment : Fragment() {
         val constraint = view.findViewById<ConstraintLayout>(R.id.constraint_id_wish)
         progressBar.visibility=View.VISIBLE
 
-        list_game_recyclerview.visibility=View.GONE
+        list_game_wish_recyclerview.visibility=View.GONE
         GlobalScope.launch(Dispatchers.Default) {
 
             val games: List<Game> = listOf() // listGame.gameDataArgs.toList()
@@ -56,9 +56,9 @@ class GameWishFragment : Fragment() {
                 progressBar.visibility=View.GONE
                 if(games.isNotEmpty()) {
                     constraint.visibility=View.GONE
-                    list_game_recyclerview.visibility=View.VISIBLE
+                    list_game_wish_recyclerview.visibility=View.VISIBLE
 
-                    rv = list_game_recyclerview
+                    rv = list_game_wish_recyclerview
                     //scroller ver le haut
                     //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
                     //scroller vers le bas

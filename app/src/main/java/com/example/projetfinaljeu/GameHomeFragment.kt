@@ -139,17 +139,12 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
         when (item.itemId) {
             R.id.like -> {
                 findNavController().navigate(
-                    GameHomeFragmentDirections.actionGameHomeFragmentToGameLikeFragment(arrayOf(
-                        Game(123),
-                        Game(855), Game(955), Game(855),
-                        Game(955),Game(855), Game(955)))
-                )
+                    GameHomeFragmentDirections.actionGameHomeFragmentToGameLikeFragment(games.toTypedArray()))
                 return true
             }
             R.id.wish -> {
                 findNavController().navigate(
-                    GameHomeFragmentDirections.actionGameHomeFragmentToGameWishFragment(arrayOf(Game(123), Game(855), Game(955)))
-                )
+                    GameHomeFragmentDirections.actionGameHomeFragmentToGameWishFragment(games.toTypedArray()))
                 return true
             }
             R.id.logout -> {

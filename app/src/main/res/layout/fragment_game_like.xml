@@ -13,7 +13,7 @@
         <include layout="@layout/empty_content_main"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_game_recyclerview"
+        android:id="@+id/list_game_like_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"

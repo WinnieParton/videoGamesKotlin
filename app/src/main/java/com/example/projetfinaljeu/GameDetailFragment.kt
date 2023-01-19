@@ -106,7 +106,8 @@ class GameDetailFragment : Fragment() {
                         data.get("background").asString.trimMargin(),
                         data.get("background_raw").asString.trimMargin(),
                         data.get("name").asString.trimMargin(),
-                        data.getAsJsonArray("publishers").map { it.asString.trimMargin() }.joinToString(),
+                         data.getAsJsonArray("publishers")
+                             .joinToString { it.asString.trimMargin() },
                         data.get("detailed_description").asString.trimMargin()
                     )
 
@@ -215,12 +216,12 @@ class GameDetailFragment : Fragment() {
         val like = mapOf("userId" to auth.currentUser!!.uid, "appId" to game.gameDataArgs.appid.toString())
 
         // Save the "like" object to Firebase under the video's ID
-        database.child("gamelikes").child("likes").push().setValue(like)
+        database.child("game").child("likes").push().setValue(like)
     }
 
     fun unlikeGame(){
         // Get reference to the video's "likes" child in Firebase
-        val likesRef = database.child("gamelikes").child("likes" )
+        val likesRef = database.child("game").child("likes" )
 
         // Get a listener for the "likes" child
         likesRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -246,12 +247,12 @@ class GameDetailFragment : Fragment() {
         val like = mapOf("userId" to auth.currentUser!!.uid, "appId" to game.gameDataArgs.appid.toString())
 
         // Save the "like" object to Firebase under the video's ID
-        database.child("gamewishs").child("likes").push().setValue(like)
+        database.child("game").child("wishs").push().setValue(like)
     }
 
     fun unwishGame(){
         // Get reference to the video's "likes" child in Firebase
-        val wishsRef = database.child("gamewishs").child("likes" )
+        val wishsRef = database.child("game").child("wishs" )
 
         // Get a listener for the "likes" child
         wishsRef.addListenerForSingleValueEvent(object : ValueEventListener {

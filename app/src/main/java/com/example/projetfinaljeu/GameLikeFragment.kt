@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.fragment_game_home.*
+import kotlinx.android.synthetic.main.fragment_game_like.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -45,7 +45,7 @@ class GameLikeFragment : Fragment() {
 
         progressBar.visibility=View.VISIBLE
 
-        list_game_recyclerview.visibility=View.GONE
+        list_game_like_recyclerview.visibility=View.GONE
 
         GlobalScope.launch(Dispatchers.Default) {
 
@@ -70,7 +70,7 @@ class GameLikeFragment : Fragment() {
         val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar_home)
 
         // Get reference to the "likes" child in Firebase
-        val likesRef = database.child("gamelikes").child("likes" )
+        val likesRef = database.child("game").child("likes" )
 
         // Get a listener for the "likes" child
         likesRef.addValueEventListener(object : ValueEventListener {
@@ -86,23 +86,20 @@ class GameLikeFragment : Fragment() {
                 progressBar.visibility=View.GONE
                 val games: MutableList<Game> = mutableListOf()
 
-                likedVideos.map { el->
-                    {
-                        listGame.gameDataArgs.map{
-                           if( it.appid.toString() == el) {
+
+               val dat= likedVideos.forEach { el->
+                        listGame.gameDataArgs.forEach{
+                            if( it.appid.toString() == el) {
                                games.add(it!!)
-                               println()
                            }
                         }
-                    }}
-
-                println("dddddddddddddddddddd $games ffff $likedVideos ")
+                    }
 
                 if(games.isNotEmpty()) {
                     constraint.visibility=View.GONE
-                    list_game_recyclerview.visibility=View.VISIBLE
+                    list_game_like_recyclerview.visibility=View.VISIBLE
 
-                    rv = list_game_recyclerview
+                    rv = list_game_like_recyclerview
                     //scroller ver le haut
                     //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
                     //scroller vers le bas
@@ -119,7 +116,6 @@ class GameLikeFragment : Fragment() {
 
             override fun onCancelled(databaseError: DatabaseError) {
                 // Handle error
-
                 println("hhhhhhhhhhhhhhhhhh ${databaseError.message}")
 
             }
