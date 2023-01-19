@@ -96,6 +96,7 @@ class GameLoginFragment : Fragment() {
         }
 
         button_connexion.setOnClickListener {
+            button_connexion.isEnabled=false
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
 
@@ -107,11 +108,15 @@ class GameLoginFragment : Fragment() {
                 // email is invalid
                 emailEditText.error=getString(R.string.invalid_email)
                 emailEditText.background = drawable
+                button_connexion.isEnabled=true
+
             } else if (password.length < 8) {
                 // password is too short
                 emailEditText.error=null
                 passwordEditText.error=getString(R.string.invalid_password)
                 passwordEditText.background = drawable
+                button_connexion.isEnabled=true
+
             } else {
                 login(email, password, view)
             }
@@ -126,6 +131,7 @@ class GameLoginFragment : Fragment() {
         }
 
         button_mot_de_passe_oublier.setOnClickListener {
+
             findNavController().navigate(
                 GameLoginFragmentDirections.actionGameLoginFragmentToGameForgetPasswordFragment(user)
             )
@@ -133,6 +139,7 @@ class GameLoginFragment : Fragment() {
     }
 
     private fun login(email: String, password: String, view: View){
+
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -155,6 +162,8 @@ class GameLoginFragment : Fragment() {
                     message_action.visibility=View.VISIBLE
                     val messageText = view.findViewById<TextView>(R.id.message_action)
                     messageText.text=getString(R.string.message_login)
+                    button_connexion.isEnabled=true
+
                 }
             }
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -30,14 +31,14 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class GameDetailFragment : Fragment() {
-    private var isItemFavorite:Boolean=true
-    private var isItemWisk:Boolean=true
+    private var isItemFavorite:Boolean=false
+    private var isItemWisk:Boolean=false
     private val game: GameDetailFragmentArgs by navArgs()
     private lateinit var rv: RecyclerView
     private lateinit var gameInfo: GameInfos
     private lateinit var auth: FirebaseAuth
     private val database = FirebaseDatabase.getInstance().reference
-
+    private lateinit var men: Menu
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,8 +66,6 @@ class GameDetailFragment : Fragment() {
                 requireContext(),R.color.primary))
             description_game.visibility=View.GONE
             list_wish_recyclerview.visibility=View.VISIBLE
-
-
         }
         return  view
     }
@@ -89,28 +88,26 @@ class GameDetailFragment : Fragment() {
         GlobalScope.launch(Dispatchers.Default) {
             val response = ApiClient.getDetailGames(game.gameDataArgs.appid)
             val responseWish = ApiClient.getWishGames(game.gameDataArgs.appid)
+            withContext(Dispatchers.Main) {
+                getGameWishDetail(responseWish)
+                val namegame = response.getAsJsonObject(game.gameDataArgs.appid.toString())
+                val data = namegame.getAsJsonObject("data")
 
-                withContext(Dispatchers.Main) {
-                    getGameWishDetail(responseWish)
-                    val namegame = response.getAsJsonObject(game.gameDataArgs.appid.toString())
-                    val data = namegame.getAsJsonObject("data")
-
-                     gameInfo= GameInfos(game.gameDataArgs.appid,
-                        data.get("header_image").asString.trimMargin(),
-                        data.get("background").asString.trimMargin(),
-                        data.get("background_raw").asString.trimMargin(),
-                        data.get("name").asString.trimMargin(),
-                        data.getAsJsonArray("publishers").joinToString { it.asString.trimMargin() },
-                        data.get("detailed_description").asString.trimMargin()
-                    )
-                    updateImg(gameInfo, view)
-                    view.findViewById<TextView>(R.id.title_detail).text = gameInfo.name
-                    view.findViewById<TextView>(R.id.descrip).text = gameInfo.publishers
-                    view.findViewById<TextView>(R.id.description_game).text = Html.fromHtml(gameInfo.detailed_description)
-                    progressBar.visibility = View.GONE
-                    home_detail_frag.visibility = View.VISIBLE
-                }
-
+                 gameInfo= GameInfos(game.gameDataArgs.appid,
+                    data.get("header_image").asString.trimMargin(),
+                    data.get("background").asString.trimMargin(),
+                    data.get("background_raw").asString.trimMargin(),
+                    data.get("name").asString.trimMargin(),
+                    data.getAsJsonArray("publishers").joinToString { it.asString.trimMargin() },
+                    data.get("detailed_description").asString.trimMargin()
+                )
+                updateImg(gameInfo, view)
+                view.findViewById<TextView>(R.id.title_detail).text = gameInfo.name
+                view.findViewById<TextView>(R.id.descrip).text = gameInfo.publishers
+                view.findViewById<TextView>(R.id.description_game).text = Html.fromHtml(gameInfo.detailed_description)
+                progressBar.visibility = View.GONE
+                home_detail_frag.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -191,7 +188,8 @@ class GameDetailFragment : Fragment() {
         inflater.inflate(R.menu.menu_toolbar, menu)
         menu.removeItem(R.id.close)
         menu.removeItem(R.id.logout)
-
+        getExistsWish(menu.findItem(R.id.wish))
+        getExistsLike(menu.findItem(R.id.like))
         super.onCreateOptionsMenu(menu, inflater)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -287,6 +285,49 @@ class GameDetailFragment : Fragment() {
 
             override fun onCancelled(databaseError: DatabaseError) {
                 // Handle error
+            }
+        })
+    }
+
+    private fun getExistsWish(menItem: MenuItem){
+
+        val wishsRef = database.child("game").child("wishs" )
+        wishsRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (wishSnapshot in dataSnapshot.children) {
+                    val wish = wishSnapshot.getValue(Wish::class.java)
+
+                    if (wish != null && wish.appId == game.gameDataArgs.appid.toString()) {
+                        menItem.setIcon(R.drawable.whishlist_full)
+                        isItemWisk = true
+
+                    }
+                }
+
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("Error", "Error getting child", error.toException())
+            }
+        })
+    }
+
+    private fun getExistsLike(menItem: MenuItem){
+
+        val likesRef = database.child("game").child("likes" )
+        likesRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (likeSnapshot in dataSnapshot.children) {
+                    val like = likeSnapshot.getValue(Like::class.java)
+
+                    if (like != null && like.appId == game.gameDataArgs.appid.toString()) {
+                        menItem.setIcon(R.drawable.like_full)
+                        isItemFavorite = true
+                    }
+                }
+
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("Error", "Error getting child", error.toException())
             }
         })
     }

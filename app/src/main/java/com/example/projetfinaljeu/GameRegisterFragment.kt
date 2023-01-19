@@ -47,6 +47,7 @@ class GameRegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         button_register.setOnClickListener {
+            button_register.isEnabled=false
             message_action.visibility=View.GONE
             val passwordEditText = view.findViewById<EditText>(R.id.editTextTextPassword)
             val usernameEditText = view.findViewById<EditText>(R.id.editTextUsername)
@@ -66,15 +67,21 @@ class GameRegisterFragment : Fragment() {
                 // email is invalid
                 emailEditText.error=getString(R.string.invalid_email)
                 emailEditText.background = drawable
+                button_register.isEnabled=true
+
             } else if (password.length < 8) {
                 // password is too short
                 emailEditText.error=null
                 passwordEditText.error=getString(R.string.invalid_password)
                 passwordEditText.background = drawable
+                button_register.isEnabled=true
+
             }else if (password != verifypassword){
                 passwordEditText.error=null
                 verifyEditText.error=getString(R.string.invalid_password_confir)
                 verifyEditText.background = drawable
+                button_register.isEnabled=true
+
             }else {
                 signInWithEmailAndPassword(email, password, username, view)
             }
@@ -108,14 +115,16 @@ class GameRegisterFragment : Fragment() {
                         message_action.visibility=View.VISIBLE
                         val messageText = view.findViewById<TextView>(R.id.message_action)
                         messageText.text=getString(R.string.message_register)
+
                     }
                 }
-                println("************** ${auth.currentUser}")
 
             } else {
                 message_action.visibility=View.VISIBLE
                 val messageText = view.findViewById<TextView>(R.id.message_action)
                 messageText.text=getString(R.string.message_register)
+                button_register.isEnabled=true
+
             }
         }
 
