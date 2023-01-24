@@ -79,7 +79,7 @@ class GameLikeFragment : Fragment() {
                 for (likeSnapshot in dataSnapshot.children) {
                     val like = likeSnapshot.getValue(Like::class.java)
 
-                    if (like != null && like.userId == auth.currentUser!!.uid)
+                    if (like != null && like.userId == listGame.userArgs.uid)
                         likedVideos.add(like.appId)
 
                 }
@@ -96,19 +96,24 @@ class GameLikeFragment : Fragment() {
                 }
 
                 if(games.isNotEmpty()) {
-                    constraint.visibility=View.GONE
-                    list_game_like_recyclerview.visibility=View.VISIBLE
+                    if(constraint != null)
+                        constraint.visibility=View.GONE
+                    if(list_game_like_recyclerview != null){
+                        list_game_like_recyclerview.visibility=View.VISIBLE
 
-                    rv = list_game_like_recyclerview
-                    //scroller ver le haut
-                    //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
-                    //scroller vers le bas
-                    rv.layoutManager = LinearLayoutManager(context)
-                    rv.adapter = GamesAdapter(games.toList(), listener, getString(R.string.item_price))
+                        rv = list_game_like_recyclerview
+                        //scroller vers le bas
+                        rv.layoutManager = LinearLayoutManager(context)
+                        rv.adapter = GamesAdapter(games.toList(), listener, getString(R.string.item_price))
+                    }
+
                 }else{
-                    constraint.visibility=View.VISIBLE
-                    imgL.visibility=View.GONE
-                    textl.visibility=View.GONE
+                    if(constraint != null)
+                        constraint.visibility=View.VISIBLE
+                    if(imgL != null)
+                        imgL.visibility=View.GONE
+                    if(textl != null)
+                        textl.visibility=View.GONE
 
                 }
 
@@ -116,15 +121,13 @@ class GameLikeFragment : Fragment() {
 
             override fun onCancelled(databaseError: DatabaseError) {
                 // Handle error
-                println("hhhhhhhhhhhhhhhhhh ${databaseError.message}")
-
             }
         })
     }
     private val listener = GamesAdapter.OnClickListener { game ->
         // Add action to navigate
         findNavController().navigate(
-            GameLikeFragmentDirections.actionGameLikeFragmentToGameDetailFragment(game)
+            GameLikeFragmentDirections.actionGameLikeFragmentToGameDetailFragment(game, listGame.userArgs)
         )
 
     }

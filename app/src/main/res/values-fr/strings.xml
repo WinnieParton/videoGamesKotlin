@@ -20,6 +20,7 @@
     <string name="message_send" >Un mail a été envoyé à votre adresse-email, veuillez vous connecter afin de terminer le processus de réinitialisation de mot de passe</string>
     <string name="message_register">Echec d\'enregistrement</string>
     <string name="message_login">Email ou mot de passe incorrect</string>
+    <string name="message_login_home">Vous devez être connecté pour accéder à la page d\'accueil.</string>
     <string name="nb_result" >Nombre de résultats : </string>
     <string name="dont_like_content">Vous n\'avez encore pas liké de contenu.</string>
     <string name="check_heart">Cliquez sur le cœur pour en rajouter.</string>
@@ -34,10 +35,12 @@
     <string name="my_wish">Ma liste de souhaits</string>
     <string name="research">Recherche</string>
     <string name="now_wish">Aucun avis</string>
+    <string name="no_game">Aucun jeu trouvé</string>
     <string name="logout">Déconnexion</string>
     <string name="place_holder_search">Rechercher un jeu...</string>
     <string name="description_game">Une description d\'un jeu mis en avant (peu être fait en dur)</string>
     <string name="bestsell">Meilleures ventes</string>
     <string name="title_description">DESCRIPTION</string>
+    <string name="no_description">Aucune description</string>
     <string name="title_avis">AVIS</string>
 </resources>

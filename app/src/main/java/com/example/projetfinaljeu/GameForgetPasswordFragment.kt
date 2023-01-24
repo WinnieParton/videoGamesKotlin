@@ -46,6 +46,9 @@ class GameForgetPasswordFragment : Fragment() {
             }
         }
         button_renvoyer_mot_de_passe.setOnClickListener{
+            text_success.visibility=View.GONE
+
+            button_renvoyer_mot_de_passe.isEnabled=false
             val email = emailEditText.text.toString()
             val emailPattern = Regex(pattern = "^[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
             val drawable = GradientDrawable()
@@ -55,11 +58,11 @@ class GameForgetPasswordFragment : Fragment() {
                 // email is invalid
                 emailEditText.error=getString(R.string.invalid_email)
                 emailEditText.background = drawable
+                button_renvoyer_mot_de_passe.isEnabled=true
+
             } else{
-
-
+                loader.visibility=View.VISIBLE
                 resetPassword(email)
-
             }
         }
     }
@@ -69,10 +72,12 @@ class GameForgetPasswordFragment : Fragment() {
     }
     private fun resetPassword(email: String){
         auth.sendPasswordResetEmail(email)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    println("Email sent.")
-                }
+            .addOnCompleteListener {
+                button_renvoyer_mot_de_passe.isEnabled=true
+                text_success.visibility=View.VISIBLE
+                editTextUsername_mot_de_passe.text.clear()
+                loader.visibility=View.GONE
+
             }
     }
 

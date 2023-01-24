@@ -1,11 +1,15 @@
 package com.example.projetfinaljeu
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.EditText
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -19,8 +23,11 @@ import kotlinx.coroutines.withContext
 
 
 class GameResearchFragment : Fragment() {
-    private val listGame: GameResearchFragmentArgs by navArgs()
     private lateinit var rv: RecyclerView
+    private lateinit var games: List<Game>
+    private lateinit var gamesSearch: List<Game>
+    private val userArgs: GameResearchFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,32 +42,83 @@ class GameResearchFragment : Fragment() {
         actionbar?.setDisplayHomeAsUpEnabled(true)
         actionbar?.setHomeAsUpIndicator(R.drawable.close)
 
-        val nbRes=view.findViewById<TextView>(R.id.nb_result)
-        nbRes.applyUnderlineTextStart(getString(R.string.nb_result)+listGame.gameDataArgs.toList().size)
+        val constraint = view.findViewById<ConstraintLayout>(R.id.constraint_id)
+        val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar_home)
+
+        progressBar.visibility=View.VISIBLE
+
+        constraint.visibility=View.GONE
+
+        val searchEditText = view.findViewById<EditText>(R.id.text_research_input)
+
+        searchEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int,
+                                       before: Int, count: Int) {
+                val data = searchGames(gamesSearch, s.toString())
+                if(data.isEmpty())
+                    list_game_search_recyclerview.visibility=View.GONE
+                else
+                    list_game_search_recyclerview.visibility=View.VISIBLE
+                getGame(data, view)
+                if(nb_result !=null)
+                    nb_result.applyUnderlineTextPart(getString(R.string.nb_result)+data.size)
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
 
         GlobalScope.launch(Dispatchers.Default) {
+            val response = ApiClient.getGamesResearch()
+            gamesSearch = response.toGamesSearch()!!.filter { it.name!!.isNotEmpty()}
+
+            if(nb_result !=null)
+                nb_result.applyUnderlineTextPart(getString(R.string.nb_result)+gamesSearch.size)
             withContext(Dispatchers.Main) {
-                getGame()
+                getGame(gamesSearch, view)
             }
         }
     }
 
-    private fun getGame() {
-        val games: List<Game> = listGame.gameDataArgs.toList()
-        rv = list_game_search_recyclerview
-        //scroller ver le haut
-        //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
-        //scroller vers le bas
-        rv.layoutManager = LinearLayoutManager(context)
-        rv.adapter = GamesAdapter(games, listener, getString(R.string.item_price))
+    private fun getGame(response:  List<Game>, view: View) {
+        games = response
+        val constraint = view.findViewById<ConstraintLayout>(R.id.constraint_id)
+        val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar_home)
+        if(games.isNotEmpty()){
+            if(no_game != null)
+                no_game.visibility=View.GONE
+            if(list_game_search_recyclerview != null) {
+                rv = list_game_search_recyclerview
+                //scroller vers le bas
+                rv.layoutManager = LinearLayoutManager(context)
+                rv.adapter = GamesAdapter(games, listener, getString(R.string.item_price))
+            }
+
+        }else{
+            if(no_game != null)
+                no_game.visibility=View.VISIBLE
+        }
+        if(progressBar != null)
+            progressBar.visibility=View.GONE
+
+        if(constraint != null)
+            constraint.visibility=View.VISIBLE
+
 
     }
 
     private val listener = GamesAdapter.OnClickListener { game ->
         // Add action to navigate
         findNavController().navigate(
-            GameResearchFragmentDirections.actionGameResearchFragmentToGameDetailFragment(game)
+            GameResearchFragmentDirections.actionGameResearchFragmentToGameDetailFragment(game, userArgs.userArgs)
         )
 
+    }
+
+    private fun searchGames(games: List<Game>, searchText: String): List<Game> {
+        return games.filter { it.name!!.contains(searchText, true) }
     }
 }

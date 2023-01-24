@@ -146,8 +146,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="15dp"
-                android:text="@string/description_game"
-                android:textSize="12sp"
+                android:text="@string/no_description"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_rel" />
 

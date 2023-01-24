@@ -87,7 +87,7 @@ class GameWishFragment : Fragment() {
                 for (wishSnapshot in dataSnapshot.children) {
                     val wish = wishSnapshot.getValue(Wish::class.java)
 
-                    if (wish != null && wish.userId == auth.currentUser!!.uid)
+                    if (wish != null && wish.userId == listGame.userArgs.uid)
                         wishdGames.add(wish.appId)
 
                 }
@@ -104,28 +104,35 @@ class GameWishFragment : Fragment() {
                 }
 
                 if(games.isNotEmpty()) {
-                    constraint.visibility=View.GONE
-                    list_game_wish_recyclerview.visibility=View.VISIBLE
+                    if(constraint != null)
+                        constraint.visibility=View.GONE
+                    if(list_game_wish_recyclerview != null) {
+                        list_game_wish_recyclerview.visibility = View.VISIBLE
 
-                    rv = list_game_wish_recyclerview
-                    //scroller ver le haut
-                    //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
-                    //scroller vers le bas
-                    rv.layoutManager = LinearLayoutManager(context)
-                    rv.adapter = GamesAdapter(games, listener, getString(R.string.item_price))
+                        rv = list_game_wish_recyclerview
+                        //scroller ver le haut
+                        //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+                        //scroller vers le bas
+                        rv.layoutManager = LinearLayoutManager(context)
+                        rv.adapter = GamesAdapter(games, listener, getString(R.string.item_price))
+                    }
                 }else{
-                    constraint.visibility=View.VISIBLE
-                    imgL.visibility=View.VISIBLE
-                    textl.visibility=View.VISIBLE
-                    imgL1.visibility=View.GONE
-                    textl1.visibility=View.GONE
+                    if(constraint != null)
+                        constraint.visibility=View.VISIBLE
+                    if(imgL != null)
+                        imgL.visibility=View.VISIBLE
+                    if(textl != null)
+                        textl.visibility=View.VISIBLE
+                    if(imgL1 != null)
+                        imgL1.visibility=View.GONE
+                    if(textl1 != null)
+                        textl1.visibility=View.GONE
                 }
 
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 // Handle error
-                println("hhhhhhhhhhhhhhhhhh ${databaseError.message}")
 
             }
         })
@@ -134,7 +141,7 @@ class GameWishFragment : Fragment() {
     private val listener = GamesAdapter.OnClickListener { game ->
         // Add action to navigate
         findNavController().navigate(
-            GameWishFragmentDirections.actionGameWishFragmentToGameDetailFragment(game)
+            GameWishFragmentDirections.actionGameWishFragmentToGameDetailFragment(game, listGame.userArgs)
         )
 
     }

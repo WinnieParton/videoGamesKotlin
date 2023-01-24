@@ -1,5 +1,6 @@
 package com.example.projetfinaljeu
 
+import android.content.Intent
 import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
@@ -14,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.ktx.auth
@@ -26,19 +28,18 @@ import kotlinx.coroutines.withContext
 
 
 class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
-   // private val login: GameHomeFragmentArgs by navArgs()
     private lateinit var games: List<Game>
     private lateinit var rv:RecyclerView
+    private val userArgs: GameHomeFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                // Handle the back button event
-                findNavController().navigate(
-                    GameHomeFragmentDirections.actionGameHomeFragmentToGameLoginFragment()
-                )
+                Firebase.auth.signOut()
+                val intent = Intent(requireActivity(), MainActivity::class.java)
+                requireActivity().startActivity(intent)
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
@@ -80,7 +81,7 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
             Firebase.auth.signOut()
             // Add action to navigate
             findNavController().navigate(
-                GameHomeFragmentDirections.actionGameHomeFragmentToGameResearchFragment(games.toTypedArray())
+                GameHomeFragmentDirections.actionGameHomeFragmentToGameResearchFragment(games.toTypedArray(), userArgs.userArgs)
             )
         }
         val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar_home)
@@ -137,19 +138,18 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
         when (item.itemId) {
             R.id.like -> {
                 findNavController().navigate(
-                    GameHomeFragmentDirections.actionGameHomeFragmentToGameLikeFragment(games.toTypedArray()))
+                    GameHomeFragmentDirections.actionGameHomeFragmentToGameLikeFragment(games.toTypedArray(), userArgs.userArgs))
                 return true
             }
             R.id.wish -> {
                 findNavController().navigate(
-                    GameHomeFragmentDirections.actionGameHomeFragmentToGameWishFragment(games.toTypedArray()))
+                    GameHomeFragmentDirections.actionGameHomeFragmentToGameWishFragment(games.toTypedArray(), userArgs.userArgs))
                 return true
             }
             R.id.logout -> {
                 Firebase.auth.signOut()
-                findNavController().navigate(
-                    GameHomeFragmentDirections.actionGameHomeFragmentToGameLoginFragment()
-                )
+                val intent = Intent(requireActivity(), MainActivity::class.java)
+                requireActivity().startActivity(intent)
                 return true
             }
         }
@@ -159,7 +159,7 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
     private val listener = GamesAdapter.OnClickListener { game ->
         // Add action to navigate
         findNavController().navigate(
-            GameHomeFragmentDirections.actionGameHomeFragmentToGameDetailFragment(game)
+            GameHomeFragmentDirections.actionGameHomeFragmentToGameDetailFragment(game, userArgs.userArgs)
         )
 
     }

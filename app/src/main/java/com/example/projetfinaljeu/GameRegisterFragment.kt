@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -83,7 +82,7 @@ class GameRegisterFragment : Fragment() {
                 button_register.isEnabled=true
 
             }else {
-                signInWithEmailAndPassword(email, password, username, view)
+                signInWithEmailAndPassword(email, password, username)
             }
         }
     }
@@ -93,7 +92,7 @@ class GameRegisterFragment : Fragment() {
         auth = Firebase.auth
     }
 
-    private fun signInWithEmailAndPassword(email: String, password: String, username: String, view: View){
+    private fun signInWithEmailAndPassword(email: String, password: String, username: String){
 
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -113,16 +112,14 @@ class GameRegisterFragment : Fragment() {
                         )
                     }else{
                         message_action.visibility=View.VISIBLE
-                        val messageText = view.findViewById<TextView>(R.id.message_action)
-                        messageText.text=getString(R.string.message_register)
+                        message_action.text=getString(R.string.message_register)
 
                     }
                 }
 
             } else {
                 message_action.visibility=View.VISIBLE
-                val messageText = view.findViewById<TextView>(R.id.message_action)
-                messageText.text=getString(R.string.message_register)
+                message_action.text=getString(R.string.message_register)
                 button_register.isEnabled=true
 
             }

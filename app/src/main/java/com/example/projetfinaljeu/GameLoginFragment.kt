@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -24,6 +24,7 @@ class GameLoginFragment : Fragment() {
 
     private lateinit var  auth: FirebaseAuth
     private var user: User=User(null,null,null,null)
+    private var callback: OnBackPressedCallback? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +55,23 @@ class GameLoginFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
+
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val navController = findNavController()
+                val currentDestination = navController.currentDestination
+                println("ffffffffffffffffff "+auth.currentUser)
+
+                if(auth.currentUser == null || currentDestination?.id == R.id.gameHomeFragment){
+                    message_action.visibility=View.VISIBLE
+                    message_action.text=getString(R.string.message_login_home)
+                }
+                else{
+                    navController.popBackStack()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback!!)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -118,10 +136,8 @@ class GameLoginFragment : Fragment() {
                 button_connexion.isEnabled=true
 
             } else {
-                login(email, password, view)
+                login(email, password)
             }
-
-
         }
 
         button_creer_un_compte.setOnClickListener {
@@ -131,15 +147,13 @@ class GameLoginFragment : Fragment() {
         }
 
         button_mot_de_passe_oublier.setOnClickListener {
-
             findNavController().navigate(
                 GameLoginFragmentDirections.actionGameLoginFragmentToGameForgetPasswordFragment(user)
             )
         }
     }
 
-    private fun login(email: String, password: String, view: View){
-
+    private fun login(email: String, password: String){
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -160,8 +174,7 @@ class GameLoginFragment : Fragment() {
                 } else {
                     // If sign in fails, display a message to the user.
                     message_action.visibility=View.VISIBLE
-                    val messageText = view.findViewById<TextView>(R.id.message_action)
-                    messageText.text=getString(R.string.message_login)
+                    message_action.text=getString(R.string.message_login)
                     button_connexion.isEnabled=true
 
                 }

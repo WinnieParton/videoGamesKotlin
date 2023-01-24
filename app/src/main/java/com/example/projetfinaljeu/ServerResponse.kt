@@ -21,7 +21,7 @@ data class ServerResponse (
         val prod = mutableListOf<Game>()
 
         resp.ranks?.forEach {
-            prod.add(Game(it.appid!!))
+            prod.add(Game(it.appid!!, ""))
         }
 
         return prod

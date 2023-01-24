@@ -31,14 +31,14 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class GameDetailFragment : Fragment() {
+    private lateinit var auth: FirebaseAuth
+    private val database = FirebaseDatabase.getInstance().reference
     private var isItemFavorite:Boolean=false
     private var isItemWisk:Boolean=false
     private val game: GameDetailFragmentArgs by navArgs()
     private lateinit var rv: RecyclerView
     private lateinit var gameInfo: GameInfos
-    private lateinit var auth: FirebaseAuth
-    private val database = FirebaseDatabase.getInstance().reference
-    private lateinit var men: Menu
+    private var isEmptyWish:Boolean=false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,6 +53,8 @@ class GameDetailFragment : Fragment() {
                 .setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.primary))
             description_game.visibility=View.VISIBLE
             list_wish_recyclerview.visibility=View.GONE
+            no_wish.visibility=View.GONE
+
         }
 
 
@@ -66,6 +68,8 @@ class GameDetailFragment : Fragment() {
                 requireContext(),R.color.primary))
             description_game.visibility=View.GONE
             list_wish_recyclerview.visibility=View.VISIBLE
+            if(isEmptyWish)
+                no_wish.visibility=View.VISIBLE
         }
         return  view
     }
@@ -92,82 +96,99 @@ class GameDetailFragment : Fragment() {
                 getGameWishDetail(responseWish)
                 val namegame = response.getAsJsonObject(game.gameDataArgs.appid.toString())
                 val data = namegame.getAsJsonObject("data")
-
                  gameInfo= GameInfos(game.gameDataArgs.appid,
-                    data.get("header_image").asString.trimMargin(),
-                    data.get("background").asString.trimMargin(),
-                    data.get("background_raw").asString.trimMargin(),
-                    data.get("name").asString.trimMargin(),
-                    data.getAsJsonArray("publishers").joinToString { it.asString.trimMargin() },
-                    data.get("detailed_description").asString.trimMargin()
+                     data?.get("header_image")?.asString?.trimMargin(),
+                    data?.get("background")?.asString?.trimMargin(),
+                    data?.get("background_raw")?.asString?.trimMargin(),
+                    data?.get("name")?.asString?.trimMargin(),
+                    data?.getAsJsonArray("publishers")?.joinToString { it.asString.trimMargin() },
+                    data?.get("detailed_description")?.asString?.trimMargin()
                 )
                 updateImg(gameInfo, view)
-                view.findViewById<TextView>(R.id.title_detail).text = gameInfo.name
-                view.findViewById<TextView>(R.id.descrip).text = gameInfo.publishers
-                view.findViewById<TextView>(R.id.description_game).text = Html.fromHtml(gameInfo.detailed_description)
-                progressBar.visibility = View.GONE
-                home_detail_frag.visibility = View.VISIBLE
+
             }
         }
     }
 
-    private fun updateImg(gameInfo: GameInfos, view: View) {
+    private fun updateImg(gameIfo: GameInfos, view: View) {
         val img = view.findViewById<ImageView>(R.id.image_header)
         val img1 = view.findViewById<ImageView>(R.id.backgr)
         val img2 = view.findViewById<ImageView>(R.id.id_image_jeu_item)
-
+        val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar_home)
+        var data = 404
+        var data1 = 404
+        var data2 = 404
         GlobalScope.launch {
 
-            val url = URL(gameInfo.header_image.split("?")[0])
-            val connection = withContext(Dispatchers.IO) {
-                url.openConnection()
-            } as HttpURLConnection
+             if(gameIfo.header_image != null){
+                 val url =   URL(gameIfo.header_image.split("?")!![0])
+                 val connection = withContext(Dispatchers.IO) {
+                     url.openConnection()
+                 } as HttpURLConnection
 
-            withContext(Dispatchers.IO) {
-                connection.connect()
+                 withContext(Dispatchers.IO) {
+                     connection.connect()
+                 }
+
+                 data = connection.responseCode
+             }
+
+
+            if(gameIfo.background != null) {
+                val url1 = URL(gameIfo.background?.split("?")!![0])
+
+                val connection1 = withContext(Dispatchers.IO) {
+                    url1.openConnection()
+                } as HttpURLConnection
+                withContext(Dispatchers.IO) {
+                    connection1.connect()
+                }
+
+                data1 = connection1.responseCode
             }
 
-            val data = connection.responseCode
+            if(gameIfo.header_image != null) {
+                val url2 = URL(gameIfo.header_image?.split("?")!![0])
 
-            val url1 = URL(gameInfo.background.split("?")[0])
-            val connection1 = withContext(Dispatchers.IO) {
-                url1.openConnection()
-            } as HttpURLConnection
-            withContext(Dispatchers.IO) {
-                connection1.connect()
+
+                val connection2 = withContext(Dispatchers.IO) {
+                    url2.openConnection()
+                } as HttpURLConnection
+                withContext(Dispatchers.IO) {
+                    connection2.connect()
+                }
+
+                data2 = connection2.responseCode
             }
-
-            val data1 = connection1.responseCode
-
-            val url2 = URL(gameInfo.header_image.split("?")[0])
-            val connection2 = withContext(Dispatchers.IO) {
-                url2.openConnection()
-            } as HttpURLConnection
-            withContext(Dispatchers.IO) {
-                connection2.connect()
-            }
-
-            val data2 = connection2.responseCode
-
             withContext(Dispatchers.Main) {
                 if (data == HttpURLConnection.HTTP_OK) {
                     Glide.with(requireContext())
-                        .load(gameInfo.header_image.split("?")[0])
+                        .load(gameIfo.header_image?.split("?")!![0])
                         .into(img)
                 }
 
                 if (data1 == HttpURLConnection.HTTP_OK) {
                     Glide.with(requireContext())
-                        .load(gameInfo.background.split("?")[0])
+                        .load(gameIfo.background?.split("?")!![0])
                         .into(img1)
                 }
 
                 if (data2 == HttpURLConnection.HTTP_OK) {
                     Glide.with(requireContext())
-                        .load(gameInfo.background_raw.split("?")[0])
+                        .load(gameIfo.background_raw?.split("?")?.get(0))
                         .into(img2)
                 }
 
+                if(gameIfo.name !=null)
+                    view.findViewById<TextView>(R.id.title_detail).text = gameIfo.name
+                if(gameIfo.publishers !=null)
+                    view.findViewById<TextView>(R.id.descrip).text = gameIfo.publishers
+                if(gameIfo.detailed_description !=null)
+                    view.findViewById<TextView>(R.id.description_game).text = Html.fromHtml(gameIfo.detailed_description)
+                else
+                    view.findViewById<TextView>(R.id.description_game).text = getString(R.string.no_description)
+                progressBar.visibility = View.GONE
+                home_detail_frag.visibility = View.VISIBLE
             }
         }
     }
@@ -178,9 +199,8 @@ class GameDetailFragment : Fragment() {
             rv = list_wish_recyclerview
             rv.layoutManager = LinearLayoutManager(context)
             rv.adapter = WishDetailGameAdapter(wish)
-        }else{
-            no_wish.visibility=View.VISIBLE
-        }
+        }else
+            isEmptyWish=true
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -202,25 +222,25 @@ class GameDetailFragment : Fragment() {
         when (item.itemId) {
             R.id.like -> {
                 if (isItemFavorite) {
-                    item.setIcon(R.drawable.like_full)
-                    isItemFavorite = false
-                    likeGame()
-                } else {
                     item.setIcon(R.drawable.like)
                     isItemFavorite = true
                     unlikeGame()
+                } else {
+                    item.setIcon(R.drawable.like_full)
+                    isItemFavorite = false
+                    likeGame()
                 }
                 return true
             }
             R.id.wish -> {
                 if (isItemWisk) {
-                    item.setIcon(R.drawable.whishlist_full)
-                    isItemWisk = false
-                    wishGame()
-                } else {
                     item.setIcon(R.drawable.whishlist)
                     isItemWisk = true
                     unwishGame()
+                } else {
+                    item.setIcon(R.drawable.whishlist_full)
+                    isItemWisk = false
+                    wishGame()
                 }
 
                 return true
@@ -231,7 +251,7 @@ class GameDetailFragment : Fragment() {
 
     private fun likeGame(){
         // Create a "like" object to save in Firebase
-        val like = mapOf("userId" to auth.currentUser!!.uid, "appId" to game.gameDataArgs.appid.toString())
+        val like = mapOf("userId" to game.userArgs.uid, "appId" to game.gameDataArgs.appid.toString())
 
         // Save the "like" object to Firebase under the video's ID
         database.child("game").child("likes").push().setValue(like)
@@ -246,7 +266,7 @@ class GameDetailFragment : Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (likeSnapshot in dataSnapshot.children) {
                     val like = likeSnapshot.getValue(Like::class.java)
-                    if (like != null && like.appId == game.gameDataArgs.appid.toString()) {
+                    if (like != null && like.appId == game.gameDataArgs.appid.toString() && like.userId == game.userArgs.uid) {
                         // Remove the like from Firebase
                         likeSnapshot.ref.removeValue()
                     }
@@ -261,13 +281,14 @@ class GameDetailFragment : Fragment() {
 
     private fun wishGame(){
         // Create a "like" object to save in Firebase
-        val like = mapOf("userId" to auth.currentUser!!.uid, "appId" to game.gameDataArgs.appid.toString())
+        val like = mapOf("userId" to game.userArgs.uid, "appId" to game.gameDataArgs.appid.toString())
 
         // Save the "like" object to Firebase under the video's ID
         database.child("game").child("wishs").push().setValue(like)
     }
 
     private fun unwishGame(){
+
         // Get reference to the video's "likes" child in Firebase
         val wishsRef = database.child("game").child("wishs" )
 
@@ -276,7 +297,7 @@ class GameDetailFragment : Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (wishSnapshot in dataSnapshot.children) {
                     val wish = wishSnapshot.getValue(Wish::class.java)
-                    if (wish != null && wish.appId == game.gameDataArgs.appid.toString()) {
+                    if (wish != null && wish.appId == game.gameDataArgs.appid.toString() && wish.userId == game.userArgs.uid) {
                         // Remove the like from Firebase
                         wishSnapshot.ref.removeValue()
                     }
@@ -297,7 +318,7 @@ class GameDetailFragment : Fragment() {
                 for (wishSnapshot in dataSnapshot.children) {
                     val wish = wishSnapshot.getValue(Wish::class.java)
 
-                    if (wish != null && wish.appId == game.gameDataArgs.appid.toString()) {
+                    if (wish != null && wish.appId == game.gameDataArgs.appid.toString() && wish.userId == game.userArgs.uid) {
                         menItem.setIcon(R.drawable.whishlist_full)
                         isItemWisk = true
 
@@ -319,7 +340,7 @@ class GameDetailFragment : Fragment() {
                 for (likeSnapshot in dataSnapshot.children) {
                     val like = likeSnapshot.getValue(Like::class.java)
 
-                    if (like != null && like.appId == game.gameDataArgs.appid.toString()) {
+                    if (like != null && like.appId == game.gameDataArgs.appid.toString() && like.userId == game.userArgs.uid) {
                         menItem.setIcon(R.drawable.like_full)
                         isItemFavorite = true
                     }
