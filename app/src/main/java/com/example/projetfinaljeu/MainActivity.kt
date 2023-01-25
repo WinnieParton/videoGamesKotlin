@@ -49,3 +49,9 @@ fun TextView.applyUnderlineText(text: String){
         setText(spannable)
     }
 }
+
+fun TextView.applyUnderlineTextPart(text: String){
+    val spannable = SpannableString(text)
+    spannable.setSpan(UnderlineSpan(),  0,text.indexOf(':') , 0)
+    setText(spannable)
+}

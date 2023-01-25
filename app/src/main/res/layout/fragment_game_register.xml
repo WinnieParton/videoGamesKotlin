@@ -43,6 +43,7 @@
             android:layout_height="50dp"
             android:background="@color/third"
             android:hint="@string/utilisateur"
+            android:textColor="@color/white"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,6 +58,7 @@
             android:layout_height="50dp"
             android:background="@color/third"
             android:hint="@string/email"
+            android:textColor="@color/white"
             android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,6 +73,7 @@
             android:layout_height="50dp"
             android:background="@color/third"
             android:hint="@string/password"
+            android:textColor="@color/white"
             android:inputType="textPassword"
             android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@+id/editTextVerificationPassword"
@@ -85,25 +88,41 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/third"
+            android:textColor="@color/white"
             android:hint="@string/verification_mot_de_passe"
             android:inputType="textPassword"
             android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@+id/button_register"
+            app:layout_constraintBottom_toTopOf="@+id/message_action"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
             android:layout_marginTop="12dp"/>
 
+        <TextView
+            android:id="@+id/message_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextVerificationPassword"
+            android:layout_marginTop="45dp"
+            android:textColor="@color/danger"
+            android:visibility="gone"
+            />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:id="@+id/button_register"
-            app:layout_constraintTop_toBottomOf="@+id/editTextVerificationPassword"
+            app:layout_constraintTop_toBottomOf="@+id/message_action"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:backgroundTint="@color/secondary"
             android:layout_marginTop="75dp"
             >
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">videoGamesKotlin</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="welcome">Bienvenue !</string>
     <string name="partie" >Veuillez vous connecter ou créer un nouveau compte pour utiliser l\'application</string>
     <string name="partie1" ><u>Mot de passe oublié</u></string>
@@ -12,21 +11,17 @@
     <string name="verification_mot_de_passe" >Vérification du mot de passe</string>
     <string name="password" >Mot de passe</string>
     <string name="email" >E-mail</string>
-    <string name="search">Research</string>
     <string name="utilisateur" >Nom d\'utilisateur</string>
     <string name="mdp" >Veuillez saisir votre email afin de réinitialiser votre mot de passe</string>
     <string name="renvoyer_code" >Renvoyer mon mot de passe</string>
     <string name="invalid_email" >Adresse électronique non valide</string>
     <string name="invalid_password" >Le mot de passe doit comporter au moins 8 caractères</string>
+    <string name="invalid_password_confir" >Le mot de passe saisi ne correspond pas !</string>
     <string name="message_send" >Un mail a été envoyé à votre adresse-email, veuillez vous connecter afin de terminer le processus de réinitialisation de mot de passe</string>
-    <string name="invalid_username" >Le nom d\'utilisateur ne peut pas être vide</string>
-    <string name="error_create_account" >Une erreur s\'est produit lors de la création de votre compte veuilez réessayer.</string>
-    <string name="success_create_account" >Votre compte a bien été créé</string>
-    <string name="error_login" >Email ou mot de passe incorrect</string>
-
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="message_register">Echec d\'enregistrement</string>
+    <string name="message_login">Email ou mot de passe incorrect</string>
+    <string name="message_login_home">Vous devez être connecté pour accéder à la page d\'accueil.</string>
+    <string name="nb_result" >Nombre de résultats : </string>
     <string name="dont_like_content">Vous n\'avez encore pas liké de contenu.</string>
     <string name="check_heart">Cliquez sur le cœur pour en rajouter.</string>
     <string name="check_start">Cliquez sur l\'étoile pour en rajouter.</string>
@@ -39,10 +34,13 @@
     <string name="my_like">Mes likes</string>
     <string name="my_wish">Ma liste de souhaits</string>
     <string name="research">Recherche</string>
+    <string name="now_wish">Aucun avis</string>
+    <string name="no_game">Aucun jeu trouvé</string>
     <string name="logout">Déconnexion</string>
     <string name="place_holder_search">Rechercher un jeu...</string>
     <string name="description_game">Une description d\'un jeu mis en avant (peu être fait en dur)</string>
     <string name="bestsell">Meilleures ventes</string>
     <string name="title_description">DESCRIPTION</string>
+    <string name="no_description">Aucune description</string>
     <string name="title_avis">AVIS</string>
 </resources>

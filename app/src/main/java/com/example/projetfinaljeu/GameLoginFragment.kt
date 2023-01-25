@@ -2,11 +2,13 @@ package com.example.projetfinaljeu
 
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -14,14 +16,16 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_game_login.*
 
 
 class GameLoginFragment : Fragment() {
 
-    private lateinit var auth: FirebaseAuth
+    private lateinit var  auth: FirebaseAuth
+    private var user: User=User(null,null,null,null)
+    private var callback: OnBackPressedCallback? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,18 +52,69 @@ class GameLoginFragment : Fragment() {
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        auth = Firebase.auth
+
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val navController = findNavController()
+                val currentDestination = navController.currentDestination
+                println("ffffffffffffffffff "+auth.currentUser)
+
+                if(auth.currentUser == null || currentDestination?.id == R.id.gameHomeFragment){
+                    message_action.visibility=View.VISIBLE
+                    message_action.text=getString(R.string.message_login_home)
+                }
+                else{
+                    navController.popBackStack()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback!!)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        button_mot_de_passe_oublier.applyUnderlineText(getString(R.string.partie1))
+
         val emailEditText = view.findViewById<EditText>(R.id.editTextTextEmailAddress)
+        val passwordEditText = view.findViewById<EditText>(R.id.editTextTextPassword)
+
+        emailEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int,
+                                       before: Int, count: Int) {
+                user= User(s.toString(), "","",user.password)
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+
+        passwordEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int,
+                                       before: Int, count: Int) {
+                user= User(user.email, "","",s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+
         emailEditText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 emailEditText.error = null
             }
         }
 
-        //val login:Login=Login("koumwinnie@gmail.com","1234")
         button_connexion.setOnClickListener {
-            val passwordEditText = view.findViewById<EditText>(R.id.editTextTextPassword)
+            button_connexion.isEnabled=false
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
 
@@ -71,49 +126,59 @@ class GameLoginFragment : Fragment() {
                 // email is invalid
                 emailEditText.error=getString(R.string.invalid_email)
                 emailEditText.background = drawable
+                button_connexion.isEnabled=true
+
             } else if (password.length < 8) {
                 // password is too short
                 emailEditText.error=null
                 passwordEditText.error=getString(R.string.invalid_password)
                 passwordEditText.background = drawable
+                button_connexion.isEnabled=true
+
             } else {
-                auth = Firebase.auth
-
-                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-                        task ->
-                    if(task.isSuccessful){
-
-                        findNavController().navigate(
-                            GameLoginFragmentDirections.actionGameLoginFragmentToGameHomeFragment()
-                        )
-
-                    }else{
-                        Toast.makeText(activity,getString(R.string.error_login), Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-
+                login(email, password)
             }
-
-
         }
 
         button_creer_un_compte.setOnClickListener {
             findNavController().navigate(
-                GameLoginFragmentDirections.actionGameLoginFragmentToGameRegisterFragment()
+                GameLoginFragmentDirections.actionGameLoginFragmentToGameRegisterFragment(user)
             )
         }
 
         button_mot_de_passe_oublier.setOnClickListener {
             findNavController().navigate(
-                GameLoginFragmentDirections.actionGameLoginFragmentToGameForgetPasswordFragment()
+                GameLoginFragmentDirections.actionGameLoginFragmentToGameForgetPasswordFragment(user)
             )
         }
+    }
 
-     /*   button_creer_un_compte.setOnClickListener { view ->
-           findNavController().navigate(
-               GameLoginFragmentDirections.actionGameLoginFragmentToGameRegisterFragment()
-           )
-        }*/
+    private fun login(email: String, password: String){
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    val user = auth.currentUser
+                    if (user != null) {
+                        findNavController().navigate(
+                            GameLoginFragmentDirections.actionGameLoginFragmentToGameHomeFragment(
+                                User(
+                                    user.email!!,
+                                    user.displayName!!,
+                                    user.uid,
+                                    ""
+                                )
+                            )
+                        )
+                    }
+                } else {
+                    // If sign in fails, display a message to the user.
+                    message_action.visibility=View.VISIBLE
+                    message_action.text=getString(R.string.message_login)
+                    button_connexion.isEnabled=true
+
+                }
+            }
+
     }
 }

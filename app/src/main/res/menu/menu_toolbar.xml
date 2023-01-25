@@ -19,5 +19,5 @@
         tools:ignore="MenuTitle"
         app:showAsAction="ifRoom"/>
     <item android:id="@+id/logout"
-        android:title="@string/logout"/>
+        android:title="@string/logout" />
 </menu>

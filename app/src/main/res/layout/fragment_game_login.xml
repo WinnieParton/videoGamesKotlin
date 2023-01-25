@@ -71,16 +71,31 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress"
             />
 
+        <TextView
+            android:id="@+id/message_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
+            android:layout_marginTop="35dp"
+            android:textColor="@color/danger"
+            android:visibility="gone"
+            />
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:id="@+id/button_connexion"
             app:layout_constraintBottom_toTopOf="@+id/button_creer_un_compte"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
+            app:layout_constraintTop_toBottomOf="@+id/message_action"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:backgroundTint="@color/secondary"
-            android:layout_marginTop="75dp"
+            android:layout_marginTop="65dp"
             >
             <TextView
                 android:layout_width="match_parent"
@@ -102,7 +117,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:backgroundTint="@color/secondary"
-            android:padding="1dp"
+            android:padding="2dp"
             android:layout_marginTop="15dp"
             >
             <TextView

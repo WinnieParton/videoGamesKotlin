@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "865041172230",
-    "project_id": "videogameskotlin",
-    "storage_bucket": "videogameskotlin.appspot.com"
+    "project_number": "165913106052",
+    "project_id": "videogameskotlin-75bb7",
+    "storage_bucket": "videogameskotlin-75bb7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:865041172230:android:1bdd1598f57a12185d4087",
+        "mobilesdk_app_id": "1:165913106052:android:b43e096ae03596acf0d4d1",
         "android_client_info": {
           "package_name": "com.example.projetfinaljeu"
         }
       },
       "oauth_client": [
         {
-          "client_id": "865041172230-k96veiun1bvt3s4kjb420tl0sn016ss2.apps.googleusercontent.com",
+          "client_id": "165913106052-5npuoqsne7tk7jr2ijo68rs95a9rkm8f.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCaN2ohfnHQav_-DVV2fge3of7b50Nywv0"
+          "current_key": "AIzaSyCClQ-tAX_y6y-qqTV9YOV3JmIjpWH5-So"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "865041172230-k96veiun1bvt3s4kjb420tl0sn016ss2.apps.googleusercontent.com",
+              "client_id": "165913106052-5npuoqsne7tk7jr2ijo68rs95a9rkm8f.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

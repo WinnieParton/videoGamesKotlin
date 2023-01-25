@@ -9,14 +9,18 @@ import retrofit2.http.Query
 interface ApiInterface {
 
     //liste  des jeux les plus joués
-    @GET("GetMostPlayedGames/v1/?")
-    fun getGames(): Deferred<ServerResponse>
+    @GET("ISteamChartsService/GetMostPlayedGames/v1/?")
+    fun getGamesAsync(): Deferred<ServerResponse>
 
     //recuperer les details d'un jeu
     @GET("api/appdetails")
-    fun getDetailGames(@Query("appids") appids: Int?): Deferred<JsonObject>
+    fun getDetailGamesAsync(@Query("appids") appids: Int?): Deferred<JsonObject>
 
     //recuperer les avis d'un jeu
     @GET("appreviews/{apiId}?json=1")
-    fun getWishGames(@Path("apiId") apiId: Int?): Deferred<ServerDetailWishGameResponse>
+    fun getWishGamesAsync(@Path("apiId") apiId: Int?): Deferred<ServerDetailWishGameResponse>
+
+    //liste  des jeux sur lesquels la recherche s'applique
+    @GET("ISteamApps/GetAppList/v2/?")
+    fun getGamesResearchAsync(): Deferred<ServerSearchResponse>
 }

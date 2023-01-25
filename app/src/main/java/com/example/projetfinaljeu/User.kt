@@ -1,3 +1,12 @@
 package com.example.projetfinaljeu
 
-data class User (var username: String ?= null)
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class User(
+    val email: String?,
+    val username: String?,
+    val uid: String?,
+    val password: String?,
+    )  : Parcelable

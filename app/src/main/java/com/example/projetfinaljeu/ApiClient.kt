@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiClient {
 
     private val api = Retrofit.Builder()
-        .baseUrl("https://api.steampowered.com/ISteamChartsService/")
+        .baseUrl("https://api.steampowered.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
@@ -22,14 +22,18 @@ object ApiClient {
         .create(ApiInterface::class.java)
 
    suspend fun getGames(): ServerResponse {
-        return api.getGames().await()
+        return api.getGamesAsync().await()
    }
 
     suspend fun getDetailGames(apiId: Int): JsonObject {
-        return apiwish.getDetailGames(apiId).await()
+        return apiwish.getDetailGamesAsync(apiId).await()
     }
 
     suspend fun getWishGames(apiId: Int): ServerDetailWishGameResponse {
-        return apiwish.getWishGames(apiId).await()
+        return apiwish.getWishGamesAsync(apiId).await()
+    }
+
+    suspend fun getGamesResearch(): ServerSearchResponse {
+        return api.getGamesResearchAsync().await()
     }
 }
