@@ -60,7 +60,6 @@ class GameLoginFragment : Fragment() {
             override fun handleOnBackPressed() {
                 val navController = findNavController()
                 val currentDestination = navController.currentDestination
-                println("ffffffffffffffffff "+auth.currentUser)
 
                 if(auth.currentUser == null || currentDestination?.id == R.id.gameHomeFragment){
                     message_action.visibility=View.VISIBLE
@@ -121,6 +120,8 @@ class GameLoginFragment : Fragment() {
             val emailPattern = Regex(pattern = "^[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
             val drawable = GradientDrawable()
             drawable.setStroke(2, ContextCompat.getColor(requireContext(),R.color.danger)) // 2 is the width of the border and Color.BLUE is the color
+            val drawableok = GradientDrawable()
+            drawableok.setStroke(2, ContextCompat.getColor(requireContext(),R.color.third)) // 2 is the width of the border and Color.BLUE is the color
 
             if (!email.matches(emailPattern)) {
                 // email is invalid
@@ -131,11 +132,17 @@ class GameLoginFragment : Fragment() {
             } else if (password.length < 8) {
                 // password is too short
                 emailEditText.error=null
+                emailEditText.background = drawableok
+
                 passwordEditText.error=getString(R.string.invalid_password)
                 passwordEditText.background = drawable
                 button_connexion.isEnabled=true
 
             } else {
+                passwordEditText.error=null
+                passwordEditText.background = drawableok
+                emailEditText.error=null
+                emailEditText.background = drawableok
                 login(email, password)
             }
         }

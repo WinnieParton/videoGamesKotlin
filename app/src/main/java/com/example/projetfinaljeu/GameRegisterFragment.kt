@@ -61,6 +61,8 @@ class GameRegisterFragment : Fragment() {
             val emailPattern = Regex(pattern = "^[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
             val drawable = GradientDrawable()
             drawable.setStroke(2, ContextCompat.getColor(requireContext(),R.color.danger)) // 2 is the width of the border and Color.BLUE is the color
+            val drawableok = GradientDrawable()
+            drawableok.setStroke(2, ContextCompat.getColor(requireContext(),R.color.third)) // 2 is the width of the border and Color.BLUE is the color
 
             if (!email.matches(emailPattern)) {
                 // email is invalid
@@ -71,17 +73,27 @@ class GameRegisterFragment : Fragment() {
             } else if (password.length < 8) {
                 // password is too short
                 emailEditText.error=null
+                emailEditText.background = drawableok
+
                 passwordEditText.error=getString(R.string.invalid_password)
                 passwordEditText.background = drawable
                 button_register.isEnabled=true
 
             }else if (password != verifypassword){
                 passwordEditText.error=null
+                passwordEditText.background = drawableok
+
                 verifyEditText.error=getString(R.string.invalid_password_confir)
                 verifyEditText.background = drawable
                 button_register.isEnabled=true
 
             }else {
+                verifyEditText.error=null
+                verifyEditText.background = drawableok
+                emailEditText.error=null
+                emailEditText.background = drawableok
+                passwordEditText.error=null
+                passwordEditText.background = drawableok
                 signInWithEmailAndPassword(email, password, username)
             }
         }
