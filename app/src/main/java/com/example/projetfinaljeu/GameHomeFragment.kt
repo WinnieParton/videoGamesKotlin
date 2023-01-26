@@ -27,6 +27,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
+
 class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
     private lateinit var games: List<Game>
     private lateinit var rv:RecyclerView

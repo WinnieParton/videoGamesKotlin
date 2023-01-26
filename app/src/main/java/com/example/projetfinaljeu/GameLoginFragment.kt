@@ -160,6 +160,7 @@ class GameLoginFragment : Fragment() {
         }
     }
 
+
     private fun login(email: String, password: String){
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->

@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
+
 class GamesAdapter(
     private val games: List<Game>,
     private val onClickListener: OnClickListener,
