@@ -121,7 +121,14 @@ class GameDetailFragment : Fragment() {
         GlobalScope.launch {
 
              if(gameIfo.header_image != null){
-                 val url =   URL(gameIfo.header_image.split("?")[0])
+                 var lien = ""
+                 if(gameIfo.header_image.split("?").isNotEmpty())
+                     lien=gameIfo.header_image.split("?")[0]
+                 else
+                     lien=gameIfo.header_image
+
+                 val url = URL(lien)
+
                  val connection = withContext(Dispatchers.IO) {
                      url.openConnection()
                  } as HttpURLConnection
@@ -135,7 +142,13 @@ class GameDetailFragment : Fragment() {
 
 
             if(gameIfo.background != null) {
-                val url1 = URL(gameIfo.background.split("?")[0])
+                var lien = ""
+                if(gameIfo.background.split("?").isNotEmpty())
+                    lien=gameIfo.background.split("?")[0]
+                else
+                    lien=gameIfo.background
+
+                val url1 = URL(lien)
 
                 val connection1 = withContext(Dispatchers.IO) {
                     url1.openConnection()
@@ -147,9 +160,14 @@ class GameDetailFragment : Fragment() {
                 data1 = connection1.responseCode
             }
 
-            if(gameIfo.header_image != null) {
-                val url2 = URL(gameIfo.header_image.split("?")[0])
+            if(gameIfo.background_raw != null) {
+                var lien = ""
+                if(gameIfo.background_raw.split("?").isNotEmpty())
+                    lien=gameIfo.background_raw.split("?")[0]
+                else
+                    lien=gameIfo.background_raw
 
+                val url2 = URL(lien)
 
                 val connection2 = withContext(Dispatchers.IO) {
                     url2.openConnection()
@@ -223,11 +241,11 @@ class GameDetailFragment : Fragment() {
             R.id.like -> {
                 if (isItemFavorite) {
                     item.setIcon(R.drawable.like)
-                    isItemFavorite = true
+                    isItemFavorite = false
                     unlikeGame()
                 } else {
                     item.setIcon(R.drawable.like_full)
-                    isItemFavorite = false
+                    isItemFavorite = true
                     likeGame()
                 }
                 return true
@@ -235,11 +253,11 @@ class GameDetailFragment : Fragment() {
             R.id.wish -> {
                 if (isItemWisk) {
                     item.setIcon(R.drawable.whishlist)
-                    isItemWisk = true
+                    isItemWisk = false
                     unwishGame()
                 } else {
                     item.setIcon(R.drawable.whishlist_full)
-                    isItemWisk = false
+                    isItemWisk = true
                     wishGame()
                 }
 
