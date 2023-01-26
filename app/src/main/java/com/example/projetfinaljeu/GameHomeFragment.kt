@@ -115,7 +115,7 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
     }
 
     private fun getGame(response: ServerResponse) {
-        games= response.toGames()!!
+        games = response.toGames()!!
         rv = list_game_recyclerview
         //scroller ver le haut
         //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
