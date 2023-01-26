@@ -11,8 +11,6 @@ data class ServerResponse (
         val ranks: List<Rank>?
     ){
         data class Rank(
-            @SerializedName("rank")
-            val rank: Int?,
             @SerializedName("appid")
             val appid: Int?,
         )

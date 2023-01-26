@@ -92,7 +92,7 @@
                         android:background="@android:color/transparent"
                         android:text="@string/description_game"
                         android:layout_marginTop="50dp"
-                        android:textSize="10sp"
+                        android:textSize="11sp"
                         android:id="@+id/descrip"
                         />
 

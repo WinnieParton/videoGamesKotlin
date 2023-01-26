@@ -121,7 +121,7 @@ class GameDetailFragment : Fragment() {
         GlobalScope.launch {
 
              if(gameIfo.header_image != null){
-                 val url =   URL(gameIfo.header_image.split("?")!![0])
+                 val url =   URL(gameIfo.header_image.split("?")[0])
                  val connection = withContext(Dispatchers.IO) {
                      url.openConnection()
                  } as HttpURLConnection
@@ -135,7 +135,7 @@ class GameDetailFragment : Fragment() {
 
 
             if(gameIfo.background != null) {
-                val url1 = URL(gameIfo.background?.split("?")!![0])
+                val url1 = URL(gameIfo.background.split("?")[0])
 
                 val connection1 = withContext(Dispatchers.IO) {
                     url1.openConnection()
@@ -148,7 +148,7 @@ class GameDetailFragment : Fragment() {
             }
 
             if(gameIfo.header_image != null) {
-                val url2 = URL(gameIfo.header_image?.split("?")!![0])
+                val url2 = URL(gameIfo.header_image.split("?")[0])
 
 
                 val connection2 = withContext(Dispatchers.IO) {

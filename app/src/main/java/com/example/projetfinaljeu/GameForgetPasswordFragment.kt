@@ -53,6 +53,8 @@ class GameForgetPasswordFragment : Fragment() {
             val emailPattern = Regex(pattern = "^[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
             val drawable = GradientDrawable()
             drawable.setStroke(2, ContextCompat.getColor(requireContext(),R.color.danger)) // 2 is the width of the border and Color.BLUE is the color
+            val drawableok = GradientDrawable()
+            drawableok.setStroke(2, ContextCompat.getColor(requireContext(),R.color.third)) // 2 is the width of the border and Color.BLUE is the color
 
             if (!email.matches(emailPattern)) {
                 // email is invalid
@@ -61,6 +63,9 @@ class GameForgetPasswordFragment : Fragment() {
                 button_renvoyer_mot_de_passe.isEnabled=true
 
             } else{
+                emailEditText.error=null
+                emailEditText.background = drawableok
+
                 loader.visibility=View.VISIBLE
                 resetPassword(email)
             }
