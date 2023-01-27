@@ -7,10 +7,6 @@
     tools:context=".GameLoginFragment"
     android:padding="30dp"
     >
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <TextView
             android:id="@+id/id_welcome"
             android:layout_width="wrap_content"
@@ -85,7 +81,6 @@
             android:visibility="gone"
             />
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -133,8 +128,6 @@
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
         <TextView
             android:id="@+id/button_mot_de_passe_oublier"
             android:layout_width="match_parent"
@@ -148,5 +141,3 @@
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
