@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.*
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
@@ -79,12 +76,12 @@ class GameDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar_home)
 
-        val relativeLayout: RelativeLayout = view.findViewById(R.id.text_rel)
+        val linearLayout: LinearLayout = view.findViewById(R.id.text_rel)
         val drawable1 = GradientDrawable()
         drawable1.cornerRadius = 15f // set the corner radius
         val color = ContextCompat.getColor(requireContext(),R.color.secondary)
         drawable1.setColor(color) // set the color using a resource
-        relativeLayout.background = drawable1
+        linearLayout.background = drawable1
 
         progressBar.visibility=View.VISIBLE
         home_detail_frag.visibility=View.GONE
