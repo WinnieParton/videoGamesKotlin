@@ -1,5 +1,6 @@
 package com.example.projetfinaljeu
 
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
@@ -14,13 +15,13 @@ interface ApiInterface {
 
     //recuperer les details d'un jeu
     @GET("api/appdetails")
-    fun getDetailGamesAsync(@Query("appids") appids: Int?): Deferred<JsonObject>
+    fun getDetailGamesAsync(@Query("appids") appids: Int?, @Query("l") lang: String?): Deferred<JsonObject>
 
     //recuperer les avis d'un jeu
     @GET("appreviews/{apiId}?json=1")
     fun getWishGamesAsync(@Path("apiId") apiId: Int?): Deferred<ServerDetailWishGameResponse>
 
     //liste  des jeux sur lesquels la recherche s'applique
-    @GET("ISteamApps/GetAppList/v2/?")
-    fun getGamesResearchAsync(): Deferred<ServerSearchResponse>
+    @GET("SearchApps/{textsearch}")
+    fun getGamesResearchAsync(@Path("textsearch") textsearch: String?): Deferred<JsonArray>
 }

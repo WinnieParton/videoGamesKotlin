@@ -57,14 +57,22 @@ class GameResearchFragment : Fragment() {
 
             override fun onTextChanged(s: CharSequence, start: Int,
                                        before: Int, count: Int) {
-                val data = searchGames(gamesSearch, s.toString())
-                if(data.isEmpty())
-                    list_game_search_recyclerview.visibility=View.GONE
-                else
-                    list_game_search_recyclerview.visibility=View.VISIBLE
-                getGame(data, view)
-                if(nb_result !=null)
-                    nb_result.applyUnderlineTextPart(getString(R.string.nb_result)+data.size)
+
+                GlobalScope.launch(Dispatchers.Default) {
+                    val data = ApiClient.getGamesResearch(s.toString())
+
+                    withContext(Dispatchers.Main) {
+                        println("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr  $data")
+                        if(data.isEmpty)
+                            list_game_search_recyclerview.visibility=View.GONE
+                        else
+                            list_game_search_recyclerview.visibility=View.VISIBLE
+                        //val dataSearch = searchGames(data)
+                        //getGame(dataSearch, view)
+                        if(nb_result !=null)
+                            nb_result.applyUnderlineTextPart(getString(R.string.nb_result)+data.size())
+                    }
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -72,12 +80,11 @@ class GameResearchFragment : Fragment() {
         })
 
         GlobalScope.launch(Dispatchers.Default) {
-            val response = ApiClient.getGamesResearch()
-            gamesSearch = response.toGamesSearch()!!.filter { it.name!!.isNotEmpty()}
+            gamesSearch = userArgs.gameDataArgs.toList()
 
-            if(nb_result !=null)
-                nb_result.applyUnderlineTextPart(getString(R.string.nb_result)+gamesSearch.size)
             withContext(Dispatchers.Main) {
+                if(nb_result !=null)
+                    nb_result.applyUnderlineTextPart(getString(R.string.nb_result)+gamesSearch.size)
                 getGame(gamesSearch, view)
             }
         }
@@ -117,8 +124,12 @@ class GameResearchFragment : Fragment() {
         )
 
     }
+    /*private fun searchGames(data: JsonArray): List<Game> {
 
-    private fun searchGames(games: List<Game>, searchText: String): List<Game> {
-        return games.filter { it.name!!.contains(searchText, true) }
-    }
+        return userArgs.gameDataArgs.filter { obj ->
+            data.toList().any { obj2 ->
+                obj.appid == obj2["dd"]
+            }
+        }
+    }*/
 }

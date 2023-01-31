@@ -1,5 +1,6 @@
 package com.example.projetfinaljeu
 
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import retrofit2.Retrofit
@@ -21,19 +22,26 @@ object ApiClient {
         .build()
         .create(ApiInterface::class.java)
 
+    private val apisearch = Retrofit.Builder()
+        .baseUrl("https://steamcommunity.com/actions/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .build()
+        .create(ApiInterface::class.java)
+
    suspend fun getGames(): ServerResponse {
         return api.getGamesAsync().await()
    }
 
-    suspend fun getDetailGames(apiId: Int): JsonObject {
-        return apiwish.getDetailGamesAsync(apiId).await()
+    suspend fun getDetailGames(apiId: Int, lang: String): JsonObject {
+        return apiwish.getDetailGamesAsync(apiId, lang).await()
     }
 
     suspend fun getWishGames(apiId: Int): ServerDetailWishGameResponse {
         return apiwish.getWishGamesAsync(apiId).await()
     }
 
-    suspend fun getGamesResearch(): ServerSearchResponse {
-        return api.getGamesResearchAsync().await()
+    suspend fun getGamesResearch(textsearch: String): JsonArray {
+        return apisearch.getGamesResearchAsync(textsearch).await()
     }
 }
