@@ -25,8 +25,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.net.HttpURLConnection
-import java.net.URL
 import java.util.*
 
 
@@ -114,7 +112,7 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
                  val data = namegame.getAsJsonObject("data")
                  var price = data.getAsJsonObject("price_overview")?.get("final_formatted")?.asString?.trimMargin()
                 if(price != null)
-                    price = getString(R.string.item_price)+price;
+                    price = getString(R.string.item_price)+" "+price;
 
                  var headerImage = data?.get("header_image")?.asString?.trimMargin()
                  headerImage = getImageUrl(headerImage)
@@ -153,18 +151,6 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
              }
          }
     }
-    private fun getImageUrl(imageUrl: String?): String {
-        var processedUrl = ""
-        if (imageUrl != null) {
-            val url = imageUrl.split("?").firstOrNull() ?: imageUrl
-            val connection = URL(url).openConnection() as HttpURLConnection
-            connection.connect()
-            if (connection.responseCode == HttpURLConnection.HTTP_OK) {
-                processedUrl = imageUrl.split("?").first()
-            }
-        }
-        return processedUrl
-    }
 
     override fun onResume() {
         super.onResume()
@@ -180,7 +166,7 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
         //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
         //scroller vers le bas
         rv.layoutManager = LinearLayoutManager(context)
-        rv.adapter = GamesAdapter(games, listener, getString(R.string.item_price) + "10,00€")
+        rv.adapter = GamesAdapter(games, listener, getString(R.string.item_price) + " 10,00€")
 
     }
 

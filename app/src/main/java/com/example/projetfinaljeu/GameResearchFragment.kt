@@ -15,11 +15,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.fragment_game_research.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 
 class GameResearchFragment : Fragment() {
@@ -60,6 +62,46 @@ class GameResearchFragment : Fragment() {
 
                 GlobalScope.launch(Dispatchers.Default) {
                     val data = ApiClient.getGamesResearch(s.toString())
+                    var dataSearch = mutableListOf<Game>()
+                    val newdata = JsonParser().parse(data.toString()).asJsonArray
+                    for (jsonElement in newdata) {
+                        val it = jsonElement.asJsonObject
+                        val response =
+                            ApiClient.getDetailGames(it.get("appid").asInt, Locale.getDefault().language)
+                        val responseWish = ApiClient.getWishGames(it.get("appid").asInt)
+
+                        val namegame = response.getAsJsonObject(it.get("appid").asInt.toString())
+                        val data = namegame.getAsJsonObject("data")
+                        var price = data.getAsJsonObject("price_overview")
+                            ?.get("final_formatted")?.asString?.trimMargin()
+                        if (price != null)
+                            price = getString(R.string.item_price) + price;
+
+                        var headerImage = data?.get("header_image")?.asString?.trimMargin()
+                        headerImage = getImageUrl(headerImage)
+
+                        var background = data?.get("background")?.asString?.trimMargin()
+                        background = getImageUrl(background)
+
+
+                        var background_raw = data?.get("background_raw")?.asString?.trimMargin()
+                        background_raw = getImageUrl(background_raw)
+
+                        println("ffffffffff   $background_raw")
+                        dataSearch.add(
+                            Game(
+                                it.get("appid").asInt,
+                                headerImage,
+                                background,
+                                background_raw,
+                                data?.get("name")?.asString?.trimMargin(),
+                                data?.getAsJsonArray("publishers")?.joinToString { it.asString.trimMargin() },
+                                data?.get("detailed_description")?.asString?.trimMargin(),
+                                responseWish.toWishDetailGame()!!,
+                                price
+                            )
+                        )
+                    }
 
                     withContext(Dispatchers.Main) {
                         println("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr  $data")
@@ -67,8 +109,7 @@ class GameResearchFragment : Fragment() {
                             list_game_search_recyclerview.visibility=View.GONE
                         else
                             list_game_search_recyclerview.visibility=View.VISIBLE
-                        //val dataSearch = searchGames(data)
-                        //getGame(dataSearch, view)
+
                         if(nb_result !=null)
                             nb_result.applyUnderlineTextPart(getString(R.string.nb_result)+data.size())
                     }
@@ -124,12 +165,5 @@ class GameResearchFragment : Fragment() {
         )
 
     }
-    /*private fun searchGames(data: JsonArray): List<Game> {
 
-        return userArgs.gameDataArgs.filter { obj ->
-            data.toList().any { obj2 ->
-                obj.appid == obj2["dd"]
-            }
-        }
-    }*/
 }

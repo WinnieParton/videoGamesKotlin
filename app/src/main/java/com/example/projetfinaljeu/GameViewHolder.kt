@@ -24,12 +24,12 @@ class GameViewHolder(v: View)  : RecyclerView.ViewHolder(v){
         title_gameText.text=game.name
         name_editeurText.text=game.publishers
 
-        if(game.header_image != null || game.header_image != "" )
+        if(game.header_image?.isNotEmpty() == true || game.header_image != null)
             Glide.with(itemView)
                 .load(game.header_image)
                 .into(id_image_jeu_itemImg)
 
-        if(game.background != null)
+        if(game.background?.isNotEmpty() == true || game.background != null)
             Glide.with(itemView)
                 .load(game.background)
                 .into(imgheaderbackImg)

@@ -23,8 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/img3"
-                android:scaleType="centerCrop"
-                android:alpha="0.1"/>
+                android:scaleType="centerCrop"/>
 
             <ImageView
                 android:id="@+id/id_image_jeu_item"
@@ -33,6 +32,7 @@
                 android:layout_marginVertical="10dp"
                 android:layout_marginStart="10dp"
                 android:src="@drawable/img3"
+                android:scaleType="centerCrop"
                />
 
             <androidx.constraintlayout.widget.ConstraintLayout
