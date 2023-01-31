@@ -57,64 +57,79 @@ class GameResearchFragment : Fragment() {
             progressBar.visibility=View.VISIBLE
 
             constraint.visibility=View.GONE
-println("eeeee ${searchEditText.toString()}")
+            var nb=0;
+            val dataSearch = mutableListOf<Game>()
+
+            println("eeeee ${searchEditText.text}")
             GlobalScope.launch(Dispatchers.Default) {
-                val data = ApiClient.getGamesResearch(searchEditText.toString())
-                val dataSearch = mutableListOf<Game>()
-                val newdata = JsonParser().parse(data.toString()).asJsonArray
-                for (jsonElement in newdata) {
-                    val it = jsonElement.asJsonObject
-                    val response =
-                        ApiClient.getDetailGames(it.get("appid").asInt, Locale.getDefault().language)
-                    val responseWish = ApiClient.getWishGames(it.get("appid").asInt)
+                try {
+                    val data = ApiClient.getGamesResearch(searchEditText.text.toString())
+                    nb = data.size()
+                    val newdata = JsonParser().parse(data.toString()).asJsonArray
+                    for (jsonElement in newdata) {
+                        val it = jsonElement.asJsonObject
+                        val response =
+                            ApiClient.getDetailGames(
+                                it.get("appid").asInt,
+                                Locale.getDefault().language
+                            )
+                        val responseWish = ApiClient.getWishGames(it.get("appid").asInt)
 
-                    val namegame = response.getAsJsonObject(it.get("appid").asInt.toString())
-                    val data = namegame.getAsJsonObject("data")
-                    var price = data.getAsJsonObject("price_overview")
-                        ?.get("final_formatted")?.asString?.trimMargin()
-                    if (price != null)
-                        price = getString(R.string.item_price) +" "+ price
+                        val namegame = response.getAsJsonObject(it.get("appid").asInt.toString())
+                        val data = namegame.getAsJsonObject("data")
+                        var price = data.getAsJsonObject("price_overview")
+                            ?.get("final_formatted")?.asString?.trimMargin()
+                        if (price != null)
+                            price = getString(R.string.item_price) + " " + price
 
-                    var headerImage = data?.get("header_image")?.asString?.trimMargin()
-                    headerImage = getImageUrl(headerImage)
+                        var headerImage = data?.get("header_image")?.asString?.trimMargin()
+                        headerImage = getImageUrl(headerImage)
 
-                    var background = data?.get("background")?.asString?.trimMargin()
-                    background = getImageUrl(background)
+                        var background = data?.get("background")?.asString?.trimMargin()
+                        background = getImageUrl(background)
 
 
-                    var background_raw = data?.get("background_raw")?.asString?.trimMargin()
-                    background_raw = getImageUrl(background_raw)
+                        var background_raw = data?.get("background_raw")?.asString?.trimMargin()
+                        background_raw = getImageUrl(background_raw)
 
-                    dataSearch.add(
-                        Game(
-                            it.get("appid").asInt,
-                            headerImage,
-                            background,
-                            background_raw,
-                            data?.get("name")?.asString?.trimMargin(),
-                            data?.getAsJsonArray("publishers")?.joinToString { it.asString.trimMargin() },
-                            data?.get("detailed_description")?.asString?.trimMargin(),
-                            responseWish.toWishDetailGame()!!,
-                            price
+                        dataSearch.add(
+                            Game(
+                                it.get("appid").asInt,
+                                headerImage,
+                                background,
+                                background_raw,
+                                data?.get("name")?.asString?.trimMargin(),
+                                data?.getAsJsonArray("publishers")
+                                    ?.joinToString { it.asString.trimMargin() },
+                                data?.get("detailed_description")?.asString?.trimMargin(),
+                                responseWish.toWishDetailGame()!!,
+                                price
+                            )
                         )
-                    )
+                    }
+                } catch (e: Exception) {
+                    println("Error: ${e.message}")
+                    //errorr.visibility=View.VISIBLE
+                    //errorr.text = getString(R.string.error) + e.message
+
                 }
 
-                withContext(Dispatchers.Main) {
-                    println("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr  $data")
-                    if(data.isEmpty)
-                        list_game_search_recyclerview.visibility=View.GONE
-                    else
-                        list_game_search_recyclerview.visibility=View.VISIBLE
 
-                    if(nb_result.text !=null)
-                        nb_result.applyUnderlineTextPart(getString(R.string.nb_result) + data.size())
+                withContext(Dispatchers.Main) {
+                    println("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr  $nb")
+                    if (dataSearch.size == 0)
+                        list_game_search_recyclerview.visibility = View.GONE
+                    else
+                        list_game_search_recyclerview.visibility = View.VISIBLE
+
+                    if (nb_result.text != null)
+                        nb_result.applyUnderlineTextPart(getString(R.string.nb_result) +nb)
 
                     getGame(dataSearch, view)
 
-                    progressBar.visibility=View.GONE
+                    progressBar.visibility = View.GONE
 
-                    constraint.visibility=View.VISIBLE
+                    constraint.visibility = View.VISIBLE
                 }
             }
         }
