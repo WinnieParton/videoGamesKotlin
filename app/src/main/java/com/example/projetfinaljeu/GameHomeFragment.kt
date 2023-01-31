@@ -100,7 +100,6 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
         //errorr.visibility=View.GONE
 
          GlobalScope.launch(Dispatchers.Default) {
-
              try {
 
              val response = ApiClient.getGames()
