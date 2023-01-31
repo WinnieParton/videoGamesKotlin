@@ -39,7 +39,7 @@
 
 
             <ImageView
-                android:id="@+id/iconsearch"
+                android:id="@+id/iconsearchbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"

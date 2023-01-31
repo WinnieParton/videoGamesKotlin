@@ -19,7 +19,8 @@ class GameViewHolder(v: View)  : RecyclerView.ViewHolder(v){
         if (game.price_overview != null) {
             priceText.applyUnderlineTextStart(game.price_overview)
         }else
-            priceText.applyUnderlineTextStart(textId!!)
+            if(textId != null)
+                priceText.applyUnderlineTextStart(textId)
 
         title_gameText.text=game.name
         name_editeurText.text=game.publishers

@@ -29,7 +29,7 @@ import java.util.*
 
 
 class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
-    private var games: List<Game> = mutableListOf<Game>()
+    private lateinit var games : List<Game>;
     private var listGa = mutableListOf<Game>()
     private lateinit var rv:RecyclerView
     private val userArgs: GameHomeFragmentArgs by navArgs()
@@ -79,7 +79,6 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
         super.onViewCreated(view, savedInstanceState)
         val clickinput = view.findViewById<RelativeLayout>(R.id.homeSearchBar)
         clickinput.setOnClickListener {
-            Firebase.auth.signOut()
             // Add action to navigate
             findNavController().navigate(
                 GameHomeFragmentDirections.actionGameHomeFragmentToGameResearchFragment(games.toTypedArray(), userArgs.userArgs)
@@ -112,7 +111,7 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
                  val data = namegame.getAsJsonObject("data")
                  var price = data.getAsJsonObject("price_overview")?.get("final_formatted")?.asString?.trimMargin()
                 if(price != null)
-                    price = getString(R.string.item_price)+" "+price;
+                    price = getString(R.string.item_price)+" "+price
 
                  var headerImage = data?.get("header_image")?.asString?.trimMargin()
                  headerImage = getImageUrl(headerImage)
