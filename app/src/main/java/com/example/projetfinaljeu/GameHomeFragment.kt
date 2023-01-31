@@ -25,14 +25,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
+import java.net.HttpURLConnection
+import java.net.URL
+import java.util.*
 
 
 class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
-    private lateinit var games: List<Game>
+    private var games: List<Game> = mutableListOf<Game>()
+    private var listGa = mutableListOf<Game>()
     private lateinit var rv:RecyclerView
     private val userArgs: GameHomeFragmentArgs by navArgs()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -86,6 +88,7 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
             )
         }
         val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar_home)
+        //val errorr = view.findViewById<TextView>(R.id.erreur_fragment)
         val color = ContextCompat.getColor(requireContext(), R.color.white)
         val drawable = progressBar.indeterminateDrawable.mutate()
         drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
@@ -94,35 +97,90 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
         progressBar.visibility=View.VISIBLE
 
         home_frag.visibility=View.GONE
+        //errorr.visibility=View.GONE
 
          GlobalScope.launch(Dispatchers.Default) {
 
-             val response = ApiClient.getGames()
+             try {
 
+             val response = ApiClient.getGames()
+             response.toRanks()?.let { println(it.size) }
+             response.toRanks()?.forEach {
+                 val response = ApiClient.getDetailGames(it.appid!!, Locale.getDefault().language)
+                 val responseWish = ApiClient.getWishGames(it.appid)
+
+
+                 val namegame = response.getAsJsonObject(it.appid.toString())
+                 val data = namegame.getAsJsonObject("data")
+                 var price = data.getAsJsonObject("price_overview")?.get("final_formatted")?.asString?.trimMargin()
+                if(price != null)
+                    price = getString(R.string.item_price)+price;
+
+                 var headerImage = data?.get("header_image")?.asString?.trimMargin()
+                 headerImage = getImageUrl(headerImage)
+
+                 var background=data?.get("background")?.asString?.trimMargin()
+                 background = getImageUrl(background)
+
+
+                 var background_raw = data?.get("background_raw")?.asString?.trimMargin()
+                 background_raw = getImageUrl(background_raw)
+
+                println("ffffffffff   $background_raw")
+                 listGa.add(Game(
+                     it.appid,
+                     headerImage,
+                     background,
+                     background_raw ,
+                     data?.get("name")?.asString?.trimMargin(),
+                     data?.getAsJsonArray("publishers")?.joinToString { it.asString.trimMargin() },
+                     data?.get("detailed_description")?.asString?.trimMargin(),
+                     responseWish.toWishDetailGame()!!,
+                     price)
+                 )
+                 }
+
+             } catch (e: Exception) {
+                 println("Error: ${e.message}")
+                 //errorr.visibility=View.VISIBLE
+                 //errorr.text = getString(R.string.error) + e.message
+
+             }
              withContext(Dispatchers.Main) {
-                 getGame(response)
+                 getGame(listGa)
                  progressBar.visibility=View.GONE
                  home_frag.visibility=View.VISIBLE
              }
          }
+    }
+    private fun getImageUrl(imageUrl: String?): String {
+        var processedUrl = ""
+        if (imageUrl != null) {
+            val url = imageUrl.split("?").firstOrNull() ?: imageUrl
+            val connection = URL(url).openConnection() as HttpURLConnection
+            connection.connect()
+            if (connection.responseCode == HttpURLConnection.HTTP_OK) {
+                processedUrl = imageUrl.split("?").first()
+            }
+        }
+        return processedUrl
     }
 
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity?)!!.let {
             it.supportActionBar?.show()
-
         }
     }
 
-    private fun getGame(response: ServerResponse) {
-        games = response.toGames()!!
+    private fun getGame(listGame: List<Game>) {
+        games = listGame
         rv = list_game_recyclerview
         //scroller ver le haut
         //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
         //scroller vers le bas
         rv.layoutManager = LinearLayoutManager(context)
-        rv.adapter = GamesAdapter(games, listener, getString(R.string.item_price))
+        rv.adapter = GamesAdapter(games, listener, getString(R.string.item_price) + "10,00€")
 
     }
 

@@ -24,8 +24,7 @@ import kotlinx.android.synthetic.main.fragment_game_detail.*
 import kotlinx.android.synthetic.main.fragment_game_detail.description_game
 import kotlinx.android.synthetic.main.fragment_game_home.*
 import kotlinx.coroutines.*
-import java.net.HttpURLConnection
-import java.net.URL
+import java.util.*
 
 class GameDetailFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
@@ -34,7 +33,6 @@ class GameDetailFragment : Fragment() {
     private var isItemWisk:Boolean=false
     private val game: GameDetailFragmentArgs by navArgs()
     private lateinit var rv: RecyclerView
-    private lateinit var gameInfo: GameInfos
     private var isEmptyWish:Boolean=false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,130 +84,46 @@ class GameDetailFragment : Fragment() {
         progressBar.visibility=View.VISIBLE
         home_detail_frag.visibility=View.GONE
 
-        GlobalScope.launch(Dispatchers.Default) {
-            val response = ApiClient.getDetailGames(game.gameDataArgs.appid)
-            val responseWish = ApiClient.getWishGames(game.gameDataArgs.appid)
-            withContext(Dispatchers.Main) {
-                getGameWishDetail(responseWish)
-                val namegame = response.getAsJsonObject(game.gameDataArgs.appid.toString())
-                val data = namegame.getAsJsonObject("data")
-                 gameInfo= GameInfos(game.gameDataArgs.appid,
-                     data?.get("header_image")?.asString?.trimMargin(),
-                    data?.get("background")?.asString?.trimMargin(),
-                    data?.get("background_raw")?.asString?.trimMargin(),
-                    data?.get("name")?.asString?.trimMargin(),
-                    data?.getAsJsonArray("publishers")?.joinToString { it.asString.trimMargin() },
-                    data?.get("detailed_description")?.asString?.trimMargin()
-                )
-                updateImg(gameInfo, view)
+        getGameWishDetail()
 
-            }
-        }
+        updateImg(game.gameDataArgs, view)
+
     }
 
-    private fun updateImg(gameIfo: GameInfos, view: View) {
+    private fun updateImg(gameIfo: Game, view: View) {
         val img = view.findViewById<ImageView>(R.id.image_header)
         val img1 = view.findViewById<ImageView>(R.id.backgr)
         val img2 = view.findViewById<ImageView>(R.id.id_image_jeu_item)
         val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar_home)
-        var data = 404
-        var data1 = 404
-        var data2 = 404
-        GlobalScope.launch {
+        if(gameIfo.header_image != null)
+            Glide.with(requireContext())
+                .load(gameIfo.header_image)
+                .into(img)
+        if(gameIfo.background != null)
+            Glide.with(requireContext())
+                .load(gameIfo.background)
+                .into(img1)
+        if(gameIfo.background_raw != null)
+            Glide.with(requireContext())
+                .load(gameIfo.background_raw)
+                .into(img2)
 
-             if(gameIfo.header_image != null){
-                 var lien = ""
-                 if(gameIfo.header_image.split("?").isNotEmpty())
-                     lien=gameIfo.header_image.split("?")[0]
-                 else
-                     lien=gameIfo.header_image
+        if(gameIfo.name !=null)
+            view.findViewById<TextView>(R.id.title_detail).text = gameIfo.name
+        if(gameIfo.publishers !=null)
+            view.findViewById<TextView>(R.id.descrip).text = gameIfo.publishers
+        if(gameIfo.detailed_description !=null)
+            view.findViewById<TextView>(R.id.description_game).text = Html.fromHtml(gameIfo.detailed_description)
+        else
+            view.findViewById<TextView>(R.id.description_game).text = getString(R.string.no_description)
 
-                 val url = URL(lien)
+        progressBar.visibility = View.GONE
+        home_detail_frag.visibility = View.VISIBLE
 
-                 val connection = withContext(Dispatchers.IO) {
-                     url.openConnection()
-                 } as HttpURLConnection
-
-                 withContext(Dispatchers.IO) {
-                     connection.connect()
-                 }
-
-                 data = connection.responseCode
-             }
-
-
-            if(gameIfo.background != null) {
-                var lien = ""
-                if(gameIfo.background.split("?").isNotEmpty())
-                    lien=gameIfo.background.split("?")[0]
-                else
-                    lien=gameIfo.background
-
-                val url1 = URL(lien)
-
-                val connection1 = withContext(Dispatchers.IO) {
-                    url1.openConnection()
-                } as HttpURLConnection
-                withContext(Dispatchers.IO) {
-                    connection1.connect()
-                }
-
-                data1 = connection1.responseCode
-            }
-
-            if(gameIfo.background_raw != null) {
-                var lien = ""
-                if(gameIfo.background_raw.split("?").isNotEmpty())
-                    lien=gameIfo.background_raw.split("?")[0]
-                else
-                    lien=gameIfo.background_raw
-
-                val url2 = URL(lien)
-
-                val connection2 = withContext(Dispatchers.IO) {
-                    url2.openConnection()
-                } as HttpURLConnection
-                withContext(Dispatchers.IO) {
-                    connection2.connect()
-                }
-
-                data2 = connection2.responseCode
-            }
-            withContext(Dispatchers.Main) {
-                if (data == HttpURLConnection.HTTP_OK) {
-                    Glide.with(requireContext())
-                        .load(gameIfo.header_image?.split("?")!![0])
-                        .into(img)
-                }
-
-                if (data1 == HttpURLConnection.HTTP_OK) {
-                    Glide.with(requireContext())
-                        .load(gameIfo.background?.split("?")!![0])
-                        .into(img1)
-                }
-
-                if (data2 == HttpURLConnection.HTTP_OK) {
-                    Glide.with(requireContext())
-                        .load(gameIfo.background_raw?.split("?")?.get(0))
-                        .into(img2)
-                }
-
-                if(gameIfo.name !=null)
-                    view.findViewById<TextView>(R.id.title_detail).text = gameIfo.name
-                if(gameIfo.publishers !=null)
-                    view.findViewById<TextView>(R.id.descrip).text = gameIfo.publishers
-                if(gameIfo.detailed_description !=null)
-                    view.findViewById<TextView>(R.id.description_game).text = Html.fromHtml(gameIfo.detailed_description)
-                else
-                    view.findViewById<TextView>(R.id.description_game).text = getString(R.string.no_description)
-                progressBar.visibility = View.GONE
-                home_detail_frag.visibility = View.VISIBLE
-            }
-        }
     }
 
-    private fun getGameWishDetail(response: ServerDetailWishGameResponse) {
-        val wish: List<WishDetailGame> = response.toWishDetailGame()!!
+    private fun getGameWishDetail() {
+        val wish: List<WishDetailGame> = game.gameDataArgs.wishs
         if(wish.isNotEmpty()) {
             rv = list_wish_recyclerview
             rv.layoutManager = LinearLayoutManager(context)

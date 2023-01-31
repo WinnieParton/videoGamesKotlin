@@ -139,6 +139,7 @@ class GameLoginFragment : Fragment() {
                 button_connexion.isEnabled=true
 
             } else {
+                button_connexion.isEnabled=false
                 passwordEditText.error=null
                 passwordEditText.background = drawableok
                 emailEditText.error=null

@@ -27,7 +27,7 @@
     <string name="check_start">Click on the star to add more.</string>
     <string name="item_name_game">Name of the game</string>
     <string name="item_name_editor">Name of the publisher </string>
-    <string name="item_price">Price : 10,00 €</string>
+    <string name="item_price">Price : </string>
     <string name="item_info">Read more</string>
     <string name="home">Home</string>
     <string name="detail_jeu">Detail of the game</string>
@@ -45,4 +45,5 @@
     <string name="bestsell">Best sellers</string>
     <string name="title_description">DESCRIPTION</string>
     <string name="title_avis">NOTICE</string>
+    <string name="error">An error has occurred</string>
 </resources>

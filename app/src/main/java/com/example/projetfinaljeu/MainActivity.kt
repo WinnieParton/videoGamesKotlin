@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
 fun TextView.applyUnderlineTextStart(text: String){
     val spannable = SpannableString(text)
-    spannable.setSpan(UnderlineSpan(),  0,text.indexOf(' ') , 0)
+    spannable.setSpan(UnderlineSpan(),  0,text.indexOf('€')-1 , 0)
     setText(spannable)
 }
 fun TextView.applyUnderlineText(text: String){

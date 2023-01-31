@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/imgheaderback"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/img3"
@@ -28,7 +29,7 @@
             <ImageView
                 android:id="@+id/id_image_jeu_item"
                 android:layout_width="80dp"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_marginVertical="10dp"
                 android:layout_marginStart="10dp"
                 android:src="@drawable/img3"

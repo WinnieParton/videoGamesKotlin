@@ -27,7 +27,7 @@
     <string name="check_start">Cliquez sur l\'étoile pour en rajouter.</string>
     <string name="item_name_game">Nom du jeu</string>
     <string name="item_name_editor">Nom de l\'éditeur</string>
-    <string name="item_price">Prix : 10,00 €</string>
+    <string name="item_price">Prix : </string>
     <string name="item_info">En savoir plus</string>
     <string name="home">Accueil</string>
     <string name="detail_jeu">Détail du jeu</string>
@@ -43,4 +43,6 @@
     <string name="title_description">DESCRIPTION</string>
     <string name="no_description">Aucune description</string>
     <string name="title_avis">AVIS</string>
+    <string name="error">Une erreur est survenue</string>
+
 </resources>
