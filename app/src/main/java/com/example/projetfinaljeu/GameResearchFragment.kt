@@ -64,7 +64,7 @@ class GameResearchFragment : Fragment() {
             if (searchEditText.text.isEmpty())
                 getGame(gamesSearch, view)
             else {
-                var nb = 0;
+                var nb = 0
                 val dataSearch = mutableListOf<Game>()
 
                 GlobalScope.launch(Dispatchers.Default) {

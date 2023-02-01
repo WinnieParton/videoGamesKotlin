@@ -27,9 +27,7 @@ class GameLoginFragment : Fragment() {
     private lateinit var  auth: FirebaseAuth
     private var user: User=User(null,null,null,null)
     private var callback: OnBackPressedCallback? = null
-    private val sharedViewModel: SharedViewModel by lazy {
-        ViewModelProvider(this).get(SharedViewModel::class.java)
-    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -171,7 +169,6 @@ class GameLoginFragment : Fragment() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 progress_bar_home.visibility=View.GONE
-                println("wiiiiiiiiiiiii  "+sharedViewModel.games!!)
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     val user = auth.currentUser

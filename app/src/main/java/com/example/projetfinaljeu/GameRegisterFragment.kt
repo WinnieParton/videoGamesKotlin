@@ -45,6 +45,8 @@ class GameRegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        button_register.isEnabled=true
         button_register.setOnClickListener {
             button_register.isEnabled=false
             message_action.visibility=View.GONE
@@ -128,6 +130,9 @@ class GameRegisterFragment : Fragment() {
 
                     }
                 }
+                findNavController().navigate(
+                    GameRegisterFragmentDirections.actionGameRegisterFragmentToGameHomeFragment(User(email, username, user.uid,""))
+                )
 
             } else {
                 message_action.visibility=View.VISIBLE
