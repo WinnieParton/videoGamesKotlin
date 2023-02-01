@@ -80,6 +80,13 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
         drawable1.setColor(color) // set the color using a resource
         relativeLayout.background = drawable1
 
+
+        SharedViewModel.getGame().observe(viewLifecycleOwner, Observer {
+            // Update UI with dataList here
+            })
+
+        val gameList = SharedViewModel.setGame(game)
+
         return view
     }
 
