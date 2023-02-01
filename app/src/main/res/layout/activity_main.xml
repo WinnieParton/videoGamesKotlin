@@ -4,15 +4,13 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <include layout="@layout/loader" android:id="@+id/prog" />
-    <include layout="@layout/erreur" android:id="@+id/resp"/>
-
     <fragment
         android:id="@+id/nav_host_fragment_container"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/app_nav" />
+        app:navGraph="@navigation/app_nav"
+        />
 </FrameLayout>
 

@@ -104,7 +104,7 @@ class GameLikeFragment : Fragment() {
                         rv = list_game_like_recyclerview
                         //scroller vers le bas
                         rv.layoutManager = LinearLayoutManager(context)
-                        rv.adapter = GamesAdapter(games.toList(), listener, getString(R.string.item_price))
+                        rv.adapter = GamesAdapter(games.toList(), listener, getString(R.string.item_price)+ " 10,00€")
                     }
 
                 }else{

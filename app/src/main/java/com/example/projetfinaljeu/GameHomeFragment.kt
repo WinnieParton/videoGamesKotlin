@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,11 +24,12 @@ import kotlinx.android.synthetic.main.fragment_game_home.*
 
 
 class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
-    private lateinit var games : List<Game>;
-    private var listGa = mutableListOf<Game>()
+    private lateinit var games : List<Game>
     private lateinit var rv:RecyclerView
     private val userArgs: GameHomeFragmentArgs by navArgs()
-    private val viewModel by activityViewModels<SharedViewModel>()
+    private val sharedViewModel: SharedViewModel by lazy {
+        ViewModelProvider(this).get(SharedViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,10 +69,8 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
         val color = ContextCompat.getColor(requireContext(),R.color.third)
         drawable1.setColor(color) // set the color using a resource
         relativeLayout.background = drawable1
-
-
-        games = viewModel.getGame().value!!
-
+        games = sharedViewModel.games!!
+println("ttttttttttt   "+sharedViewModel.games!!)
         return view
     }
 

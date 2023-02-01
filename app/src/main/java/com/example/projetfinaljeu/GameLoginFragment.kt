@@ -13,11 +13,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_game_login.*
+import kotlinx.android.synthetic.main.loader.*
 
 
 class GameLoginFragment : Fragment() {
@@ -25,7 +27,9 @@ class GameLoginFragment : Fragment() {
     private lateinit var  auth: FirebaseAuth
     private var user: User=User(null,null,null,null)
     private var callback: OnBackPressedCallback? = null
-
+    private val sharedViewModel: SharedViewModel by lazy {
+        ViewModelProvider(this).get(SharedViewModel::class.java)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -76,7 +80,7 @@ class GameLoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         button_mot_de_passe_oublier.applyUnderlineText(getString(R.string.partie1))
-
+        progress_bar_home.visibility=View.GONE
         val emailEditText = view.findViewById<EditText>(R.id.editTextTextEmailAddress)
         val passwordEditText = view.findViewById<EditText>(R.id.editTextTextPassword)
 
@@ -113,6 +117,7 @@ class GameLoginFragment : Fragment() {
         }
 
         button_connexion.setOnClickListener {
+            message_action.visibility=View.GONE
             button_connexion.isEnabled=false
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
@@ -139,7 +144,6 @@ class GameLoginFragment : Fragment() {
                 button_connexion.isEnabled=true
 
             } else {
-                button_connexion.isEnabled=false
                 passwordEditText.error=null
                 passwordEditText.background = drawableok
                 emailEditText.error=null
@@ -163,8 +167,11 @@ class GameLoginFragment : Fragment() {
 
 
     private fun login(email: String, password: String){
+        progress_bar_home.visibility=View.VISIBLE
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
+                progress_bar_home.visibility=View.GONE
+                println("wiiiiiiiiiiiii  "+sharedViewModel.games!!)
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     val user = auth.currentUser
@@ -182,7 +189,8 @@ class GameLoginFragment : Fragment() {
                     }
                 } else {
                     // If sign in fails, display a message to the user.
-                    message_action.visibility=View.VISIBLE
+                    if(message_action != null)
+                        message_action.visibility=View.VISIBLE
                     message_action.text=getString(R.string.message_login)
                     button_connexion.isEnabled=true
 
