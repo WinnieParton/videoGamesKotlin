@@ -37,14 +37,15 @@ class MainActivity : AppCompatActivity() {
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val navHostFragmentContainer: View = findViewById(R.id.nav_host_fragment_container)
 
         lifecycleScope.launch {
             var listGa = mutableListOf<Game>()
             GlobalScope.launch(Dispatchers.Default) {
                 try {
                     binding.prog.progressBarHome.visibility= View.VISIBLE
-                    binding.nav.progressBarHome.visibility= View.VISIBLE
-
+                    binding.resp.erreurFragment.visibility= View.GONE
+                    navHostFragmentContainer.visibility= View.GONE
                     val response = ApiClient.getGames()
                     response.toRanks()?.let { println(it.size) }
                     response.toRanks()?.forEach {
@@ -82,15 +83,18 @@ class MainActivity : AppCompatActivity() {
                     }
 
                 } catch (e: Exception) {
-                    //binding.erreurFragment.text = "Une erreur est survenue ${e.message}"
+                    binding.resp.erreurFragment.text = "Une erreur est survenue ${e.message}"
+                    binding.resp.erreurFragment.visibility= View.VISIBLE
+                    binding.prog.progressBarHome.visibility= View.GONE
+
                     println("Error: ${e.message}")
-                    //errorr.visibility=View.VISIBLE
-                    //errorr.text = getString(R.string.error) + e.message
 
                 }
                 withContext(Dispatchers.Main) {
                     viewModel.setGame(listGa)
-                    //binding.progressBarHome.visibility=View.GONE
+                    binding.prog.progressBarHome.visibility= View.GONE
+                    navHostFragmentContainer.visibility= View.VISIBLE
+                    binding.resp.erreurFragment.visibility= View.GONE
                 }
             }
 
