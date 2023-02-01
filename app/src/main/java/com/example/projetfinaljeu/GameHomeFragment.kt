@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,16 +27,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.net.HttpURLConnection
-import java.net.URL
 import java.util.*
 
 
+private fun Any.observe(viewLifecycleOwner: LifecycleOwner, observer: Observer) {
+    TODO("Not yet implemented")
+}
+
 class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
-    private var games: List<Game> = mutableListOf<Game>()
+    private lateinit var games : List<Game>;
     private var listGa = mutableListOf<Game>()
     private lateinit var rv:RecyclerView
     private val userArgs: GameHomeFragmentArgs by navArgs()
+    private val viewModel by activityViewModels<SharedViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -81,7 +87,6 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
         super.onViewCreated(view, savedInstanceState)
         val clickinput = view.findViewById<RelativeLayout>(R.id.homeSearchBar)
         clickinput.setOnClickListener {
-            Firebase.auth.signOut()
             // Add action to navigate
             findNavController().navigate(
                 GameHomeFragmentDirections.actionGameHomeFragmentToGameResearchFragment(games.toTypedArray(), userArgs.userArgs)
@@ -113,7 +118,7 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
                  val data = namegame.getAsJsonObject("data")
                  var price = data.getAsJsonObject("price_overview")?.get("final_formatted")?.asString?.trimMargin()
                 if(price != null)
-                    price = getString(R.string.item_price)+price;
+                    price = getString(R.string.item_price)+" "+price
 
                  var headerImage = data?.get("header_image")?.asString?.trimMargin()
                  headerImage = getImageUrl(headerImage)
@@ -152,18 +157,6 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
              }
          }
     }
-    private fun getImageUrl(imageUrl: String?): String {
-        var processedUrl = ""
-        if (imageUrl != null) {
-            val url = imageUrl.split("?").firstOrNull() ?: imageUrl
-            val connection = URL(url).openConnection() as HttpURLConnection
-            connection.connect()
-            if (connection.responseCode == HttpURLConnection.HTTP_OK) {
-                processedUrl = imageUrl.split("?").first()
-            }
-        }
-        return processedUrl
-    }
 
     override fun onResume() {
         super.onResume()
@@ -179,7 +172,7 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
         //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
         //scroller vers le bas
         rv.layoutManager = LinearLayoutManager(context)
-        rv.adapter = GamesAdapter(games, listener, getString(R.string.item_price) + "10,00€")
+        rv.adapter = GamesAdapter(games, listener, getString(R.string.item_price) + " 10,00€")
 
     }
 

@@ -22,11 +22,17 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
-import com.example.projetfinaljeu.SharedViewModel as SharedViewModel1
+import java.net.HttpURLConnection
+import java.net.URL
 
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel by viewModels<SharedViewModel>()
+
+
     private lateinit var navController: NavController
+
 
     @RequiresApi(Build.VERSION_CODES.S)
 
@@ -41,6 +47,7 @@ class MainActivity : AppCompatActivity() {
 
 
         lifecycleScope.launch {
+            var listGa = mutableListOf<Game>()
 
             GlobalScope.launch(Dispatchers.Default) {
                 try {
@@ -89,12 +96,10 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 withContext(Dispatchers.Main) {
-                    getGame(listGa)
-                    progressBar.visibility= View.GONE
-                    home_frag.visibility= View.VISIBLE
+                    viewModel.game.value = listGa
                 }
             }
-            viewModel.game.value = game
+
         }
 
             //pour rendre le loader visible
@@ -111,9 +116,11 @@ class MainActivity : AppCompatActivity() {
 
 
 fun TextView.applyUnderlineTextStart(text: String){
-    val spannable = SpannableString(text)
-    spannable.setSpan(UnderlineSpan(),  0,text.indexOf('€')-1 , 0)
-    setText(spannable)
+    if(text!=null) {
+        val spannable = SpannableString(text)
+        spannable.setSpan(UnderlineSpan(), 0, text.indexOf('€'), 0)
+        setText(spannable)
+    }
 }
 fun TextView.applyUnderlineText(text: String){
     if(text!=null) {
@@ -127,4 +134,17 @@ fun TextView.applyUnderlineTextPart(text: String){
     val spannable = SpannableString(text)
     spannable.setSpan(UnderlineSpan(),  0,text.indexOf(':') , 0)
     setText(spannable)
+}
+
+fun getImageUrl(imageUrl: String?): String {
+    var processedUrl = ""
+    if (imageUrl != null) {
+        val url = imageUrl.split("?").firstOrNull() ?: imageUrl
+        val connection = URL(url).openConnection() as HttpURLConnection
+        connection.connect()
+        if (connection.responseCode == HttpURLConnection.HTTP_OK) {
+            processedUrl = imageUrl.split("?").first()
+        }
+    }
+    return processedUrl
 }
