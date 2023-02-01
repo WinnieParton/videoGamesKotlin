@@ -6,8 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".GameHomeFragment">
 
-    <include layout="@layout/loader" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -87,7 +85,7 @@
 
                         <TextView
                             android:id="@+id/title_game"
-                            android:layout_width="wrap_content"
+                            android:layout_width="200dp"
                             android:layout_height="wrap_content"
                             android:background="@android:color/transparent"
                             android:text="@string/title_best"
@@ -99,26 +97,15 @@
                             android:layout_marginBottom="30dp"/>
 
                         <TextView
-                            android:id="@+id/sub_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@android:color/transparent"
-                            android:text="@string/sub_title"
-                            android:textSize="25sp"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/title_game"
-                            />
-
-
-                        <TextView
                             android:id="@+id/description_game"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@android:color/transparent"
                             android:text="@string/description_game"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/sub_title"
+                            app:layout_constraintTop_toBottomOf="@+id/title_game"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
                             android:textSize="14sp"/>
 
                         <androidx.constraintlayout.widget.ConstraintLayout

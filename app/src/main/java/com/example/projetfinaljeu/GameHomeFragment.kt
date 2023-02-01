@@ -2,11 +2,9 @@ package com.example.projetfinaljeu
 
 import android.content.Intent
 import android.graphics.Paint
-import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.*
-import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -15,24 +13,15 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_game_home.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.util.*
 
-
-private fun Any.observe(viewLifecycleOwner: LifecycleOwner, observer: Observer) {
-    TODO("Not yet implemented")
-}
 
 class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
     private lateinit var games : List<Game>;
@@ -81,11 +70,7 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
         relativeLayout.background = drawable1
 
 
-        SharedViewModel.getGame().observe(viewLifecycleOwner, Observer {
-            // Update UI with dataList here
-            })
-
-        val gameList = SharedViewModel.setGame(game)
+        games = viewModel.getGame().value!!
 
         return view
     }
@@ -99,19 +84,35 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
                 GameHomeFragmentDirections.actionGameHomeFragmentToGameResearchFragment(games.toTypedArray(), userArgs.userArgs)
             )
         }
-        val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar_home)
+        println("fffffffffffffff "+games)
+        val g = games.get(0)
+        if(g.header_image?.isNotEmpty() == true || g.header_image != null)
+            Glide.with(requireContext())
+                .load(g.header_image)
+                .into(image)
+
+        if(g.background?.isNotEmpty() == true || g.background != null)
+            Glide.with(requireContext())
+                .load(g.background)
+                .into(id_image_jeu_item_home)
+
+        title_game.text=g.name
+        description_game.text=g.detailed_description
+
+        getGame(games)
+        //val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar_home)
         //val errorr = view.findViewById<TextView>(R.id.erreur_fragment)
-        val color = ContextCompat.getColor(requireContext(), R.color.white)
-        val drawable = progressBar.indeterminateDrawable.mutate()
-        drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-        progressBar.indeterminateDrawable = drawable
+        //val color = ContextCompat.getColor(requireContext(), R.color.white)
+        //val drawable = progressBar.indeterminateDrawable.mutate()
+        //drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+       // progressBar.indeterminateDrawable = drawable
 
-        progressBar.visibility=View.VISIBLE
+       // progressBar.visibility=View.VISIBLE
 
-        home_frag.visibility=View.GONE
+        //home_frag.visibility=View.GONE
         //errorr.visibility=View.GONE
 
-         GlobalScope.launch(Dispatchers.Default) {
+       /*  GlobalScope.launch(Dispatchers.Default) {
              try {
 
              val response = ApiClient.getGames()
@@ -163,6 +164,7 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
                  home_frag.visibility=View.VISIBLE
              }
          }
+   */
     }
 
     override fun onResume() {
@@ -175,8 +177,6 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
     private fun getGame(listGame: List<Game>) {
         games = listGame
         rv = list_game_recyclerview
-        //scroller ver le haut
-        //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
         //scroller vers le bas
         rv.layoutManager = LinearLayoutManager(context)
         rv.adapter = GamesAdapter(games, listener, getString(R.string.item_price) + " 10,00€")

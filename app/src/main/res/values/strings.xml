@@ -39,8 +39,7 @@
     <string name="no_description">No description</string>
     <string name="no_game">No games found</string>
     <string name="place_holder_search">Search for a game…</string>
-    <string name="title_best" translatable="false">Titan Fall 2</string>
-    <string name="sub_title" translatable="false">Ultimate Edition</string>
+    <string name="title_best" translatable="false">Titan Fall 2 Ultimate Edition</string>
     <string name="description_game">A description of a highlighted game (can be done in hard copy)</string>
     <string name="bestsell">Best sellers</string>
     <string name="title_description">DESCRIPTION</string>
