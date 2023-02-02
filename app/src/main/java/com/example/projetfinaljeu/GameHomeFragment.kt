@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_game_home.*
 
 
 class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
-    private lateinit var games : List<Game>;
+    private lateinit var games : List<Game>
     private lateinit var rv:RecyclerView
     private val userArgs: GameHomeFragmentArgs by navArgs()
     private val viewModel by viewModels<SharedViewModel>()
@@ -56,8 +56,25 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
 
         sharedViewModel.getData().observe(viewLifecycleOwner, Observer { data ->
             games = data
-            println("888888888888888888  "+data.size)
             getGame()
+            val g = games.get(0)
+            if(g.header_image?.isNotEmpty() == true || g.header_image != null)
+                Glide.with(requireContext())
+                    .load(g.header_image)
+                    .into(image)
+
+            if((g.background?.isNotEmpty() == true) || (g.background != null))
+                Glide.with(requireContext())
+                    .load(g.background)
+                    .into(id_image_jeu_item_home)
+
+            title_game.text= g.name
+            description_game.text= g.detailed_description
+            btn_read_more.setOnClickListener{
+                findNavController().navigate(
+                    GameHomeFragmentDirections.actionGameHomeFragmentToGameDetailFragment(g, userArgs.userArgs)
+                )
+            }
         })
 
         val actionbar = (activity as AppCompatActivity).supportActionBar
@@ -84,31 +101,16 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val g = games.get(0)
+
 
         val clickinput = view.findViewById<RelativeLayout>(R.id.homeSearchBar)
         clickinput.setOnClickListener {
-            // Add action to navigate
-
             findNavController().navigate(
-                GameHomeFragmentDirections.actionGameHomeFragmentToGameDetailFragment(g, userArgs.userArgs)
+                GameHomeFragmentDirections.actionGameHomeFragmentToGameResearchFragment(games.toTypedArray(), userArgs.userArgs)
             )
         }
-        btn_read_more.setOnClickListener{
 
-        }
-        if(g.header_image?.isNotEmpty() == true || g.header_image != null)
-            Glide.with(requireContext())
-                .load(g.header_image)
-                .into(image)
 
-        if(g.background?.isNotEmpty() == true || g.background != null)
-            Glide.with(requireContext())
-                .load(g.background)
-                .into(id_image_jeu_item_home)
-
-        title_game.text=g.name
-        description_game.text=g.detailed_description
     }
 
     override fun onResume() {

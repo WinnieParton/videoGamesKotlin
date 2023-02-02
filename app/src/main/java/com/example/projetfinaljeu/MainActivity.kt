@@ -75,23 +75,14 @@ class MainActivity : AppCompatActivity() {
 
                 } catch (e: Exception) {
                     println("Error: ${e.message}")
-                    //errorr.visibility=View.VISIBLE
-                    //errorr.text = getString(R.string.error) + e.message
 
                 }
             withContext(Dispatchers.Main) {
-println("ffffffffffffff  "+listGa.size )
-            viewModel.setData(listGa)
-
+                println("ffffffffffffff  "+listGa.size )
+                viewModel.setData(listGa)
             }
         }
         }
-
-
-        //pour rendre le loader visible
-        //progressBar.visibility=View.VISIBLE
-        //pour rendre invisible
-       // progressBar.visibility=View.GONE
 
     }
 

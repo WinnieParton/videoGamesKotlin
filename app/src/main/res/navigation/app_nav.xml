@@ -2,9 +2,18 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/app_nav"
-    app:startDestination="@id/gameLoginFragment"
+    app:startDestination="@id/gameLoaderFragment"
     xmlns:tools="http://schemas.android.com/tools">
+    <fragment
+        android:id="@+id/gameLoaderFragment"
+        android:name="com.example.projetfinaljeu.LoaderFragment"
+        android:label="LoaderFragment"
+        tools:layout="@layout/fragment_loader">
 
+        <action
+            android:id="@+id/action_gameLoaderFragment_to_gameLoginFragment"
+            app:destination="@id/gameLoginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/gameLoginFragment"
         android:name="com.example.projetfinaljeu.GameLoginFragment"

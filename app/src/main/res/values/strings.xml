@@ -1,24 +1,24 @@
 <resources>
     <string name="app_name">videoGamesKotlin</string>
     <string name="welcome">Welcome !</string>
-    <string name="partie" > Please log in or create a New account to use the app </string>
-    <string name="partie1" >Forgot your password</string>
+    <string name="partie"> Please log in or create a New account to use the app </string>
+    <string name="partie1">Forgot your password</string>
     <string name="register_game"> Registration </string>
-    <string name="enregistrer" >Please enter this information so that your lists are saved</string>
+    <string name="enregistrer">Please enter this information so that your lists are saved</string>
     <string name="creer_compte">Create a new account</string>
-    <string name="inscrire" > Register </string>
-    <string name="connecter" >Login</string>
-    <string name="verification_mot_de_passe" >Password verification</string>
-    <string name="password" >Password</string>
-    <string name="email" >E-mail</string>
-    <string name="utilisateur" >Username</string>
-    <string name="mdp" >Please enter your email to reset your password</string>
-    <string name="renvoyer_code" >Resend my password</string>
-    <string name="message_send" >An email has been sent to your email address, please login to complete the password reset process</string>
-    <string name="invalid_email" >Invalid email address</string>
-    <string name="nb_result" >Number of results : </string>
-    <string name="invalid_password" >Password must be at least 8 characters</string>
-    <string name="invalid_password_confir" >The password entered does not match!</string>
+    <string name="inscrire"> Register </string>
+    <string name="connecter">Login</string>
+    <string name="verification_mot_de_passe">Password verification</string>
+    <string name="password">Password</string>
+    <string name="email">E-mail</string>
+    <string name="utilisateur">Username</string>
+    <string name="mdp">Please enter your email to reset your password</string>
+    <string name="renvoyer_code">Resend my password</string>
+    <string name="message_send">An email has been sent to your email address, please login to complete the password reset process</string>
+    <string name="invalid_email">Invalid email address</string>
+    <string name="nb_result">Number of results : </string>
+    <string name="invalid_password">Password must be at least 8 characters</string>
+    <string name="invalid_password_confir">The password entered does not match!</string>
     <string name="message_register">Fail to register</string>
     <string name="message_login">Email or password incorrect</string>
     <string name="message_login_home">You must be logged in to access home page</string>
@@ -45,5 +45,6 @@
     <string name="bestsell">Best sellers</string>
     <string name="title_description">DESCRIPTION</string>
     <string name="title_avis">NOTICE</string>
-    <string name="error">An error has occurred</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
