@@ -114,7 +114,7 @@ class GameWishFragment : Fragment() {
                         //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
                         //scroller vers le bas
                         rv.layoutManager = LinearLayoutManager(context)
-                        rv.adapter = GamesAdapter(games, listener, getString(R.string.item_price))
+                        rv.adapter = GamesAdapter(games, listener, getString(R.string.item_price)+ " 10,00€")
                     }
                 }else{
                     if(constraint != null)

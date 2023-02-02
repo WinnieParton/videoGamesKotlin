@@ -2,11 +2,9 @@ package com.example.projetfinaljeu
 
 import android.content.Intent
 import android.graphics.Paint
-import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.*
-import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -14,25 +12,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_game_home.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.util.*
 
 
 class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
     private lateinit var games : List<Game>;
-    private var listGa = mutableListOf<Game>()
     private lateinit var rv:RecyclerView
     private val userArgs: GameHomeFragmentArgs by navArgs()
+    private val viewModel by viewModels<SharedViewModel>()
+    private lateinit var sharedViewModel: SharedViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -43,6 +42,7 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
                 requireActivity().startActivity(intent)
             }
         }
+
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
@@ -50,8 +50,15 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
         val view = inflater.inflate(R.layout.fragment_game_home, container, false)
+
+        sharedViewModel.getData().observe(viewLifecycleOwner, Observer { data ->
+            games = data
+            println("888888888888888888  "+data.size)
+            getGame()
+        })
 
         val actionbar = (activity as AppCompatActivity).supportActionBar
         actionbar?.setDisplayHomeAsUpEnabled(false)
@@ -77,78 +84,31 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val g = games.get(0)
+
         val clickinput = view.findViewById<RelativeLayout>(R.id.homeSearchBar)
         clickinput.setOnClickListener {
             // Add action to navigate
+
             findNavController().navigate(
-                GameHomeFragmentDirections.actionGameHomeFragmentToGameResearchFragment(games.toTypedArray(), userArgs.userArgs)
+                GameHomeFragmentDirections.actionGameHomeFragmentToGameDetailFragment(g, userArgs.userArgs)
             )
         }
-        val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar_home)
-        //val errorr = view.findViewById<TextView>(R.id.erreur_fragment)
-        val color = ContextCompat.getColor(requireContext(), R.color.white)
-        val drawable = progressBar.indeterminateDrawable.mutate()
-        drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-        progressBar.indeterminateDrawable = drawable
+        btn_read_more.setOnClickListener{
 
-        progressBar.visibility=View.VISIBLE
+        }
+        if(g.header_image?.isNotEmpty() == true || g.header_image != null)
+            Glide.with(requireContext())
+                .load(g.header_image)
+                .into(image)
 
-        home_frag.visibility=View.GONE
-        //errorr.visibility=View.GONE
+        if(g.background?.isNotEmpty() == true || g.background != null)
+            Glide.with(requireContext())
+                .load(g.background)
+                .into(id_image_jeu_item_home)
 
-         GlobalScope.launch(Dispatchers.Default) {
-
-             try {
-
-             val response = ApiClient.getGames()
-             response.toRanks()?.let { println(it.size) }
-             response.toRanks()?.forEach {
-                 val response = ApiClient.getDetailGames(it.appid!!, Locale.getDefault().language)
-                 val responseWish = ApiClient.getWishGames(it.appid)
-
-
-                 val namegame = response.getAsJsonObject(it.appid.toString())
-                 val data = namegame.getAsJsonObject("data")
-                 var price = data.getAsJsonObject("price_overview")?.get("final_formatted")?.asString?.trimMargin()
-                if(price != null)
-                    price = getString(R.string.item_price)+" "+price
-
-                 var headerImage = data?.get("header_image")?.asString?.trimMargin()
-                 headerImage = getImageUrl(headerImage)
-
-                 var background=data?.get("background")?.asString?.trimMargin()
-                 background = getImageUrl(background)
-
-
-                 var background_raw = data?.get("background_raw")?.asString?.trimMargin()
-                 background_raw = getImageUrl(background_raw)
-
-                println("ffffffffff   $background_raw")
-                 listGa.add(Game(
-                     it.appid,
-                     headerImage,
-                     background,
-                     background_raw ,
-                     data?.get("name")?.asString?.trimMargin(),
-                     data?.getAsJsonArray("publishers")?.joinToString { it.asString.trimMargin() },
-                     data?.get("detailed_description")?.asString?.trimMargin(),
-                     responseWish.toWishDetailGame()!!,
-                     price)
-                 )
-                 }
-
-             } catch (e: Exception) {
-                 println("Error: ${e.message}")
-                 //errorr.visibility=View.VISIBLE
-                 //errorr.text = getString(R.string.error) + e.message
-
-             }
-             withContext(Dispatchers.Main) {
-                 getGame(listGa)
-                 progressBar.visibility=View.GONE
-                 home_frag.visibility=View.VISIBLE
-             }
-         }
+        title_game.text=g.name
+        description_game.text=g.detailed_description
     }
 
     override fun onResume() {
@@ -158,8 +118,7 @@ class GameHomeFragment : Fragment(R.layout.fragment_game_home) {
         }
     }
 
-    private fun getGame(listGame: List<Game>) {
-        games = listGame
+    private fun getGame() {
         rv = list_game_recyclerview
         //scroller ver le haut
         //rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
